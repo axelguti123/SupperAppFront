@@ -1,0 +1,181 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "F:\\Proyecto\\Back-End\\Model\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{10566435-A8EB-45A4-A430-C83101994E43}|Model.csproj|f:\\proyecto\\back-end\\model\\dao\\especialidaddao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{10566435-A8EB-45A4-A430-C83101994E43}|Model.csproj|solutionrelative:dao\\especialidaddao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{10566435-A8EB-45A4-A430-C83101994E43}|Model.csproj|f:\\proyecto\\back-end\\model\\interfaz\\iespecialidad.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{10566435-A8EB-45A4-A430-C83101994E43}|Model.csproj|solutionrelative:interfaz\\iespecialidad.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{10566435-A8EB-45A4-A430-C83101994E43}|Model.csproj|f:\\proyecto\\back-end\\model\\interfaz\\irepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{10566435-A8EB-45A4-A430-C83101994E43}|Model.csproj|solutionrelative:interfaz\\irepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{10566435-A8EB-45A4-A430-C83101994E43}|Model.csproj|f:\\proyecto\\back-end\\model\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{10566435-A8EB-45A4-A430-C83101994E43}|Model.csproj|solutionrelative:class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{10566435-A8EB-45A4-A430-C83101994E43}|Model.csproj|f:\\proyecto\\back-end\\model\\model\\tblespecialidad.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{10566435-A8EB-45A4-A430-C83101994E43}|Model.csproj|solutionrelative:model\\tblespecialidad.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{10566435-A8EB-45A4-A430-C83101994E43}|Model.csproj|f:\\proyecto\\back-end\\model\\model\\dbobracontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{10566435-A8EB-45A4-A430-C83101994E43}|Model.csproj|solutionrelative:model\\dbobracontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{10566435-A8EB-45A4-A430-C83101994E43}|Model.csproj|f:\\proyecto\\back-end\\model\\model\\tbldetallepartidum.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{10566435-A8EB-45A4-A430-C83101994E43}|Model.csproj|solutionrelative:model\\tbldetallepartidum.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{10566435-A8EB-45A4-A430-C83101994E43}|Model.csproj|f:\\proyecto\\back-end\\model\\model\\tblusuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{10566435-A8EB-45A4-A430-C83101994E43}|Model.csproj|solutionrelative:model\\tblusuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{10566435-A8EB-45A4-A430-C83101994E43}|Model.csproj|f:\\proyecto\\back-end\\model\\model\\tblpartidum.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{10566435-A8EB-45A4-A430-C83101994E43}|Model.csproj|solutionrelative:model\\tblpartidum.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{b1e99781-ab81-11d0-b683-00aa00a3ee26}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "EspecialidadDAO.cs",
+              "DocumentMoniker": "F:\\Proyecto\\Back-End\\Model\\DAO\\EspecialidadDAO.cs",
+              "RelativeDocumentMoniker": "DAO\\EspecialidadDAO.cs",
+              "ToolTip": "F:\\Proyecto\\Back-End\\Model\\DAO\\EspecialidadDAO.cs",
+              "RelativeToolTip": "DAO\\EspecialidadDAO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAyAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-03T23:42:51.003Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "IEspecialidad.cs",
+              "DocumentMoniker": "F:\\Proyecto\\Back-End\\Model\\Interfaz\\IEspecialidad.cs",
+              "RelativeDocumentMoniker": "Interfaz\\IEspecialidad.cs",
+              "ToolTip": "F:\\Proyecto\\Back-End\\Model\\Interfaz\\IEspecialidad.cs",
+              "RelativeToolTip": "Interfaz\\IEspecialidad.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAA/AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-03T23:41:31.214Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "IRepository.cs",
+              "DocumentMoniker": "F:\\Proyecto\\Back-End\\Model\\Interfaz\\IRepository.cs",
+              "RelativeDocumentMoniker": "Interfaz\\IRepository.cs",
+              "ToolTip": "F:\\Proyecto\\Back-End\\Model\\Interfaz\\IRepository.cs",
+              "RelativeToolTip": "Interfaz\\IRepository.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAcAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-03T23:29:08.341Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "TblDetallePartidum.cs",
+              "DocumentMoniker": "F:\\Proyecto\\Back-End\\Model\\Model\\TblDetallePartidum.cs",
+              "RelativeDocumentMoniker": "Model\\TblDetallePartidum.cs",
+              "ToolTip": "F:\\Proyecto\\Back-End\\Model\\Model\\TblDetallePartidum.cs",
+              "RelativeToolTip": "Model\\TblDetallePartidum.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-03T23:27:46.599Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "TblUsuario.cs",
+              "DocumentMoniker": "F:\\Proyecto\\Back-End\\Model\\Model\\TblUsuario.cs",
+              "RelativeDocumentMoniker": "Model\\TblUsuario.cs",
+              "ToolTip": "F:\\Proyecto\\Back-End\\Model\\Model\\TblUsuario.cs",
+              "RelativeToolTip": "Model\\TblUsuario.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-03T23:27:35.191Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "TblPartidum.cs",
+              "DocumentMoniker": "F:\\Proyecto\\Back-End\\Model\\Model\\TblPartidum.cs",
+              "RelativeDocumentMoniker": "Model\\TblPartidum.cs",
+              "ToolTip": "F:\\Proyecto\\Back-End\\Model\\Model\\TblPartidum.cs",
+              "RelativeToolTip": "Model\\TblPartidum.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-03T23:27:21.813Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "TblEspecialidad.cs",
+              "DocumentMoniker": "F:\\Proyecto\\Back-End\\Model\\Model\\TblEspecialidad.cs",
+              "RelativeDocumentMoniker": "Model\\TblEspecialidad.cs",
+              "ToolTip": "F:\\Proyecto\\Back-End\\Model\\Model\\TblEspecialidad.cs",
+              "RelativeToolTip": "Model\\TblEspecialidad.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-03T23:26:58.564Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "DbObraContext.cs",
+              "DocumentMoniker": "F:\\Proyecto\\Back-End\\Model\\Model\\DbObraContext.cs",
+              "RelativeDocumentMoniker": "Model\\DbObraContext.cs",
+              "ToolTip": "F:\\Proyecto\\Back-End\\Model\\Model\\DbObraContext.cs",
+              "RelativeToolTip": "Model\\DbObraContext.cs",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAAAgAAAAaAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-03T23:23:16.943Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Class1.cs",
+              "DocumentMoniker": "F:\\Proyecto\\Back-End\\Model\\Class1.cs",
+              "RelativeDocumentMoniker": "Class1.cs",
+              "ToolTip": "F:\\Proyecto\\Back-End\\Model\\Class1.cs",
+              "RelativeToolTip": "Class1.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-03T23:16:48.617Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

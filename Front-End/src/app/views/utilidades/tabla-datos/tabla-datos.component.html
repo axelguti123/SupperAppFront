@@ -1,0 +1,16 @@
+{{ listado | json }}
+<table class="table table-bordered">
+    <thead>
+      <tr class="bg-success text-white">
+        <th *ngFor="let header of headers">{{ header }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of listado; let i = index">
+        {{listado}}
+        <td *ngFor="let header of headers">
+          {{ row[header] }}
+        </td>
+      </tr>
+    </tbody>
+  </table>

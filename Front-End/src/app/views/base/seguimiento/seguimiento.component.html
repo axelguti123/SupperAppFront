@@ -1,0 +1,78 @@
+<app-autorizado [cargo]="'admin'">
+  <ng-container Autorizado>Estas autenticado</ng-container>
+  <ng-container noAutorizado>no estas autenticado</ng-container>
+</app-autorizado>
+
+<div class="row">
+  <div>
+    <div class="mb-1 p-2 bg-secondary text-white rounded text-center">
+      <h1>Seguimiento de actividades</h1>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-1"></div>
+  <div>
+    <table class="table table-bordered">
+      <thead>
+        <tr class="bg-success text-white">
+          <th>Sr</th>
+          <th>Name</th>
+          <th>User Name</th>
+          <th>Phone</th>
+          <th>Website</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let user of userArray; let srNo = index; trackByFn"
+          (click)="onEdit(user); selectRow(user)"
+          [class.selected-row]="selectedUser === user"
+          (keydown.enter)="onRowUpdate(user)"
+        >
+          <td>{{ srNo + 1 }}</td>
+          <td>
+            <ng-container *ngIf="!user.isEdit; else editMode">
+              {{ user.name }}
+            </ng-container>
+            <ng-template #editMode>
+              <input
+                type="text"
+                [(ngModel)]="user.name"
+              />
+              <div class="text-danger" *ngIf="validateField(user.name)">
+                <span> Required </span>
+              </div>
+            </ng-template>
+          </td>
+          <td>
+            <ng-container *ngIf="!user.isEdit; else editModeUser">
+              {{ user.username }}
+            </ng-container>
+            <ng-template #editModeUser>
+              <input type="text" [(ngModel)]="user.username" />
+              <div class="text-danger" *ngIf="validateField(user.username)">
+                <span> Required </span>
+              </div>
+            </ng-template>
+          </td>
+          <td>
+            <div *ngIf="user.isEdit">
+              <input
+                type="text"
+                [(ngModel)]="user.phone"
+              />
+              <div class="text-danger" *ngIf="validateField(user.phone)">
+                <span> Required </span>
+              </div>
+            </div>
+            <div *ngIf="!user.isEdit">
+              {{ user.phone }}
+            </div>
+          </td>
+          <td>{{ user.website }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

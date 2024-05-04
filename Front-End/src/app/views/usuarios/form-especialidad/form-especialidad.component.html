@@ -1,0 +1,76 @@
+<app-mostrar-errores [errores]="errores"></app-mostrar-errores>
+<a (click)="toggleCollapse(0)" cButton class="me-1" color="primary"
+  >Agregar Especialidad</a
+>
+<c-row>
+  <c-col [xs]="6">
+    <div [visible]="visible[0]" cCollapse>
+      <c-card class="mt-3">
+        <c-card-body>
+          <form
+            cForm
+            (submit)="guardarCambios()"
+            [formGroup]="form"
+            class="mb-2"
+          >
+            <div [cFormFloating]="true" class="mb-3">
+              <input
+                cFormControl
+                formControlName="nombreEspecialidad"
+                placeholder="Comunicaciones"
+              />
+              <label cLabel for="especialidad">Especialidad</label>
+            </div>
+            <button
+              [disabled]="form.invalid"
+              cButton
+              color="success"
+              variant="outline"
+              type="submit"
+            >
+              Guardar
+            </button>
+          </form>
+          
+          <div class="row">
+            <div class="col-1"></div>
+            <div>
+              <table datatable [dtOptions]="dtOptions"  class="table table-bordered">
+                <thead>
+                  <tr class="bg-success text-white">
+                    <th>Nº</th>
+                    <th>Especialidad</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    *ngFor="let user of userArray; let srNo = index; trackByFn"
+                    (click)="onEdit(user); selectRow(user)"
+                    [class.selected-row]="selectedUser === user"
+                    (keydown.enter)="onRowUpdate(user)"
+                  >
+                    <td>{{ srNo + 1 }}</td>
+                    <td>
+                      <ng-container *ngIf="!user.isEdit; else editMode">
+                        {{ user.nombreEspecialidad }}
+                      </ng-container>
+                      <ng-template #editMode>
+                        <input
+                          type="text"
+                          [(ngModel)]="user.nombreEspecialidad"
+                        />
+                        <div class="text-danger" *ngIf="validateField(user.nombreEspecialidad)">
+                          <span> Required </span>
+                        </div>
+                      </ng-template>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>          
+        </c-card-body>
+      </c-card>
+    </div>
+  </c-col>
+</c-row>
