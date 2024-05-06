@@ -1,0 +1,87 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "F:\\Proyecto\\Back-End\\SuperApp.AccesoDatos\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{99659E62-3FAC-4D9E-AF43-94BB31BD865C}|..\\SuperApp.Models\\SuperApp.Models.csproj|f:\\proyecto\\back-end\\superapp.models\\especialidad.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF63C61E-6B6B-4758-A880-308F6122577F}|SuperApp.AccesoDatos.csproj|f:\\proyecto\\back-end\\superapp.accesodatos\\conexion\\cadenaconexion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AF63C61E-6B6B-4758-A880-308F6122577F}|SuperApp.AccesoDatos.csproj|solutionrelative:conexion\\cadenaconexion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{99659E62-3FAC-4D9E-AF43-94BB31BD865C}|..\\SuperApp.Models\\SuperApp.Models.csproj|f:\\proyecto\\back-end\\superapp.models\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF63C61E-6B6B-4758-A880-308F6122577F}|SuperApp.AccesoDatos.csproj|f:\\proyecto\\back-end\\superapp.accesodatos\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AF63C61E-6B6B-4758-A880-308F6122577F}|SuperApp.AccesoDatos.csproj|solutionrelative:class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{b1e99781-ab81-11d0-b683-00aa00a3ee26}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Especialidad.cs",
+              "DocumentMoniker": "F:\\Proyecto\\Back-End\\SuperApp.Models\\Especialidad.cs",
+              "RelativeDocumentMoniker": "..\\SuperApp.Models\\Especialidad.cs",
+              "ToolTip": "F:\\Proyecto\\Back-End\\SuperApp.Models\\Especialidad.cs",
+              "RelativeToolTip": "..\\SuperApp.Models\\Especialidad.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABkAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-05T22:02:30.484Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "CadenaConexion.cs",
+              "DocumentMoniker": "F:\\Proyecto\\Back-End\\SuperApp.AccesoDatos\\Conexion\\CadenaConexion.cs",
+              "RelativeDocumentMoniker": "Conexion\\CadenaConexion.cs",
+              "ToolTip": "F:\\Proyecto\\Back-End\\SuperApp.AccesoDatos\\Conexion\\CadenaConexion.cs",
+              "RelativeToolTip": "Conexion\\CadenaConexion.cs",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAAABUAAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-05T21:20:21.536Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Class1.cs",
+              "DocumentMoniker": "F:\\Proyecto\\Back-End\\SuperApp.Models\\Class1.cs",
+              "RelativeDocumentMoniker": "..\\SuperApp.Models\\Class1.cs",
+              "ToolTip": "F:\\Proyecto\\Back-End\\SuperApp.Models\\Class1.cs",
+              "RelativeToolTip": "..\\SuperApp.Models\\Class1.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-05T21:19:42.42Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Class1.cs",
+              "DocumentMoniker": "F:\\Proyecto\\Back-End\\SuperApp.AccesoDatos\\Class1.cs",
+              "RelativeDocumentMoniker": "Class1.cs",
+              "ToolTip": "F:\\Proyecto\\Back-End\\SuperApp.AccesoDatos\\Class1.cs",
+              "RelativeToolTip": "Class1.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-05T21:11:19.527Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
