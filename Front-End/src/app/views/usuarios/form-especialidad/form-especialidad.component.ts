@@ -65,7 +65,12 @@ export class FormEspecialidadComponent implements OnInit {
       }
     }
   }
- 
+  get filteredUsers() {
+    if (!this.userArray) return [];
+  return this.userArray.filter(user => {
+    return user.nombreEspecialidad.toLowerCase().includes(this.filtro.toLowerCase());
+  });
+  }
   loadAllUser() {
     this.especialidadService.obtenerTodos().subscribe({
       next: (especialidad:especialidadDTO[]) => {
@@ -75,6 +80,7 @@ export class FormEspecialidadComponent implements OnInit {
       error: (error) => console.error(error),
     });
   }
+  filtro:String='';
   validateForm(obj: especialidadDTO): boolean {
     return obj.NombreEspecialidad !== '' && obj.estado;
   }

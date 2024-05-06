@@ -33,9 +33,11 @@
           </form>
           
           <div class="row">
-            <div class="col-1"></div>
+            <div class="col-1">
+              <input type="text" formControlName="filtro" placeholder="Buscar...">
+            </div>
             <div>
-              <table datatable [dtOptions]="dtOptions"  class="row border hover">
+              <table formControlName="table" class="table table-bordered">
                 <thead>
                   <tr class="bg-success text-white">
                     <th>Nº</th>
