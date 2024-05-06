@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SuperApp.Services.Utilities
 {
-    internal class AutoMapperProfiles:Profile
+    public class AutoMapperProfiles:Profile
     {
         public AutoMapperProfiles()
         {

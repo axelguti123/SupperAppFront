@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-
+using SuperApp.Services;
+using SuperApp.Services.DTOs;
+using SuperApp.Services.Sevices;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace SuperApp.API.Controllers
@@ -8,11 +10,18 @@ namespace SuperApp.API.Controllers
     [ApiController]
     public class EspecialidadController : ControllerBase
     {
+        private readonly EspecialidadServices _especialidad;
+
+        public EspecialidadController(EspecialidadServices especialidad)
+        {
+            _especialidad = especialidad;
+        }
+
         // GET: api/<EspecialidadController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<MostrarEspecialidadDTO> Get()
         {
-            return new string[] { "value1", "value2" };
+            return _especialidad.GetAll();
         }
 
         // GET api/<EspecialidadController>/5
@@ -39,5 +48,7 @@ namespace SuperApp.API.Controllers
         public void Delete(int id)
         {
         }
+
+        
     }
 }

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using SuperApp.AccesoDatos;
 using SuperApp.Services.DTOs;
+using SuperApp.Services.Interfaz;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,17 +10,10 @@ using System.Threading.Tasks;
 
 namespace SuperApp.Services.Sevices
 {
-    internal class EspecialidadServices
+    public class EspecialidadServices(IMapper mapper, UOF uof) : IEspecialidadServices
     {
-        private readonly IMapper _mapper;
-        private readonly UOF _uof;
-
-        public EspecialidadServices() { }
-        public EspecialidadServices(IMapper mapper, UOF uof)
-        {
-            _mapper = mapper;
-            _uof = uof;
-        }
+        private readonly IMapper _mapper = mapper;
+        private readonly UOF _uof = uof;
 
         public IEnumerable<MostrarEspecialidadDTO> GetAll()
         {

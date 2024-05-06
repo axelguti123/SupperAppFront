@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SuperApp.AccesoDatos.Interfaz
 {
-    internal interface IUnitOfWork
+    public interface IUnitOfWork
     {
         IEspecialidad Especialidad { get; }
 

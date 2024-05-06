@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "xfuCcPavdK1eqfgF6agf0abAKiZ19LgwuWHreyfsH4I=",
+  "Source": "SuperApp.API",
+  "BasePath": "_content/SuperApp.API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

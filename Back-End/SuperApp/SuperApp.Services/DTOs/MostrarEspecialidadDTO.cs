@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SuperApp.Services.DTOs
 {
-    internal class MostrarEspecialidadDTO
+    public class MostrarEspecialidadDTO
     {
         public int IDEspecialidad { get; set; }
         public string? NombreEspecialidad { get; set; }
