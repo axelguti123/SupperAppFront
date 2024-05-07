@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SupperApp.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,10 +7,7 @@ using System.Threading.Tasks;
 
 namespace SuperApp.AccesoDatos.Interfaz
 {
-    public interface IUnitOfWork
+    public interface IUsuario:IRepository<Usuario>
     {
-        IEspecialidad Especialidad { get; }
-        IUsuario Usuario { get; }
-
     }
 }

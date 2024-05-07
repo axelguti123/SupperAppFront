@@ -11,9 +11,12 @@ namespace SuperApp.AccesoDatos
     public class UOF : IUnitOfWork
     {
         private IEspecialidad? _especialidad;
+        private IUsuario? _usuario;
         public IEspecialidad Especialidad
         {
             get { return _especialidad ??= new EspecialidadDAO(); }
         }
+
+        public IUsuario Usuario { get { return _usuario ??= new UsuarioDAO(); } }
     }
 }

@@ -13,7 +13,7 @@ namespace SuperApp.AccesoDatos.DAO
 {
     internal class EspecialidadDAO : IEspecialidad
     {
-        public Especialidad Create(Especialidad data)
+        public string Create(Especialidad data)
         {
             throw new NotImplementedException();
         }
