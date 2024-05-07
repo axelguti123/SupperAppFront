@@ -12,7 +12,7 @@ export const navItems: INavData[] = [
   },
   {
     name: 'User',
-    url: '/theme/user',
+    url: '/especialidad/user',
     iconComponent: { name: 'cil-drop' }
   },
   {

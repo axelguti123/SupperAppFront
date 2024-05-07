@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {esAdminGuard} from '../../es-admin.guard'
 import { EspecialidadComponent } from './especialidad/especialidad.component';
+import { UserComponent } from './user/user.component';
 
 const routes: Routes = [
   {
@@ -23,6 +24,14 @@ const routes: Routes = [
           title: 'especialidad',
         }
       },
+      {
+        path:'user',
+        component:UserComponent,
+        canActivate:[esAdminGuard],
+        data:{
+          title:'user'
+        }
+      }
     ],
   },
 ];
