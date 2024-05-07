@@ -15,12 +15,14 @@ import { MostrarErroresComponent } from '../utilidades/mostrar-errores/mostrar-e
 import {UtilidadesModule} from '../utilidades/utilidades.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DataTablesModule } from 'angular-datatables';
+import { UserComponent } from './user/user.component';
 
 @NgModule({
   declarations: [
     EspecialidadComponent,
     FormEspecialidadComponent,
     MostrarErroresComponent,
+    UserComponent,
   ],
   imports: [
     CommonModule,
