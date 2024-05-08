@@ -15,7 +15,23 @@ namespace SuperApp.AccesoDatos.DAO
     {
         public string Create(Especialidad data)
         {
-            throw new NotImplementedException();
+            try
+            {
+                CadenaConexion.abrir();
+                using SqlCommand cmd = new("SP_C_ESPECIALIDAD", CadenaConexion.conectar) { CommandType = CommandType.StoredProcedure };
+                cmd.Parameters.AddWithValue("@nombreEspecialidad", data.NombreEspecialidad);
+                cmd.Parameters.AddWithValue("@estado", data.IsActivo);
+                cmd.ExecuteNonQuery();
+                return "Especialidad Agregada";
+            }catch(SqlException ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+            finally
+            {
+                CadenaConexion.cerrar();
+            }
         }
 
         public void Delete(int id)

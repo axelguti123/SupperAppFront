@@ -33,8 +33,14 @@ namespace SuperApp.API.Controllers
 
         // POST api/<EspecialidadController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post([FromBody] CrearEspecialidadDTO especialidad)
         {
+            if(especialidad == null)
+            {
+                return BadRequest("Datos vacios");
+            }
+            string result = _especialidad.Create(especialidad);
+            return Ok(result);
         }
 
         // PUT api/<EspecialidadController>/5
