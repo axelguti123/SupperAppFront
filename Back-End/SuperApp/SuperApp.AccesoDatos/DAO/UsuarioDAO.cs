@@ -13,17 +13,15 @@ namespace SuperApp.AccesoDatos.DAO
             try
             {
                 CadenaConexion.abrir();
-                using (SqlCommand cmd = new("SP_C_USUARIO", CadenaConexion.conectar) { CommandType=CommandType.StoredProcedure })
-                {
-                    cmd.Parameters.AddWithValue("@idEspecialidad", data.IDEspecialidad);
-                    cmd.Parameters.AddWithValue("@nombre", data.Nombre);
-                    cmd.Parameters.AddWithValue("@apellido", data.Apellido);
-                    cmd.Parameters.AddWithValue("@fechaNacimiento", data.FechaNacimiento);
-                    cmd.Parameters.AddWithValue("@nombreUsuario", data.Nombre_de_usuario);
-                    cmd.Parameters.AddWithValue("@contraseña", data.Contraseña);
-                    cmd.Parameters.AddWithValue("@activo", data.Activo);
-                    cmd.ExecuteNonQuery();
-                }
+                using SqlCommand cmd = new("SP_C_USUARIO", CadenaConexion.conectar) { CommandType = CommandType.StoredProcedure };
+                cmd.Parameters.AddWithValue("@idEspecialidad", data.IDEspecialidad);
+                cmd.Parameters.AddWithValue("@nombre", data.Nombre);
+                cmd.Parameters.AddWithValue("@apellido", data.Apellido);
+                cmd.Parameters.AddWithValue("@fechaNacimiento", data.FechaNacimiento);
+                cmd.Parameters.AddWithValue("@nombreUsuario", data.Nombre_de_usuario);
+                cmd.Parameters.AddWithValue("@contraseña", data.Contraseña);
+                cmd.Parameters.AddWithValue("@activo", data.Activo);
+                cmd.ExecuteNonQuery();
                 return "Usuario Agregado";
             }catch(SqlException ex){
                 Console.WriteLine(ex.ToString());

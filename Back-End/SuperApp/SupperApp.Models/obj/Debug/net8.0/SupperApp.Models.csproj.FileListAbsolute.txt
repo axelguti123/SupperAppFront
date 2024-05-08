@@ -10,3 +10,15 @@ D:\Proyecto\SuperApp\Back-End\SuperApp\SupperApp.Models\obj\Debug\net8.0\SupperA
 D:\Proyecto\SuperApp\Back-End\SuperApp\SupperApp.Models\obj\Debug\net8.0\refint\SupperApp.Models.dll
 D:\Proyecto\SuperApp\Back-End\SuperApp\SupperApp.Models\obj\Debug\net8.0\SupperApp.Models.pdb
 D:\Proyecto\SuperApp\Back-End\SuperApp\SupperApp.Models\obj\Debug\net8.0\ref\SupperApp.Models.dll
+F:\Proyecto\Back-End\SuperApp\SupperApp.Models\bin\Debug\net8.0\SupperApp.Models.deps.json
+F:\Proyecto\Back-End\SuperApp\SupperApp.Models\bin\Debug\net8.0\SupperApp.Models.dll
+F:\Proyecto\Back-End\SuperApp\SupperApp.Models\bin\Debug\net8.0\SupperApp.Models.pdb
+F:\Proyecto\Back-End\SuperApp\SupperApp.Models\obj\Debug\net8.0\SupperApp.Models.GeneratedMSBuildEditorConfig.editorconfig
+F:\Proyecto\Back-End\SuperApp\SupperApp.Models\obj\Debug\net8.0\SupperApp.Models.AssemblyInfoInputs.cache
+F:\Proyecto\Back-End\SuperApp\SupperApp.Models\obj\Debug\net8.0\SupperApp.Models.AssemblyInfo.cs
+F:\Proyecto\Back-End\SuperApp\SupperApp.Models\obj\Debug\net8.0\SupperApp.Models.csproj.CoreCompileInputs.cache
+F:\Proyecto\Back-End\SuperApp\SupperApp.Models\obj\Debug\net8.0\SupperApp.Models.sourcelink.json
+F:\Proyecto\Back-End\SuperApp\SupperApp.Models\obj\Debug\net8.0\SupperApp.Models.dll
+F:\Proyecto\Back-End\SuperApp\SupperApp.Models\obj\Debug\net8.0\refint\SupperApp.Models.dll
+F:\Proyecto\Back-End\SuperApp\SupperApp.Models\obj\Debug\net8.0\SupperApp.Models.pdb
+F:\Proyecto\Back-End\SuperApp\SupperApp.Models\obj\Debug\net8.0\ref\SupperApp.Models.dll

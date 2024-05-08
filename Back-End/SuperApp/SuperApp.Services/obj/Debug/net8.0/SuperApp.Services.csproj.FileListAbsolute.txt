@@ -16,3 +16,12 @@ D:\Proyecto\SuperApp\Back-End\SuperApp\SuperApp.Services\obj\Debug\net8.0\SuperA
 D:\Proyecto\SuperApp\Back-End\SuperApp\SuperApp.Services\obj\Debug\net8.0\refint\SuperApp.Services.dll
 D:\Proyecto\SuperApp\Back-End\SuperApp\SuperApp.Services\obj\Debug\net8.0\SuperApp.Services.pdb
 D:\Proyecto\SuperApp\Back-End\SuperApp\SuperApp.Services\obj\Debug\net8.0\ref\SuperApp.Services.dll
+F:\Proyecto\Back-End\SuperApp\SuperApp.Services\obj\Debug\net8.0\SuperApp.Services.csproj.AssemblyReference.cache
+F:\Proyecto\Back-End\SuperApp\SuperApp.Services\obj\Debug\net8.0\SuperApp.Services.GeneratedMSBuildEditorConfig.editorconfig
+F:\Proyecto\Back-End\SuperApp\SuperApp.Services\obj\Debug\net8.0\SuperApp.Services.AssemblyInfoInputs.cache
+F:\Proyecto\Back-End\SuperApp\SuperApp.Services\obj\Debug\net8.0\SuperApp.Services.AssemblyInfo.cs
+F:\Proyecto\Back-End\SuperApp\SuperApp.Services\obj\Debug\net8.0\SuperApp.Services.csproj.CoreCompileInputs.cache
+F:\Proyecto\Back-End\SuperApp\SuperApp.Services\obj\Debug\net8.0\SuperApp.Services.sourcelink.json
+F:\Proyecto\Back-End\SuperApp\SuperApp.Services\obj\Debug\net8.0\SuperApp.Services.dll
+F:\Proyecto\Back-End\SuperApp\SuperApp.Services\obj\Debug\net8.0\refint\SuperApp.Services.dll
+F:\Proyecto\Back-End\SuperApp\SuperApp.Services\obj\Debug\net8.0\SuperApp.Services.pdb
