@@ -33,7 +33,7 @@ namespace SuperApp.AccesoDatos.DAO
             }
         }
 
-        public void Delete(int id)
+        public string Delete(int id)
         {
             throw new NotImplementedException();
         }
@@ -82,7 +82,7 @@ namespace SuperApp.AccesoDatos.DAO
             }
         }
 
-        public void Update(Usuario data)
+        public string Update(Usuario data)
         {
             throw new NotImplementedException();
         }

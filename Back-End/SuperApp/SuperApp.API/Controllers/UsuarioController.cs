@@ -49,6 +49,7 @@ namespace SuperApp.API.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+
         }
     }
 }
