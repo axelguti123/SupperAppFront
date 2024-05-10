@@ -15,11 +15,11 @@ namespace SuperApp.Services.Sevices
             var especialidad = _uof.Especialidad.GetAll();
             return _mapper.Map<IEnumerable<MostrarEspecialidadDTO>>(especialidad);
         }
-        public string Create(CrearEspecialidadDTO especialidad)
+        public async Task<string> Create(CrearEspecialidadDTO especialidad)
         {
             var user=_mapper.Map<Especialidad>(especialidad);
-            return _uof.Especialidad.Create(user);
+            return await _uof.Especialidad.Create(user);
         }
-        public string Delete(int id)=>_uof.Especialidad.Delete(id);
+        public async Task<string> Delete(int id)=>await _uof.Especialidad.Delete(id);
     }
 }
