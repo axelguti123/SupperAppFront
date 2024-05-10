@@ -20,5 +20,6 @@ namespace SuperApp.Services.Sevices
             var user=_mapper.Map<Especialidad>(especialidad);
             return _uof.Especialidad.Create(user);
         }
+        public string Delete(int id)=>_uof.Especialidad.Delete(id);
     }
 }

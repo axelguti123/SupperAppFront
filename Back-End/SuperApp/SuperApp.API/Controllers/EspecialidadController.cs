@@ -51,8 +51,10 @@ namespace SuperApp.API.Controllers
 
         // DELETE api/<EspecialidadController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
+            string result=_especialidad.Delete(id);
+            return Ok(result);
         }
 
         

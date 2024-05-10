@@ -21,5 +21,6 @@ namespace SuperApp.Services.Sevices
             var lst=_uof.Usuario.GetAll();
             return _mapper.Map<IEnumerable<MostrarUsuarioDTO>>(lst);
         } 
+
     }
 }
