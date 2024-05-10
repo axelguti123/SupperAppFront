@@ -29,13 +29,13 @@ namespace SuperApp.API.Controllers
 
         // POST api/<UsuarioController>
         [HttpPost]
-        public IActionResult Post([FromBody] CrearUsuarioDTO usuarioDTO)
+        public async Task<IActionResult> Post([FromBody] CrearUsuarioDTO usuarioDTO)
         {
             if(usuarioDTO == null)
             {
                 return BadRequest("Datos Vacios");
             }
-            string result = _usuario.Create(usuarioDTO);
+            string result = await _usuario.Create(usuarioDTO);
             return Ok(result);
         }
 
@@ -47,9 +47,10 @@ namespace SuperApp.API.Controllers
 
         // DELETE api/<UsuarioController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-
+            string result=await _usuario.Delete(id);
+            return Ok(result);
         }
     }
 }

@@ -13,15 +13,15 @@ namespace SuperApp.AccesoDatos.DAO
 {
     internal class EspecialidadDAO : IEspecialidad
     {
-        public string Create(Especialidad data)
+        public async Task<string> Create(Especialidad data)
         {
             try
             {
-                CadenaConexion.abrir();
+                CadenaConexion.Abrir();
                 using SqlCommand cmd = new("SP_C_ESPECIALIDAD", CadenaConexion.conectar) { CommandType = CommandType.StoredProcedure };
                 cmd.Parameters.AddWithValue("@nombreEspecialidad", data.NombreEspecialidad);
                 cmd.Parameters.AddWithValue("@estado", data.IsActivo);
-                cmd.ExecuteNonQuery();
+                await cmd.ExecuteNonQueryAsync();
                 return "Especialidad Agregada";
             }catch(SqlException ex)
             {
@@ -30,18 +30,18 @@ namespace SuperApp.AccesoDatos.DAO
             }
             finally
             {
-                CadenaConexion.cerrar();
+                CadenaConexion.Cerrar();
             }
         }
 
-        public string Delete(int id)
+        public async Task<string> Delete(int id)
         {
             try
             {
-                CadenaConexion.abrir();
+                CadenaConexion.Abrir();
                 using SqlCommand cmd = new("SP_D_ESPECIALIDAD", CadenaConexion.conectar) { CommandType = CommandType.StoredProcedure };
                 cmd.Parameters.AddWithValue("@idEspecialidad", id);
-                cmd.ExecuteNonQuery();
+                await cmd.ExecuteNonQueryAsync();
                 return "Registro Eliminado";
             }
             catch (Exception ex)
@@ -51,25 +51,25 @@ namespace SuperApp.AccesoDatos.DAO
             }
             finally
             {
-                CadenaConexion.cerrar();
+                CadenaConexion.Cerrar();
             }
         }
 
-        public Especialidad Find(int id)
+        public async Task<Especialidad> Find(int id)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Especialidad> GetAll()
+        public async Task<IEnumerable<Especialidad>> GetAll()
         {
             var list = new List<Especialidad>();
             try
             {
-                CadenaConexion.abrir();
-                using (SqlCommand cmd = new SqlCommand("SP_R_ESPECIALIDAD", CadenaConexion.conectar) { CommandType = CommandType.StoredProcedure })
+                CadenaConexion.Abrir();
+                using (SqlCommand cmd = new("SP_R_ESPECIALIDAD", CadenaConexion.conectar) { CommandType = CommandType.StoredProcedure })
                 {
-                    using SqlDataReader reader = cmd.ExecuteReader();
-                    while (reader.Read())
+                    using SqlDataReader reader = await cmd.ExecuteReaderAsync();
+                    while (await reader.ReadAsync())
                     {
                         Especialidad especialidad = new()
                         {
@@ -90,13 +90,32 @@ namespace SuperApp.AccesoDatos.DAO
             }
             finally
             {
-                CadenaConexion.cerrar();
+                CadenaConexion.Cerrar();
             }
         }
 
-        public string Update(Especialidad data)
+        public async Task<string> Update(Especialidad data)
         {
-            throw new NotImplementedException();
+            try
+            {
+                CadenaConexion.Abrir();
+                using(SqlCommand cmd =new("SP_D_USUARIO", CadenaConexion.conectar) { CommandType=CommandType.StoredProcedure})
+                {
+                    cmd.Parameters.AddWithValue("@idEspecialidad", data.IDEspecialidad);
+                    cmd.Parameters.AddWithValue("@nombreEspecialidad",data.NombreEspecialidad);
+                    cmd.Parameters.AddWithValue("@estado",data.IsActivo);
+                    await cmd.ExecuteNonQueryAsync();
+                    return "Registro Modificado";
+                }
+            }catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+            finally
+            {
+                CadenaConexion.Cerrar();
+            }
         }
     }
 }

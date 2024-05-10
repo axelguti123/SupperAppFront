@@ -33,13 +33,13 @@ namespace SuperApp.API.Controllers
 
         // POST api/<EspecialidadController>
         [HttpPost]
-        public IActionResult Post([FromBody] CrearEspecialidadDTO especialidad)
+        public async Task<IActionResult> Post([FromBody] CrearEspecialidadDTO especialidad)
         {
             if(especialidad == null)
             {
                 return BadRequest("Datos vacios");
             }
-            string result = _especialidad.Create(especialidad);
+            string result = await _especialidad.Create(especialidad);
             return Ok(result);
         }
 
@@ -51,9 +51,9 @@ namespace SuperApp.API.Controllers
 
         // DELETE api/<EspecialidadController>/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            string result=_especialidad.Delete(id);
+            string result=await _especialidad.Delete(id);
             return Ok(result);
         }
 
