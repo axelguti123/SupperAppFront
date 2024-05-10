@@ -44,3 +44,5 @@ D:\Proyecto\SuperApp\Back-End\SuperApp\SuperApp.API\bin\Debug\net8.0\SupperApp.M
 D:\Proyecto\SuperApp\Back-End\SuperApp\SuperApp.API\bin\Debug\net8.0\SuperApp.Services.pdb
 D:\Proyecto\SuperApp\Back-End\SuperApp\SuperApp.API\bin\Debug\net8.0\SuperApp.AccesoDatos.pdb
 D:\Proyecto\SuperApp\Back-End\SuperApp\SuperApp.API\bin\Debug\net8.0\SupperApp.Models.pdb
+D:\Proyecto\SuperApp\Back-End\SuperApp\SuperApp.API\bin\Debug\net8.0\Konscious.Security.Cryptography.Argon2.dll
+D:\Proyecto\SuperApp\Back-End\SuperApp\SuperApp.API\bin\Debug\net8.0\Konscious.Security.Cryptography.Blake2.dll

@@ -15,12 +15,44 @@ namespace SuperApp.AccesoDatos.DAO
     {
         public string Create(Especialidad data)
         {
-            throw new NotImplementedException();
+            try
+            {
+                CadenaConexion.abrir();
+                using SqlCommand cmd = new("SP_C_ESPECIALIDAD", CadenaConexion.conectar) { CommandType = CommandType.StoredProcedure };
+                cmd.Parameters.AddWithValue("@nombreEspecialidad", data.NombreEspecialidad);
+                cmd.Parameters.AddWithValue("@estado", data.IsActivo);
+                cmd.ExecuteNonQuery();
+                return "Especialidad Agregada";
+            }catch(SqlException ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+            finally
+            {
+                CadenaConexion.cerrar();
+            }
         }
 
-        public void Delete(int id)
+        public string Delete(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                CadenaConexion.abrir();
+                using SqlCommand cmd = new("SP_D_ESPECIALIDAD", CadenaConexion.conectar) { CommandType = CommandType.StoredProcedure };
+                cmd.Parameters.AddWithValue("@idEspecialidad", id);
+                cmd.ExecuteNonQuery();
+                return "Registro Eliminado";
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+            finally
+            {
+                CadenaConexion.cerrar();
+            }
         }
 
         public Especialidad Find(int id)
@@ -62,7 +94,7 @@ namespace SuperApp.AccesoDatos.DAO
             }
         }
 
-        public void Update(Especialidad data)
+        public string Update(Especialidad data)
         {
             throw new NotImplementedException();
         }

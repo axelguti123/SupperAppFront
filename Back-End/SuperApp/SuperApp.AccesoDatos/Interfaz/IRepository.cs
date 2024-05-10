@@ -11,7 +11,7 @@ namespace SuperApp.AccesoDatos.Interfaz
         TEntity Find(int id);
         string Create(TEntity data);
         IEnumerable<TEntity> GetAll();
-        void Update(TEntity data);
-        void Delete(int id);
+        string Update(TEntity data);
+        string Delete(int id);
     }
 }

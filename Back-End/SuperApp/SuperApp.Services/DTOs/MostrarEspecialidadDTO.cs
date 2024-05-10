@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace SuperApp.Services.DTOs
 {
-    public class MostrarEspecialidadDTO
+    public class MostrarEspecialidadDTO:CrearEspecialidadDTO
     {
+
         public int IDEspecialidad { get; set; }
-        public string? NombreEspecialidad { get; set; }
+
     }
 }

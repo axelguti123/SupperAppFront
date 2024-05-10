@@ -11,7 +11,7 @@ namespace SuperApp.AccesoDatos.Conexion
     {
 
         private static string _conexion = "Data Source=localhost;Initial Catalog=dbObra; Integrated Security=true;";
-        public static readonly SqlConnection conectar = new(_conexion);
+        protected internal static readonly SqlConnection conectar = new(_conexion);
 
         public static string Conexion { get => _conexion; set => _conexion = value; }
         public static void abrir()

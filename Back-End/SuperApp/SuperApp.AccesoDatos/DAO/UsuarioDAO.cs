@@ -20,7 +20,7 @@ namespace SuperApp.AccesoDatos.DAO
                 cmd.Parameters.AddWithValue("@fechaNacimiento", data.FechaNacimiento);
                 cmd.Parameters.AddWithValue("@nombreUsuario", data.Nombre_de_usuario);
                 cmd.Parameters.AddWithValue("@contraseña", data.Contraseña);
-                cmd.Parameters.AddWithValue("@activo", data.Activo);
+                cmd.Parameters.AddWithValue("@activo", data.IsActivo);
                 cmd.ExecuteNonQuery();
                 return "Usuario Agregado";
             }catch(SqlException ex){
@@ -33,7 +33,7 @@ namespace SuperApp.AccesoDatos.DAO
             }
         }
 
-        public void Delete(int id)
+        public string Delete(int id)
         {
             throw new NotImplementedException();
         }
@@ -64,7 +64,7 @@ namespace SuperApp.AccesoDatos.DAO
                             },
                             Nombre = Convert.ToString(reader["nombre"]),
                             Apellido = Convert.ToString(reader["Apellido"]),
-                            Activo = Convert.ToBoolean(reader["activo"])
+                            IsActivo = Convert.ToBoolean(reader["activo"])
                         };
                         list.Add(usuario);
                     }
@@ -82,7 +82,7 @@ namespace SuperApp.AccesoDatos.DAO
             }
         }
 
-        public void Update(Usuario data)
+        public string Update(Usuario data)
         {
             throw new NotImplementedException();
         }
