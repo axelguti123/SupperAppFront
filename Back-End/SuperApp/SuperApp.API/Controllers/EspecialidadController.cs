@@ -8,27 +8,23 @@ namespace SuperApp.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EspecialidadController : ControllerBase
+    public class EspecialidadController(EspecialidadServices especialidad) : ControllerBase
     {
-        private readonly EspecialidadServices _especialidad;
-
-        public EspecialidadController(EspecialidadServices especialidad)
-        {
-            _especialidad = especialidad;
-        }
+        private readonly EspecialidadServices _especialidad = especialidad;
 
         // GET: api/<EspecialidadController>
         [HttpGet]
-        public IEnumerable<MostrarEspecialidadDTO> Get()
+        public async Task<IEnumerable<MostrarEspecialidadDTO>> Get()
         {
-            return _especialidad.GetAll();
+            var lst = await _especialidad.GetAll();
+            return lst;
         }
 
         // GET api/<EspecialidadController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<MostrarEspecialidadDTO> Get(int id)
         {
-            return "value";
+            return await _especialidad.Find(id);
         }
 
         // POST api/<EspecialidadController>

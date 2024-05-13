@@ -10,9 +10,9 @@ namespace SuperApp.Services.Sevices
         private readonly IMapper _mapper = mapper;
         private readonly UOF _uof = uof;
 
-        public IEnumerable<MostrarEspecialidadDTO> GetAll()
+        public async Task<IEnumerable<MostrarEspecialidadDTO>> GetAll()
         {
-            var especialidad = _uof.Especialidad.GetAll();
+            var especialidad = await _uof.Especialidad.GetAll();
             return _mapper.Map<IEnumerable<MostrarEspecialidadDTO>>(especialidad);
         }
         public async Task<string> Create(CrearEspecialidadDTO especialidad)
@@ -21,5 +21,10 @@ namespace SuperApp.Services.Sevices
             return await _uof.Especialidad.Create(user);
         }
         public async Task<string> Delete(int id)=>await _uof.Especialidad.Delete(id);
+        public async Task<MostrarEspecialidadDTO> Find(int id)
+        {
+            var especialidad=await _uof.Especialidad.Find(id);
+            return _mapper.Map<MostrarEspecialidadDTO>(especialidad);
+        }
     }
 }

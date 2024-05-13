@@ -22,9 +22,9 @@ namespace SuperApp.API.Controllers
 
         // GET api/<UsuarioController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public  async Task<MostrarUsuarioDTO> Get(int id)
         {
-            return "value";
+            return await _usuario.Find(id);
         }
 
         // POST api/<UsuarioController>

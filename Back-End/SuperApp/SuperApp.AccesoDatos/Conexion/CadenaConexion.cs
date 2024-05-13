@@ -14,18 +14,18 @@ namespace SuperApp.AccesoDatos.Conexion
         protected internal static readonly SqlConnection conectar = new(_conexion);
 
         public static string Conexion { get => _conexion; set => _conexion = value; }
-        public static void Abrir()
+        public static async Task Abrir()
         {
             if (conectar.State == System.Data.ConnectionState.Closed)
             {
-                conectar.OpenAsync();
+                await conectar.OpenAsync();
             }
         }
-        public static void Cerrar()
+        public static async Task Cerrar()
         {
             if (conectar.State == System.Data.ConnectionState.Open)
             {
-                conectar.CloseAsync();
+                await conectar.CloseAsync();
             }
         }
     }

@@ -1,4 +1,5 @@
 ﻿using SuperApp.AccesoDatos.Conexion;
+using SuperApp.AccesoDatos.Excepciones;
 using SuperApp.AccesoDatos.Interfaz;
 using SupperApp.Models;
 using System.Data;
@@ -12,7 +13,7 @@ namespace SuperApp.AccesoDatos.DAO
         {
             try
             {
-                CadenaConexion.Abrir();
+                await CadenaConexion.Abrir();
                 using SqlCommand cmd = new("SP_C_USUARIO", CadenaConexion.conectar) { CommandType = CommandType.StoredProcedure };
                 cmd.Parameters.AddWithValue("@idEspecialidad", data.IDEspecialidad);
                 cmd.Parameters.AddWithValue("@nombre", data.Nombre);
@@ -29,7 +30,7 @@ namespace SuperApp.AccesoDatos.DAO
             }
             finally
             {
-                CadenaConexion.Cerrar();
+                await CadenaConexion.Cerrar();
             }
         }
 
@@ -37,7 +38,7 @@ namespace SuperApp.AccesoDatos.DAO
         {
             try
             {
-                CadenaConexion.Abrir();
+                await CadenaConexion.Abrir();
                 using SqlCommand cmd = new("SP_D_USUARIO", CadenaConexion.conectar) { CommandType = CommandType.StoredProcedure };
                 cmd.Parameters.AddWithValue("@idUsuario", id);
                 await cmd.ExecuteNonQueryAsync();
@@ -50,13 +51,54 @@ namespace SuperApp.AccesoDatos.DAO
             }
             finally
             {
-                CadenaConexion.Cerrar();
+                await CadenaConexion.Cerrar();
             }
         }
 
         public async Task<Usuario> Find(int id)
         {
-            throw new NotImplementedException();
+
+            try
+            {
+                Usuario user;
+                await CadenaConexion.Abrir();
+                using SqlCommand cmd = new("SP_F_USUARIO", CadenaConexion.conectar) { CommandType = CommandType.StoredProcedure };
+                cmd.Parameters.AddWithValue("@idUsuario", id);
+                using SqlDataReader reader = await cmd.ExecuteReaderAsync();
+                if (await reader.ReadAsync())
+                {
+
+                    user = new()
+                    {
+                        IDUsuario = reader.GetInt32(0),
+                        IDEspecialidad = reader.GetInt32(1),
+                        Especialidads = new Especialidad()
+                        {
+                            NombreEspecialidad = Convert.ToString(reader.GetInt32(2))
+                        },
+                        Nombre = Convert.ToString(reader.GetInt32(3)),
+                        Apellido = Convert.ToString(reader.GetInt32(4)),
+                        IsActivo = Convert.ToBoolean(reader.GetInt32(5))
+                    };
+                    return user;
+                }
+                throw new UsuarioNoEncontradoException("Usuario No encontrado");
+            }
+            catch (UsuarioNoEncontradoException ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+            finally
+            {
+                await CadenaConexion.Cerrar();
+            }
+            
         }
 
         public async Task<IEnumerable<Usuario>> GetAll()
@@ -64,7 +106,7 @@ namespace SuperApp.AccesoDatos.DAO
             var list=new List<Usuario>();
             try
             {
-                CadenaConexion.Abrir();
+                await CadenaConexion.Abrir();
                 using SqlCommand cmd = new("SP_R_USUARIOS", CadenaConexion.conectar) { CommandType = CommandType.StoredProcedure };
                 using SqlDataReader reader = await cmd.ExecuteReaderAsync();
                 while (await reader.ReadAsync())
@@ -93,7 +135,7 @@ namespace SuperApp.AccesoDatos.DAO
             }
             finally
             {
-                CadenaConexion.Cerrar();
+                await CadenaConexion.Cerrar();
             }
         }
 
@@ -101,7 +143,7 @@ namespace SuperApp.AccesoDatos.DAO
         {
             try
             {
-                CadenaConexion.Abrir();
+                await CadenaConexion.Abrir();
                 using SqlCommand cmd = new("SP_U_USUARIO", CadenaConexion.conectar) { CommandType=CommandType.StoredProcedure};
                 cmd.Parameters.AddWithValue("@idUsuario",data.IDUsuario);
                 cmd.Parameters.AddWithValue("@idEspecialidad", data.IDEspecialidad);
@@ -120,7 +162,7 @@ namespace SuperApp.AccesoDatos.DAO
             }
             finally
             {
-                CadenaConexion.Cerrar();
+                await CadenaConexion.Cerrar();
             }
         }
     }

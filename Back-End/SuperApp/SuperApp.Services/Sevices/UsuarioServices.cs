@@ -22,6 +22,11 @@ namespace SuperApp.Services.Sevices
             return _mapper.Map<IEnumerable<MostrarUsuarioDTO>>(lst);
         } 
         public async Task<string> Delete(int id)=>await _uof.Usuario.Delete(id);
+        public async Task<MostrarUsuarioDTO> Find(int id)
+        {
+            var usuario = await _uof.Usuario.Find(id);
+            return _mapper.Map<MostrarUsuarioDTO>(usuario);
+        }
 
     }
 }

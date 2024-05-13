@@ -8,6 +8,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SuperApp.AccesoDatos.Excepciones;
 
 namespace SuperApp.AccesoDatos.DAO
 {
@@ -17,7 +18,7 @@ namespace SuperApp.AccesoDatos.DAO
         {
             try
             {
-                CadenaConexion.Abrir();
+                await CadenaConexion.Abrir();
                 using SqlCommand cmd = new("SP_C_ESPECIALIDAD", CadenaConexion.conectar) { CommandType = CommandType.StoredProcedure };
                 cmd.Parameters.AddWithValue("@nombreEspecialidad", data.NombreEspecialidad);
                 cmd.Parameters.AddWithValue("@estado", data.IsActivo);
@@ -30,7 +31,7 @@ namespace SuperApp.AccesoDatos.DAO
             }
             finally
             {
-                CadenaConexion.Cerrar();
+                await CadenaConexion.Cerrar();
             }
         }
 
@@ -38,7 +39,7 @@ namespace SuperApp.AccesoDatos.DAO
         {
             try
             {
-                CadenaConexion.Abrir();
+                await CadenaConexion.Abrir();
                 using SqlCommand cmd = new("SP_D_ESPECIALIDAD", CadenaConexion.conectar) { CommandType = CommandType.StoredProcedure };
                 cmd.Parameters.AddWithValue("@idEspecialidad", id);
                 await cmd.ExecuteNonQueryAsync();
@@ -51,13 +52,43 @@ namespace SuperApp.AccesoDatos.DAO
             }
             finally
             {
-                CadenaConexion.Cerrar();
+                await CadenaConexion.Cerrar();
             }
         }
 
         public async Task<Especialidad> Find(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                Especialidad especialidad;
+                await CadenaConexion.Abrir();
+                using SqlCommand cmd = new("SP_F_ESPECIALIDAD", CadenaConexion.conectar) { CommandType=CommandType.StoredProcedure};
+                cmd.Parameters.AddWithValue("@idEspecialidad",id);
+                using SqlDataReader reader = await cmd.ExecuteReaderAsync();
+                while(await reader.ReadAsync())
+                {
+                    especialidad = new Especialidad()
+                    {
+                        IDEspecialidad = Convert.ToInt32(reader["idEspecialidad"]),
+                        NombreEspecialidad = Convert.ToString(reader["nombreEspecialidad"]),
+                    };
+                    return especialidad;
+                }
+                throw new EspecialidadNoEncontradaException("No se pudo encontrar El Registro");
+            }
+            catch (EspecialidadNoEncontradaException ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+            finally
+            {
+                await CadenaConexion.Cerrar();
+            }
         }
 
         public async Task<IEnumerable<Especialidad>> GetAll()
@@ -65,7 +96,7 @@ namespace SuperApp.AccesoDatos.DAO
             var list = new List<Especialidad>();
             try
             {
-                CadenaConexion.Abrir();
+                await CadenaConexion.Abrir();
                 using (SqlCommand cmd = new("SP_R_ESPECIALIDAD", CadenaConexion.conectar) { CommandType = CommandType.StoredProcedure })
                 {
                     using SqlDataReader reader = await cmd.ExecuteReaderAsync();
@@ -90,7 +121,7 @@ namespace SuperApp.AccesoDatos.DAO
             }
             finally
             {
-                CadenaConexion.Cerrar();
+                await CadenaConexion.Cerrar();
             }
         }
 
@@ -98,7 +129,7 @@ namespace SuperApp.AccesoDatos.DAO
         {
             try
             {
-                CadenaConexion.Abrir();
+                await CadenaConexion.Abrir();
                 using(SqlCommand cmd =new("SP_D_USUARIO", CadenaConexion.conectar) { CommandType=CommandType.StoredProcedure})
                 {
                     cmd.Parameters.AddWithValue("@idEspecialidad", data.IDEspecialidad);
@@ -114,7 +145,7 @@ namespace SuperApp.AccesoDatos.DAO
             }
             finally
             {
-                CadenaConexion.Cerrar();
+                await CadenaConexion.Cerrar();
             }
         }
     }
