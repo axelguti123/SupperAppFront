@@ -14,9 +14,9 @@ namespace SuperApp.API.Controllers
 
         // GET: api/<UsuarioController>
         [HttpGet]
-        public IEnumerable<MostrarUsuarioDTO> Get()
+        public async Task<IEnumerable<MostrarUsuarioDTO>> Get()
         {
-            var lst= _usuario.GetAll();
+            var lst=await _usuario.GetAll();
             return lst;
         }
 

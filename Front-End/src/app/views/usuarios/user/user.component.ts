@@ -1,24 +1,39 @@
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit, Output } from '@angular/core';
+import { Config } from 'datatables.net';
+import { Subject } from 'rxjs';
+import { UsuarioService } from '../../../services/usuario.service';
+import { UsuarioDTO } from '../../../dto/usuarioDTO';
 
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
   styleUrl: './user.component.scss'
 })
-export class UserComponent {
-  userArray: any[] = [];
-  constructor(private http: HttpClient) {}
+export class UserComponent implements OnInit,OnDestroy {
+  @Output() userArray: any[];
+  dtOptions: Config={};
+  dtTrigger=new Subject();
+  constructor(private usuarioService: UsuarioService
+  ) {}
+  ngOnDestroy(): void {
+    
+  }
   ngOnInit(): void {
+    this.dtOptions = {
+      pagingType:'full-numbers'
+    }
     this.loadAllUser();
   }
 
   loadAllUser() {
-    this.http
-      .get('https://jsonplaceholder.typicode.com/users')
-      .subscribe((res: any) => {
-        this.userArray = res;
-      });
+    this.usuarioService.obtenerTodos().subscribe({
+      next: (usuario:UsuarioDTO[]) => {
+        this.userArray = usuario;
+        console.log(this.userArray);
+      },
+      error: (error) => console.error(error),
+    });
   }
   originalValue: any;
   onEdit(item: any) {

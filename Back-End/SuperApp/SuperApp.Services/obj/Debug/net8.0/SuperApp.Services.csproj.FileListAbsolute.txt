@@ -25,3 +25,12 @@ F:\Proyecto\Back-End\SuperApp\SuperApp.Services\obj\Debug\net8.0\SuperApp.Servic
 F:\Proyecto\Back-End\SuperApp\SuperApp.Services\obj\Debug\net8.0\SuperApp.Services.dll
 F:\Proyecto\Back-End\SuperApp\SuperApp.Services\obj\Debug\net8.0\refint\SuperApp.Services.dll
 F:\Proyecto\Back-End\SuperApp\SuperApp.Services\obj\Debug\net8.0\SuperApp.Services.pdb
+F:\Proyecto\Back-End\SuperApp\SuperApp.Services\bin\Debug\net8.0\SuperApp.Services.deps.json
+F:\Proyecto\Back-End\SuperApp\SuperApp.Services\bin\Debug\net8.0\SuperApp.Services.dll
+F:\Proyecto\Back-End\SuperApp\SuperApp.Services\bin\Debug\net8.0\SuperApp.Services.pdb
+F:\Proyecto\Back-End\SuperApp\SuperApp.Services\bin\Debug\net8.0\SuperApp.AccesoDatos.dll
+F:\Proyecto\Back-End\SuperApp\SuperApp.Services\bin\Debug\net8.0\SupperApp.Models.dll
+F:\Proyecto\Back-End\SuperApp\SuperApp.Services\bin\Debug\net8.0\SuperApp.AccesoDatos.pdb
+F:\Proyecto\Back-End\SuperApp\SuperApp.Services\bin\Debug\net8.0\SupperApp.Models.pdb
+F:\Proyecto\Back-End\SuperApp\SuperApp.Services\obj\Debug\net8.0\SuperApp.845DF0EE.Up2Date
+F:\Proyecto\Back-End\SuperApp\SuperApp.Services\obj\Debug\net8.0\ref\SuperApp.Services.dll

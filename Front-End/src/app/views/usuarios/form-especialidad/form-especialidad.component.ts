@@ -14,7 +14,7 @@ export class FormEspecialidadComponent implements OnInit {
   form: FormGroup;
   userControls: FormControl[] = [];
   @Output() headers: string[] = [];
-  @Output()userArray: any[];
+  @Output()especialidadArray: any[];
   @Input() errores: string[] = [];
   @Input() especialidad: especialidadDTO;
   @Output() onSubmit = new EventEmitter<especialidadDTO>();
@@ -65,17 +65,12 @@ export class FormEspecialidadComponent implements OnInit {
       }
     }
   }
-  get filteredUsers() {
-    if (!this.userArray) return [];
-  return this.userArray.filter(user => {
-    return user.nombreEspecialidad.toLowerCase().includes(this.filtro.toLowerCase());
-  });
-  }
+
   loadAllUser() {
     this.especialidadService.obtenerTodos().subscribe({
       next: (especialidad:especialidadDTO[]) => {
-        this.userArray = especialidad;
-        console.log(this.userArray);
+        this.especialidadArray = especialidad;
+        console.log(this.especialidadArray);
       },
       error: (error) => console.error(error),
     });

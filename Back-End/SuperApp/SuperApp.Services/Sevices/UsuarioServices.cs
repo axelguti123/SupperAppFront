@@ -16,9 +16,9 @@ namespace SuperApp.Services.Sevices
             Usuario user = _mapper.Map<Usuario>(userDTO);
             return await _uof.Usuario.Create(user);
         }
-        public IEnumerable<MostrarUsuarioDTO> GetAll()
+        public async Task<IEnumerable<MostrarUsuarioDTO>> GetAll()
         {
-            var lst=_uof.Usuario.GetAll();
+            var lst=await _uof.Usuario.GetAll();
             return _mapper.Map<IEnumerable<MostrarUsuarioDTO>>(lst);
         } 
         public async Task<string> Delete(int id)=>await _uof.Usuario.Delete(id);

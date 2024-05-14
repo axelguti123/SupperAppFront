@@ -45,7 +45,7 @@
                 </thead>
                 <tbody>
                   <tr
-                    *ngFor="let user of userArray; let srNo = index; trackByFn"
+                    *ngFor="let user of especialidadArray; let srNo = index; trackByFn"
                     (click)="onEdit(user); selectRow(user)"
                     [class.selected-row]="selectedUser === user"
                     (keydown.enter)="onRowUpdate(user)"
