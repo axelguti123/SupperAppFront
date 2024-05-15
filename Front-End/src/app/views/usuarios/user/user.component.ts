@@ -17,20 +17,25 @@ export class UserComponent implements OnInit,OnDestroy {
   constructor(private usuarioService: UsuarioService
   ) {}
   ngOnDestroy(): void {
-    
+    this.dtTrigger.unsubscribe();
   }
   ngOnInit(): void {
     this.dtOptions = {
-      pagingType:'full-numbers'
+      pagingType:'full_numbers',
+      pageLength:10
     }
     this.loadAllUser();
   }
-
+  onChange(event:Event): void{
+    const isChecked:boolean=event.target['checked'];
+    console.log(isChecked);
+  }
   loadAllUser() {
     this.usuarioService.obtenerTodos().subscribe({
       next: (usuario:UsuarioDTO[]) => {
         this.userArray = usuario;
-        console.log(this.userArray);
+        console.log(this.userArray)
+        this.dtTrigger.next(this.dtOptions);
       },
       error: (error) => console.error(error),
     });

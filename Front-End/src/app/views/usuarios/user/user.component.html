@@ -1,65 +1,61 @@
-<div class="row">
-  <div>
-    <div class="mb-1 p-2 bg-secondary text-white rounded text-center">
-      <h1>Seguimiento de actividades</h1>
-    </div>
-  </div>
-</div>
+
 <div class="row">
   <div class="col-1"></div>
   <div class="container">
     <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered hover">
       <thead>
         <tr class="bg-success text-white">
-          <th>Sr</th>
-          <th>Name</th>
-          <th>User Name</th>
-          <th>Phone</th>
-          <th>Website</th>
+          <th>Nº</th>
+          <th>Nombres</th>
+          <th>Apellidos</th>
+          <th>Especialidad</th>
+          <th>Estado</th>
         </tr>
       </thead>
       <tbody>
         <tr
-          *ngFor="let user of userArray; let srNo = index; trackByFn"
-          (click)="onEdit(user); selectRow(user)"
+        *ngFor="let user of userArray; let srNo = index; trackByFn"
           [class.selected-row]="selectedUser === user"
           (keydown.enter)="onRowUpdate(user)"
+          (dblclick)="onEdit(user); selectRow(user)"
         >
           <td>{{ srNo + 1 }}</td>
           <td>
             <ng-container *ngIf="!user.isEdit; else editMode">
-              {{ user.name }}
+              {{ user.nombre }}
             </ng-container>
             <ng-template #editMode>
-              <input type="text" [(ngModel)]="user.name" />
-              <div class="text-danger" *ngIf="validateField(user.name)">
+              <input type="text" [(ngModel)]="user.nombre" />
+              <div class="text-danger" *ngIf="validateField(user.nombre)">
                 <span> Required </span>
               </div>
             </ng-template>
           </td>
           <td>
             <ng-container *ngIf="!user.isEdit; else editModeUser">
-              {{ user.username }}
+              {{ user.apellido }}
             </ng-container>
             <ng-template #editModeUser>
-              <input type="text" [(ngModel)]="user.username" />
-              <div class="text-danger" *ngIf="validateField(user.username)">
+              <input type="text" [(ngModel)]="user.apellido" />
+              <div class="text-danger" *ngIf="validateField(user.apellido)">
                 <span> Required </span>
               </div>
             </ng-template>
           </td>
           <td>
-            <div *ngIf="user.isEdit">
-              <input type="text" [(ngModel)]="user.phone" />
-              <div class="text-danger" *ngIf="validateField(user.phone)">
+            <ng-container *ngIf="!user.isEdit; else editModeUser">
+              {{ user.nombreEspecialidad }}
+            </ng-container>
+            <ng-template #editModeUser>
+              <input type="text" [(ngModel)]="user.nombreEspecialidad" />
+              <div class="text-danger" *ngIf="validateField(user.nombreEspecialidad)">
                 <span> Required </span>
               </div>
-            </div>
-            <div *ngIf="!user.isEdit">
-              {{ user.phone }}
-            </div>
+            </ng-template>
           </td>
-          <td>{{ user.website }}</td>
+          <td><c-form-check [switch]="true">
+            <input cFormCheckInput checked type="checkbox" />
+          </c-form-check></td>
         </tr>
       </tbody>
     </table>

@@ -37,6 +37,6 @@ import { UserComponent } from './user/user.component';
     FormsModule,
     UtilidadesModule,
     DataTablesModule
-    ],
+    ]
 })
 export class UsuariosModule {}
