@@ -1,40 +1,52 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Config } from 'datatables.net';
 import { Subject } from 'rxjs';
 import { UsuarioService } from '../../../services/usuario.service';
 import { UsuarioDTO } from '../../../dto/usuarioDTO';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { EspecialidadService } from '../../../services/especialidad.service';
+import { especialidadDTO } from '../../../dto/especialidadDTO';
 
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
-  styleUrl: './user.component.scss'
+  styleUrl: './user.component.scss',
 })
-export class UserComponent implements OnInit,OnDestroy {
-  @Output() userArray: any[];
-  dtOptions: Config={};
-  dtTrigger=new Subject();
-  constructor(private usuarioService: UsuarioService
-  ) {}
+export class UserComponent implements OnInit, OnDestroy {
+  userArray: any[];
+  especialidad: especialidadDTO[];
+  dtOptions: Config = {};
+  dtTrigger = new Subject();
+  isChecked: boolean;
+  constructor(private usuarioService: UsuarioService, private especialidadService:EspecialidadService) {}
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
   }
+
   ngOnInit(): void {
     this.dtOptions = {
-      pagingType:'full_numbers',
-      pageLength:10
-    }
+      pagingType: 'full_numbers',
+      pageLength: 10,
+    };
+
     this.loadAllUser();
+    this.loadAllEspecialidades();
   }
-  onChange(event:Event): void{
-    const isChecked:boolean=event.target['checked'];
-    console.log(isChecked);
+  loadAllEspecialidades(){
+    this.especialidadService.obtenerTodos().subscribe({
+      next: (especialidades) => {
+        this.especialidad = especialidades;
+        console.log(this.especialidad)
+      },
+      error: (error) => console.error(error),
+    });
   }
   loadAllUser() {
     this.usuarioService.obtenerTodos().subscribe({
-      next: (usuario:UsuarioDTO[]) => {
+      next: (usuario: UsuarioDTO[]) => {
         this.userArray = usuario;
-        console.log(this.userArray)
+        console.log(this.userArray);
         this.dtTrigger.next(this.dtOptions);
       },
       error: (error) => console.error(error),
@@ -42,51 +54,37 @@ export class UserComponent implements OnInit,OnDestroy {
   }
   originalValue: any;
   onEdit(item: any) {
-    this.originalValue={...item};
+    this.originalValue = { ...item };
     item.isEdit = true;
   }
   onUpdate(data: any): void {
-      console.log(data);
+    console.log(data);
   }
-
-  onRowUpdate(user:any):void{
-    
-    if (this.originalValue && JSON.stringify(user) !== JSON.stringify(this.originalValue)) {
-      // El valor ha cambiado    
+  Mod(data: any): void {
+    data.isActivo = !data.isActivo;
+    console.log(data);
+  }
+  onRowUpdate(user: any): void {
+    if (
+      this.originalValue &&
+      JSON.stringify(user) !== JSON.stringify(this.originalValue)
+    ) {
+      // El valor ha  cambiado
       this.onUpdate(user);
     }
     user.isEdit = !user.isEdit;
   }
   validateField(item: any) {
-    if (item !== '') {
-      return false;
-    } else {
-      return true;
-    }
-  }
-  validateUserName(userName: string) {
-    if (userName === '') {
-      return 'Required';
-    } else {
-      if (userName.length >= 3) {
-        return '';
-      } else {
-        return 'min 3 char';
-      }
-    }
+    return !item.trim();
   }
   validateForm(obj: any) {
-    if (obj.name != '' && obj.username != '' && obj.phone != '') {
-      return false;
-    } else {
-      return true;
-    }
+    return !obj.nombre || !obj.apellido || obj.nombreEspecialidad;
   }
   onCancel(item: any) {
     item.isEdit = false;
   }
-  trackByFn(index: number, item: any) {
-    return item.id; // Usa una propiedad única del usuario si es posible
+  trackByFn(item: UsuarioDTO) {
+    return item.idEspecialidad; // Usa una propiedad única del usuario si es posible
   }
   selectedUser: any;
 

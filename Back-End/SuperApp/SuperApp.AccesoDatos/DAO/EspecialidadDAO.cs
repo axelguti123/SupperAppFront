@@ -99,16 +99,22 @@ namespace SuperApp.AccesoDatos.DAO
                 await CadenaConexion.Abrir();
                 using (SqlCommand cmd = new("SP_R_ESPECIALIDAD", CadenaConexion.conectar) { CommandType = CommandType.StoredProcedure })
                 {
-                    using SqlDataReader reader = await cmd.ExecuteReaderAsync();
-                    while (await reader.ReadAsync())
+                    using(SqlDataReader reader = await cmd.ExecuteReaderAsync())
                     {
-                        Especialidad especialidad = new()
+                        if (reader.HasRows)
                         {
-                            IDEspecialidad = Convert.ToInt32(reader["idEspecialidad"]),
-                            NombreEspecialidad = Convert.ToString(reader["nombreEspecialidad"]),
-                        };
-                        list.Add(especialidad);
+                            while (await reader.ReadAsync())
+                            {
+                                Especialidad especialidad = new()
+                                {
+                                    IDEspecialidad = Convert.ToInt32(reader["idEspecialidad"]),
+                                    NombreEspecialidad = Convert.ToString(reader["nombreEspecialidad"]),
+                                };
+                                list.Add(especialidad);
+                            }
+                        }
                     }
+                    
                 }
 
 
