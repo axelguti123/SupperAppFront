@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Proyecto\\SuperApp\\Back-End\\SuperApp\\SupperApp.Models\\SupperApp.Models.csproj": {}
+    "F:\\Proyecto\\Back-End\\SuperApp\\SupperApp.Models\\SupperApp.Models.csproj": {}
   },
   "projects": {
-    "D:\\Proyecto\\SuperApp\\Back-End\\SuperApp\\SupperApp.Models\\SupperApp.Models.csproj": {
+    "F:\\Proyecto\\Back-End\\SuperApp\\SupperApp.Models\\SupperApp.Models.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Proyecto\\SuperApp\\Back-End\\SuperApp\\SupperApp.Models\\SupperApp.Models.csproj",
+        "projectUniqueName": "F:\\Proyecto\\Back-End\\SuperApp\\SupperApp.Models\\SupperApp.Models.csproj",
         "projectName": "SupperApp.Models",
-        "projectPath": "D:\\Proyecto\\SuperApp\\Back-End\\SuperApp\\SupperApp.Models\\SupperApp.Models.csproj",
-        "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
-        "outputPath": "D:\\Proyecto\\SuperApp\\Back-End\\SuperApp\\SupperApp.Models\\obj\\",
+        "projectPath": "F:\\Proyecto\\Back-End\\SuperApp\\SupperApp.Models\\SupperApp.Models.csproj",
+        "packagesPath": "C:\\Users\\pc\\.nuget\\packages\\",
+        "outputPath": "F:\\Proyecto\\Back-End\\SuperApp\\SupperApp.Models\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\pc\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
