@@ -14,7 +14,11 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SuperApp.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
+<<<<<<< HEAD
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ff2959edd23e2a77ee48a37c97ca28c9afe8f009")]
+=======
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8bb3cc7e3dea5017948cbc9ad93c20d55dea9974")]
+>>>>>>> 70e264497aab7dd11b2c50ea9bf4916cc62250cc
 [assembly: System.Reflection.AssemblyProductAttribute("SuperApp.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SuperApp.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
