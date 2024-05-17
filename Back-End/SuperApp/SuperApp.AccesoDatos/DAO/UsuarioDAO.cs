@@ -7,10 +7,13 @@ using System.Data.SqlClient;
 
 namespace SuperApp.AccesoDatos.DAO
 {
-    internal class UsuarioDAO : IUsuario
+    internal class UsuarioDAO: IUsuario
     {
-        public async Task<string> Create(Usuario data)
+
+
+        public async Task<Response> Create(Usuario data)
         {
+            var response=new Response();
             try
             {
                 await CadenaConexion.Abrir();
@@ -23,41 +26,46 @@ namespace SuperApp.AccesoDatos.DAO
                 cmd.Parameters.AddWithValue("@contraseña", data.Contraseña);
                 cmd.Parameters.AddWithValue("@activo", data.IsActivo);
                 await cmd.ExecuteNonQueryAsync();
-                return "Usuario Agregado";
+                response.Status = "Success";
+                response.Message = "Registro Agregado";
             }catch(SqlException ex){
-                Console.WriteLine(ex.ToString());
-                throw;
+                response.Status = "Error";
+                response.Message = ex.Message;
             }
             finally
             {
                 await CadenaConexion.Cerrar();
             }
+            return response;
         }
 
-        public async Task<string> Delete(int id)
+        public async Task<Response> Delete(int id)
         {
+            var response=new Response();
             try
             {
                 await CadenaConexion.Abrir();
                 using SqlCommand cmd = new("SP_D_USUARIO", CadenaConexion.conectar) { CommandType = CommandType.StoredProcedure };
                 cmd.Parameters.AddWithValue("@idUsuario", id);
                 await cmd.ExecuteNonQueryAsync();
-                return "Registro Eliminado";
+                response.Status = "Success";
+                response.Message = "Registro Eliminado";
             }catch(Exception ex)
             {
-                Console.WriteLine(ex.ToString());
-                throw;
+                response.Status="Error";
+                response.Message=ex.Message;
 
             }
             finally
             {
                 await CadenaConexion.Cerrar();
             }
+            return response;
         }
 
-        public async Task<Usuario> Find(int id)
+        public async Task<Response<Usuario>> Find(int id)
         {
-
+            var response=new Response<Usuario>();
             try
             {
                 Usuario user;
@@ -65,44 +73,58 @@ namespace SuperApp.AccesoDatos.DAO
                 using SqlCommand cmd = new("SP_F_USUARIO", CadenaConexion.conectar) { CommandType = CommandType.StoredProcedure };
                 cmd.Parameters.AddWithValue("@idUsuario", id);
                 using SqlDataReader reader = await cmd.ExecuteReaderAsync();
-                if (await reader.ReadAsync())
+                if (reader.HasRows)
                 {
 
-                    user = new()
+                    while(await reader.ReadAsync())
                     {
-                        IDUsuario = reader.GetInt32(0),
-                        IDEspecialidad = reader.GetInt32(1),
-                        Especialidads = new Especialidad()
+                        user = new()
                         {
-                            NombreEspecialidad = Convert.ToString(reader.GetInt32(2))
-                        },
-                        Nombre = Convert.ToString(reader.GetInt32(3)),
-                        Apellido = Convert.ToString(reader.GetInt32(4)),
-                        IsActivo = Convert.ToBoolean(reader.GetInt32(5))
-                    };
-                    return user;
+                            IDUsuario = reader.GetInt32(0),
+                            IDEspecialidad = reader.GetInt32(1),
+                            Especialidads = new Especialidad()
+                            {
+                                NombreEspecialidad = Convert.ToString(reader.GetInt32(2))
+                            },
+                            Nombre = Convert.ToString(reader.GetInt32(3)),
+                            Apellido = Convert.ToString(reader.GetInt32(4)),
+                            IsActivo = Convert.ToBoolean(reader.GetInt32(5))
+                        };
+                        response.Data = user;
+                    }
+                    response.Status = "Success";
+                    response.Message = "Registro Encontrado";
+
                 }
-                throw new UsuarioNoEncontradoException("Usuario No encontrado");
+                else
+                {
+
+                    throw new UsuarioNoEncontradoException("Usuario No encontrado");
+                }
+                reader.Close();
+
             }
             catch (UsuarioNoEncontradoException ex)
             {
-                Console.WriteLine(ex.Message);
-                throw;
+                response.Status = "Error";
+                response.Message = ex.Message;
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
-                throw;
+                response.Status = "Error";
+                response.Message = ex.Message;
             }
             finally
             {
+
                 await CadenaConexion.Cerrar();
             }
-            
+            return response;
         }
 
-        public async Task<IEnumerable<Usuario>> GetAll()
+        public async Task<Response<IEnumerable<Usuario>>> GetAll()
         {
+            var response= new Response<IEnumerable<Usuario>>();
             var list=new List<Usuario>();
             try
             {
@@ -125,22 +147,26 @@ namespace SuperApp.AccesoDatos.DAO
                     };
                     list.Add(usuario);
                 }
-                return list;
+                response.Data = list;
+                response.Status = "Success";
+                response.Message = "Datos Recuperados";
             }
 
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
-                throw;
+                response.Status = "Error";
+                response.Message = ex.Message;
             }
             finally
             {
                 await CadenaConexion.Cerrar();
             }
+            return response;
         }
 
-        public async Task<string> Update(Usuario data)
+        public async Task<Response> Update(Usuario data)
         {
+            var response = new Response();
             try
             {
                 await CadenaConexion.Abrir();
@@ -154,16 +180,18 @@ namespace SuperApp.AccesoDatos.DAO
                 cmd.Parameters.AddWithValue("@contraseña", data.Contraseña);
                 cmd.Parameters.AddWithValue("@activo", data.IsActivo);
                 await cmd.ExecuteNonQueryAsync();
-                return "Registro Modificado";
+                response.Status = "Success";
+                response.Message = "Registro Agregado";
             }catch (Exception ex)
             {
-                Console.WriteLine($"{ex.Message}");
-                throw;
+                response.Status="Error";
+                response.Message = ex.Message;
             }
             finally
             {
                 await CadenaConexion.Cerrar();
             }
+            return response;
         }
     }
 }

@@ -14,17 +14,18 @@ namespace SuperApp.API.Controllers
 
         // GET: api/<EspecialidadController>
         [HttpGet]
-        public async Task<IEnumerable<MostrarEspecialidadDTO>> Get()
+        public async Task<IActionResult> Get()
         {
             var lst = await _especialidad.GetAll();
-            return lst;
+            return Ok(lst);
         }
 
         // GET api/<EspecialidadController>/5
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            return await _especialidad.Find(id);
+            var especialidad = await _especialidad.Find(id);
+            return Ok(especialidad);
         }
 
         // POST api/<EspecialidadController>
@@ -35,7 +36,7 @@ namespace SuperApp.API.Controllers
             {
                 return BadRequest("Datos vacios");
             }
-            string result = await _especialidad.Create(especialidad);
+            var result = await _especialidad.Create(especialidad);
             return Ok(result);
         }
 
@@ -49,7 +50,7 @@ namespace SuperApp.API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            string result=await _especialidad.Delete(id);
+            var result=await _especialidad.Delete(id);
             return Ok(result);
         }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SupperApp.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,10 +9,10 @@ namespace SuperApp.AccesoDatos.Interfaz
 {
     public interface IRepository<TEntity> where TEntity : class
     {
-        Task<TEntity> Find(int id);
-        Task<string> Create(TEntity data);
-        Task<IEnumerable<TEntity>> GetAll();
-        Task<string> Update(TEntity data);
-        Task<string> Delete(int id);
+        Task<Response<TEntity>> Find(int id);
+        Task<Response> Create(TEntity data);
+        Task<Response<IEnumerable<TEntity>>> GetAll();
+        Task<Response> Update(TEntity data);
+        Task<Response> Delete(int id);
     }
 }
