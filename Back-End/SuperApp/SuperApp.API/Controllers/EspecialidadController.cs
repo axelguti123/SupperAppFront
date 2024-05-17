@@ -22,7 +22,7 @@ namespace SuperApp.API.Controllers
 
         // GET api/<EspecialidadController>/5
         [HttpGet("{id}")]
-        public async Task<MostrarEspecialidadDTO> Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
             return await _especialidad.Find(id);
         }
