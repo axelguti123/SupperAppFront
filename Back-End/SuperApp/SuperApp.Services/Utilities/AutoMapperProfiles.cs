@@ -18,6 +18,10 @@ namespace SuperApp.Services.Utilities
             CreateMap<Usuario, MostrarUsuarioDTO>().ForMember(dest => dest.NombreEspecialidad,
                 opt => opt.MapFrom(mapExpression: src => src.Especialidads.NombreEspecialidad));
             CreateMap<Especialidad, CrearEspecialidadDTO>().ReverseMap();
+            CreateMap<Response, ResponseDTO>().ReverseMap();
+            CreateMap<Response<Especialidad>,ResponseDTO<MostrarEspecialidadDTO>>().ReverseMap();
+            CreateMap<ResponseDTO<IEnumerable<MostrarEspecialidadDTO>>,Response<IEnumerable<Especialidad>>>().ReverseMap();
+            CreateMap<ResponseDTO<MostrarEspecialidadDTO>,Response<Especialidad>>().ReverseMap();
 
         }
     }

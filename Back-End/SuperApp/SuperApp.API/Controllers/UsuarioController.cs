@@ -35,7 +35,7 @@ namespace SuperApp.API.Controllers
             {
                 return BadRequest("Datos Vacios");
             }
-            string result = await _usuario.Create(usuarioDTO);
+            var result = await _usuario.Create(usuarioDTO);
             return Ok(result);
         }
 
@@ -49,7 +49,7 @@ namespace SuperApp.API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            string result=await _usuario.Delete(id);
+            var result=await _usuario.Delete(id);
             return Ok(result);
         }
     }
