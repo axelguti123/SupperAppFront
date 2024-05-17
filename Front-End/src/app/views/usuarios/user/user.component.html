@@ -1,12 +1,8 @@
+
 <div class="row">
   <div class="col-1"></div>
   <div class="container">
-    <table
-      datatable
-      [dtOptions]="dtOptions"
-      [dtTrigger]="dtTrigger"
-      class="table table-bordered hover"
-    >
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered hover">
       <thead>
         <tr class="bg-success text-white">
           <th>Nº</th>
@@ -18,7 +14,7 @@
       </thead>
       <tbody>
         <tr
-          *ngFor="let user of userArray; let srNo = index; trackByFn"
+        *ngFor="let user of userArray; let srNo = index; trackByFn"
           [class.selected-row]="selectedUser === user"
           (keydown.enter)="onRowUpdate(user)"
           (dblclick)="onEdit(user); selectRow(user)"
@@ -47,21 +43,19 @@
             </ng-template>
           </td>
           <td>
-            <select cSelect [(ngModel)]="user.idEspecialidad">
-              <option *ngFor="let e of especialidad" value="{{e.idEspecialidad}}">{{e.nombreEspecialidad}} </option>
-            </select>
+            <ng-container *ngIf="!user.isEdit; else editModeUser">
+              {{ user.nombreEspecialidad }}
+            </ng-container>
+            <ng-template #editModeUser>
+              <input type="text" [(ngModel)]="user.nombreEspecialidad" />
+              <div class="text-danger" *ngIf="validateField(user.nombreEspecialidad)">
+                <span> Required </span>
+              </div>
+            </ng-template>
           </td>
-          <td>
-            <c-form-check [switch]="true">
-              <input
-                cFormCheckInput
-                [checked]="user.isActivo ? true : false"
-                class="click"
-                type="checkbox"
-                (click)="Mod(user)"
-              />
-            </c-form-check>
-          </td>
+          <td><c-form-check [switch]="true">
+            <input cFormCheckInput (change)="onChange($event)" type="checkbox" />
+          </c-form-check></td>
         </tr>
       </tbody>
     </table>
