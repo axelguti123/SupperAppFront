@@ -7,14 +7,7 @@ using System.Threading.Tasks;
 namespace SuperApp.AccesoDatos.Excepciones
 {
     [Serializable]
-    internal class UsuarioNoEncontradoException:Exception
+    internal class UsuarioNoEncontradoException(string message) : SuppException(message)
     {
-        public UsuarioNoEncontradoException()
-        {
-
-        }
-
-        public UsuarioNoEncontradoException(string message):base(message) { }
-
     }
 }

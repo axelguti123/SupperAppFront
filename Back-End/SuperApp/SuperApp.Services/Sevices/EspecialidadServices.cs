@@ -29,12 +29,11 @@ namespace SuperApp.Services.Sevices
 
         public async Task<ResponseDTO> Create(CrearEspecialidadDTO especialidadDTO)
         {
-            var response = new Response();
             var responseDTO=new ResponseDTO();
             try
             {
                 var especialidad= _mapper.Map<Especialidad>(especialidadDTO);
-                response = await _uof.Especialidad.Create(especialidad);
+                var response = await _uof.Especialidad.Create(especialidad);
                 responseDTO=_mapper.Map<ResponseDTO>(response);
             }
             catch (Exception ex)
@@ -72,6 +71,22 @@ namespace SuperApp.Services.Sevices
                 _logger.LogError(ex, "Error encontrando especialidad con ID {Id}", id);
             }
             return response;
+        }
+
+        public async Task<ResponseDTO> Update(ModificarEspecialidadDTO especialidadDTO)
+        {
+            var responseDTO = new ResponseDTO();
+            try
+            {
+
+                var especialidad = _mapper.Map<Especialidad>(especialidadDTO);
+                var response = await _uof.Especialidad.Update(especialidad);
+                responseDTO = _mapper.Map<ResponseDTO>(response);
+            }catch(Exception ex)
+            {
+                _logger.LogError(ex, "Error Modificando especialidad");
+            }
+            return responseDTO;
         }
     }
 }

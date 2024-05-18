@@ -25,24 +25,25 @@ namespace SuperApp.Services.Sevices
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error creando usuario");
-                response.Status = "Error";
-                response.Message = "Error creando usuario. Ver logs para más detalles.";
             }
             return response;
         }
 
-        public async Task<IEnumerable<MostrarUsuarioDTO>> GetAll()
+        public async Task<ResponseDTO<IEnumerable<MostrarUsuarioDTO>>> GetAll()
         {
+            var response=new ResponseDTO<IEnumerable<MostrarUsuarioDTO>>();
             try
             {
                 var users = await _uof.Usuario.GetAll();
-                return _mapper.Map<IEnumerable<MostrarUsuarioDTO>>(users);
+                response = _mapper.Map<ResponseDTO<IEnumerable<MostrarUsuarioDTO>>>(users);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error obteniendo todos los usuarios");
-                return new List<MostrarUsuarioDTO>(); // Retornar lista vacía en caso de error
+                response.Status = "Error";
+                response.Message = ex.Message;
             }
+            return response;
         }
 
         public async Task<ResponseDTO> Delete(int id)
@@ -56,24 +57,42 @@ namespace SuperApp.Services.Sevices
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error eliminando usuario con ID {Id}", id);
-                response.Status = "Error";
-                response.Message = "Error eliminando usuario. Ver logs para más detalles.";
             }
             return response;
         }
 
-        public async Task<MostrarUsuarioDTO> Find(int id)
+        public async Task<ResponseDTO<MostrarUsuarioDTO>> Find(int id)
         {
+            var responseDTO=new ResponseDTO<MostrarUsuarioDTO>();
             try
             {
                 var usuario = await _uof.Usuario.Find(id);
-                return _mapper.Map<MostrarUsuarioDTO>(usuario);
+                responseDTO= _mapper.Map<ResponseDTO<MostrarUsuarioDTO>> (usuario);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error encontrando usuario con ID {Id}", id);
-                return null; // Retornar null en caso de error
+                responseDTO.Status = "Error";
+                responseDTO.Message = ex.Message;
             }
+            return responseDTO;
+        }
+        public async Task<ResponseDTO> Update(ModificarUsuarioDTO user)
+        {
+            var responseDTO = new ResponseDTO();
+            try
+            {
+                var usuario = _mapper.Map<Usuario>(user);
+                var response=await _uof.Usuario.Update(usuario);
+                responseDTO=_mapper.Map<ResponseDTO>(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error Modificando Especailidad");
+                responseDTO.Status="Error";
+                responseDTO.Message= ex.Message;
+            }
+            return responseDTO;
         }
     }
 }

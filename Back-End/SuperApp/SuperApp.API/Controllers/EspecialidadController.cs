@@ -42,8 +42,14 @@ namespace SuperApp.API.Controllers
 
         // PUT api/<EspecialidadController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<IActionResult> Put(int id, [FromBody] ModificarEspecialidadDTO especialidad)
         {
+            if (id != especialidad.IDEspecialidad)
+            {
+                return BadRequest("El id de la especialidad no coincide");
+            }
+            var response = await _especialidad.Update(especialidad);
+            return Ok(response);
         }
 
         // DELETE api/<EspecialidadController>/5

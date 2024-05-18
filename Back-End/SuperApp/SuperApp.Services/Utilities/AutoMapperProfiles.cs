@@ -13,15 +13,22 @@ namespace SuperApp.Services.Utilities
     {
         public AutoMapperProfiles()
         {
+            //Mappeo Especialidad
             CreateMap<Especialidad, MostrarEspecialidadDTO>().ReverseMap();
+            CreateMap<Especialidad, CrearEspecialidadDTO>().ReverseMap();
+            CreateMap<Especialidad, ModificarEspecialidadDTO>().ReverseMap();
+
+            //Mapeo Usuario
             CreateMap<Usuario, CrearUsuarioDTO>().ReverseMap();
             CreateMap<Usuario, MostrarUsuarioDTO>().ForMember(dest => dest.NombreEspecialidad,
                 opt => opt.MapFrom(mapExpression: src => src.Especialidads.NombreEspecialidad));
-            CreateMap<Especialidad, CrearEspecialidadDTO>().ReverseMap();
+            CreateMap<Usuario, ModificarUsuarioDTO>().ReverseMap();
+            //Otros Mapeos
             CreateMap<Response, ResponseDTO>().ReverseMap();
-            CreateMap<Response<Especialidad>,ResponseDTO<MostrarEspecialidadDTO>>().ReverseMap();
-            CreateMap<ResponseDTO<IEnumerable<MostrarEspecialidadDTO>>,Response<IEnumerable<Especialidad>>>().ReverseMap();
-            CreateMap<ResponseDTO<MostrarEspecialidadDTO>,Response<Especialidad>>().ReverseMap();
+            CreateMap<Response<Especialidad>, ResponseDTO<MostrarEspecialidadDTO>>().ReverseMap();
+            CreateMap<ResponseDTO<IEnumerable<MostrarUsuarioDTO>>, Response<IEnumerable<Usuario>>>().ReverseMap();
+            CreateMap<ResponseDTO<IEnumerable<MostrarEspecialidadDTO>>, Response<IEnumerable<Especialidad>>>().ReverseMap();
+            CreateMap<Response<Usuario>, ResponseDTO<MostrarUsuarioDTO>>().ReverseMap();
 
         }
     }

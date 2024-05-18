@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace SuperApp.AccesoDatos.Excepciones
 {
     [Serializable]
-    internal class EspecialidadNoEncontradaException(string msg) : Exception(msg)
+    internal class EspecialidadNoEncontradaException(string msg) : SuppException(msg)
     {
     }
 }

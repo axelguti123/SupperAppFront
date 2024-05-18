@@ -14,17 +14,18 @@ namespace SuperApp.API.Controllers
 
         // GET: api/<UsuarioController>
         [HttpGet]
-        public async Task<IEnumerable<MostrarUsuarioDTO>> Get()
+        public async Task<IActionResult> Get()
         {
             var lst=await _usuario.GetAll();
-            return lst;
+            return Ok(lst);
         }
 
         // GET api/<UsuarioController>/5
         [HttpGet("{id}")]
-        public  async Task<MostrarUsuarioDTO> Get(int id)
+        public  async Task<IActionResult> Get(int id)
         {
-            return await _usuario.Find(id);
+            var result= await _usuario.Find(id);
+            return Ok(result);
         }
 
         // POST api/<UsuarioController>
@@ -41,8 +42,14 @@ namespace SuperApp.API.Controllers
 
         // PUT api/<UsuarioController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<IActionResult> Put(int id, [FromBody] ModificarUsuarioDTO user)
         {
+            if (id != user.IDUsuario)
+            {
+                return BadRequest("El id no coincide");
+            }
+            var response= await _usuario.Update(user);
+            return Ok(response);
         }
 
         // DELETE api/<UsuarioController>/5

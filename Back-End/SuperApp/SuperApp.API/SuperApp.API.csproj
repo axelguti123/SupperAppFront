@@ -14,5 +14,4 @@
     <ProjectReference Include="..\SuperApp.AccesoDatos\SuperApp.AccesoDatos.csproj" />
     <ProjectReference Include="..\SuperApp.Services\SuperApp.Services.csproj" />
   </ItemGroup>
-
 </Project>
