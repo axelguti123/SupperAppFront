@@ -96,3 +96,5 @@ F:\Proyecto\Back-End\SuperApp\SuperApp.API\obj\Debug\net8.0\SuperApp.API.genrunt
 F:\Proyecto\Back-End\SuperApp\SuperApp.API\obj\Debug\net8.0\ref\SuperApp.API.dll
 D:\Proyecto\SuperApp\Back-End\SuperApp\SuperApp.API\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
 D:\Proyecto\SuperApp\Back-End\SuperApp\SuperApp.API\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
+F:\Proyecto\Back-End\SuperApp\SuperApp.API\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+F:\Proyecto\Back-End\SuperApp\SuperApp.API\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll

@@ -21,6 +21,16 @@ namespace SuperApp.AccesoDatos.DAO
             {
                 cmd.Parameters.AddWithValue("@nombreEspecialidad", data.NombreEspecialidad);
                 cmd.Parameters.AddWithValue("@estado", data.IsActivo);
+            },
+            result =>
+            {
+                return result switch
+                {
+                    1 => new Response { Status = "Success", Message = "Registro Eliminado" },
+                    -1 => new Response { Status = "Error", Message = "Error. No se encontro una especialidad con el ID proporcionado." },
+                    -2 => new Response { Status = "Error", Message = "Error al eliminar especialidad" },
+                    _ => new Response { Status = "Error", Message = "Código de retorno no reconocido." }
+                };
             });
         }
 
@@ -51,139 +61,58 @@ namespace SuperApp.AccesoDatos.DAO
 
         public async Task<Response<Especialidad>> Find(int id)
         {
-            var response=new Response<Especialidad>();
-            try
+            return await ExecuteReaderAsync("SP_F_ESPECIALIDAD", cmd =>
             {
-                Especialidad especialidad;
-                await CadenaConexion.Abrir();
-                using SqlCommand cmd = new("SP_F_ESPECIALIDAD", CadenaConexion.conectar) { CommandType=CommandType.StoredProcedure};
                 cmd.Parameters.AddWithValue("@idEspecialidad",id);
-                using SqlDataReader reader = await cmd.ExecuteReaderAsync();
-                if(reader.HasRows)
+            }, reader =>
+            {
+                if( reader.Read())
                 {
-                    while (await reader.ReadAsync())
+                    return new Especialidad()
                     {
-                        especialidad = new Especialidad()
-                        {
-                            IDEspecialidad = Convert.ToInt32(reader["idEspecialidad"]),
-                            NombreEspecialidad = Convert.ToString(reader["nombreEspecialidad"]),
-                        };
-                        response.Data = especialidad;
-                    }
-                    response.Status = "Success";
-                    response.Message = "Registro Encontrado";
+                        IDEspecialidad = reader.GetInt32(reader.GetOrdinal("idEspecialidad")),
+                        NombreEspecialidad = reader.GetString(reader.GetOrdinal("nombreEspecialidad"))
+                    };
                 }
-                else
-                {
-                    throw new EspecialidadNoEncontradaException("No se pudo encontrar El Registro");
-
-                }
-                
-            }
-            catch (EspecialidadNoEncontradaException ex)
-            {
-                response.Status = "Error";
-                response.Message = ex.Message;
-            }
-            catch (Exception ex)
-            {
-                response.Status = "Error";
-                response.Message = ex.Message;
-            }
-            finally
-            {
-                await CadenaConexion.Cerrar();
-            }
-            return response;
+                throw new EspecialidadNoEncontradaException("No se pudo encontrar la especialidad");
+            });
         }
 
         public async Task<Response<IEnumerable<Especialidad>>> GetAll()
         {
-            var response=new Response<IEnumerable<Especialidad>>();
-            var list = new List<Especialidad>();
-            try
+            return await ExecuteReaderAsync("SP_R_ESPECIALIDAD", null, reader =>
             {
-                await CadenaConexion.Abrir();
-                using (SqlCommand cmd = new("SP_R_ESPECIALIDAD", CadenaConexion.conectar) { CommandType = CommandType.StoredProcedure })
+                var list = new List<Especialidad>();
+                while (reader.Read())
                 {
-<<<<<<< HEAD
-
-                    using SqlDataReader reader = await cmd.ExecuteReaderAsync().ConfigureAwait(false);
-                    if (reader.HasRows)
+                    list.Add(new Especialidad
                     {
-                        while (await reader.ReadAsync().ConfigureAwait(false) )
-=======
-                    using SqlDataReader reader = await cmd.ExecuteReaderAsync().ConfigureAwait(false);
-                    if (reader.HasRows)
-                    {
-                        while (await reader.ReadAsync().ConfigureAwait(false))
->>>>>>> 19524fb444718f9e27415dd392933bad66dcf271
-                        {
-                            Especialidad especialidad = new()
-                            {
-                                IDEspecialidad = Convert.ToInt32(reader["idEspecialidad"]),
-                                NombreEspecialidad = Convert.ToString(reader["nombreEspecialidad"]),
-                            };
-                            list.Add(especialidad);
-                        }
-<<<<<<< HEAD
-                    }   
-=======
-                    }
-                    reader.Close();
->>>>>>> 19524fb444718f9e27415dd392933bad66dcf271
+                        IDEspecialidad = reader.GetInt32(reader.GetOrdinal("idEspecialidad")),
+                        NombreEspecialidad = reader.GetString(reader.GetOrdinal("nombreEspecialidad"))
+                    });
                 }
-                response.Data = list;
-                response.Status = "Success";
-                response.Message = "Datos recuperados";
-            }
-            catch (Exception ex)
-            {
-                response.Status = "Error";
-                response.Message = ex.StackTrace;
-            }
-            finally
-            {
-                await CadenaConexion.Cerrar();
-            }
-            return response;
+                return list.AsEnumerable();
+            });
         }
 
         public async Task<Response> Update(Especialidad data)
         {
-            var response=new Response();
-            try
+            return await ExecuteNonQueryAsync("SP_U_ESPECIALIDAD", cmd =>
             {
-                await CadenaConexion.Abrir();
-                using(SqlCommand cmd =new("SP_D_USUARIO", CadenaConexion.conectar) { CommandType=CommandType.StoredProcedure})
-                {
-                    cmd.Parameters.AddWithValue("@idEspecialidad", data.IDEspecialidad);
-                    cmd.Parameters.AddWithValue("@nombreEspecialidad",data.NombreEspecialidad);
-                    cmd.Parameters.AddWithValue("@estado",data.IsActivo);
-                    await cmd.ExecuteNonQueryAsync();
-                    response.Status = "Success";
-                    response.Message = "Registro Modificado";
-                }
-            }catch(Exception ex)
-            {
-                response.Status = "Error";
-                response.Message = ex.Message;
-            }
-            finally
-            {
-                await CadenaConexion.Cerrar();
-            }
-            return response;
+                cmd.Parameters.AddWithValue("@idEspecialidad", data.IDEspecialidad);
+                cmd.Parameters.AddWithValue("@nombreEspecialidad", data.NombreEspecialidad);
+                cmd.Parameters.AddWithValue("@estado", data.IsActivo);
+            });
         }
 
-        private async Task<Response> ExecuteNonQueryAsync(string storedProcedure,Action<SqlCommand> action)
+        private async Task<Response> ExecuteNonQueryAsync(string storedProcedure,Action<SqlCommand> action,Func<int,Response> handleReturnValue=null)
         {
             var response = new Response();
             try
             {
                 await CadenaConexion.Abrir();
                 using var cmd = new SqlCommand(storedProcedure, CadenaConexion.conectar) { CommandType = CommandType.StoredProcedure };
-                action.Invoke(cmd);
+                action?.Invoke(cmd);
                 await cmd.ExecuteNonQueryAsync().ConfigureAwait(false);
                 response.Status = "success";
                 response.Message = "Operacion Realizada con Exito. ";
@@ -207,7 +136,7 @@ namespace SuperApp.AccesoDatos.DAO
             {
                 await CadenaConexion.Abrir();
                 using var cmd = new SqlCommand(storedProcedure, CadenaConexion.conectar) { CommandType= CommandType.StoredProcedure };
-                action.Invoke(cmd);
+                action?.Invoke(cmd);
                 using var reader=await cmd.ExecuteReaderAsync().ConfigureAwait(false);
                 response.Data=read(reader);
                 response.Status = "success";
@@ -227,5 +156,6 @@ namespace SuperApp.AccesoDatos.DAO
             }
             return response;
         }
+
     }
 }
