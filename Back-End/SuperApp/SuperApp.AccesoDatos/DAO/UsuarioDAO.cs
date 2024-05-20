@@ -75,15 +75,15 @@ namespace SuperApp.AccesoDatos.DAO
                     {
 
 
-                        IDUsuario = Convert.ToInt32(reader["idUsuario"]),
-                        IDEspecialidad = Convert.ToInt32(reader["idEspecialidad"]),
+                        IDUsuario = reader.GetInt32(reader.GetOrdinal("idUsuario")),
+                        IDEspecialidad = reader.GetInt32(reader.GetOrdinal("idEspecialidad")),
                         Especialidads = new Especialidad()
                         {
-                            NombreEspecialidad = Convert.ToString(reader["nombreEspecialidad"])
+                            NombreEspecialidad = reader.GetString(reader.GetOrdinal("nombreEspecialidad"))
                         },
-                        Nombre = Convert.ToString(reader["nombre"]),
-                        Apellido = Convert.ToString(reader["Apellido"]),
-                        IsActivo = Convert.ToBoolean(reader["activo"])
+                        Nombre = reader.GetString(reader.GetOrdinal("nombre")),
+                        Apellido = reader.GetString(reader.GetOrdinal("Apellido")),
+                        IsActivo = reader.GetBoolean(reader.GetOrdinal("activo"))
 
 
                     };
@@ -102,15 +102,15 @@ namespace SuperApp.AccesoDatos.DAO
                 {
                     list.Add(new Usuario()
                     {
-                        IDUsuario = Convert.ToInt32(reader["idUsuario"]),
-                        IDEspecialidad = Convert.ToInt32(reader["idEspecialidad"]),
+                        IDUsuario = reader.GetInt32(reader.GetOrdinal("idUsuario")),
+                        IDEspecialidad = reader.GetInt32(reader.GetOrdinal("idEspecialidad")),
                         Especialidads = new Especialidad()
                         {
-                            NombreEspecialidad = Convert.ToString(reader["nombreEspecialidad"])
+                            NombreEspecialidad = reader.GetString(reader.GetOrdinal("nombreEspecialidad"))
                         },
-                        Nombre = Convert.ToString(reader["nombre"]),
-                        Apellido = Convert.ToString(reader["Apellido"]),
-                        IsActivo = Convert.ToBoolean(reader["activo"])
+                        Nombre = reader.GetString(reader.GetOrdinal("nombre")),
+                        Apellido = reader.GetString(reader.GetOrdinal("Apellido")),
+                        IsActivo = reader.GetBoolean(reader.GetOrdinal("activo"))
                     });
                 }
                 return list.AsEnumerable();

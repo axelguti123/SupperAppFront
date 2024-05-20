@@ -68,8 +68,8 @@ export class FormEspecialidadComponent implements OnInit {
 
   loadAllUser() {
     this.especialidadService.obtenerTodos().subscribe({
-      next: (especialidad:especialidadDTO[]) => {
-        this.especialidadArray = especialidad;
+      next: (especialidad:any) => {
+        this.especialidadArray = especialidad.data;
         console.log(this.especialidadArray);
       },
       error: (error) => console.error(error),

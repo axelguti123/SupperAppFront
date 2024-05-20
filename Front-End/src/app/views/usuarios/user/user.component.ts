@@ -14,7 +14,7 @@ import { especialidadDTO } from '../../../dto/especialidadDTO';
   styleUrl: './user.component.scss',
 })
 export class UserComponent implements OnInit, OnDestroy {
-  userArray: any[];
+  userArray: any[]=[];
   especialidad: especialidadDTO[];
   dtOptions: Config = {};
   dtTrigger = new Subject();
@@ -29,24 +29,24 @@ export class UserComponent implements OnInit, OnDestroy {
       pagingType: 'full_numbers',
       pageLength: 10,
     };
-
-    this.loadAllUser();
     this.loadAllEspecialidades();
+    this.loadAllUser();
+    
   }
   loadAllEspecialidades(){
     this.especialidadService.obtenerTodos().subscribe({
-      next: (especialidades) => {
-        this.especialidad = especialidades;
-        console.log(this.especialidad)
+      next: (especialidades:any) => {
+        this.especialidad = especialidades.data;
+        console.log(especialidades)
       },
       error: (error) => console.error(error),
     });
   }
   loadAllUser() {
     this.usuarioService.obtenerTodos().subscribe({
-      next: (usuario: UsuarioDTO[]) => {
-        this.userArray = usuario;
-        console.log(this.userArray);
+      next: (usuario: any) => {
+        this.userArray = usuario.data;
+        console.log(usuario);
         this.dtTrigger.next(this.dtOptions);
       },
       error: (error) => console.error(error),
