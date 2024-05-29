@@ -1,16 +1,49 @@
-{{ listado | json }}
-<table class="table table-bordered">
-    <thead>
-      <tr class="bg-success text-white">
-        <th *ngFor="let header of headers">{{ header }}</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let row of listado; let i = index">
-        {{listado}}
-        <td *ngFor="let header of headers">
-          {{ row[header] }}
-        </td>
-      </tr>
-    </tbody>
-  </table>
+<tbody>
+  <tr
+    *ngFor="let user of listado; let srNo = index; trackByFn"
+    [class.selected-row]="selectedUser === user"
+    (keydown.enter)="onRowUpdate(user)"
+    (dblclick)="onEdit(user); selectRow(user)"
+  >
+    <td>{{ srNo + 1 }}</td>
+    <td>
+      <ng-container *ngIf="!user.isEdit; else editMode">
+        {{ user.nombre }}
+      </ng-container>
+      <ng-template #editMode>
+        <input type="text" [(ngModel)]="user.nombre" />
+        <div class="text-danger" *ngIf="validateField(user.nombre)">
+          <span> Required </span>
+        </div>
+      </ng-template>
+    </td>
+    <td>
+      <ng-container *ngIf="!user.isEdit; else editModeUser">
+        {{ user.apellido }}
+      </ng-container>
+      <ng-template #editModeUser>
+        <input type="text" [(ngModel)]="user.apellido" />
+        <div class="text-danger" *ngIf="validateField(user.apellido)">
+          <span> Required </span>
+        </div>
+      </ng-template>
+    </td>
+    <td>
+      <select cSelect [(ngModel)]="user.idEspecialidad">
+        <option *ngFor="let e of especialidad" value="{{ e.idEspecialidad }}">
+          {{ e.nombreEspecialidad }}
+        </option>
+      </select>
+    </td>
+    <td>
+      <c-form-check [switch]="true">
+        <input
+          cFormCheckInput
+          [checked]="user.isActivo ? true : false"
+          type="checkbox"
+          (click)="Mod(user)"
+        />
+      </c-form-check>
+    </td>
+  </tr>
+</tbody>

@@ -1,1 +1,60 @@
-<p>partida works!</p>
+
+<div class="row">
+    <div class="col-1"></div>
+    <div class="container">
+      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered hover">
+        <thead>
+          <tr class="bg-success text-white">
+            <th>Nº</th>
+            <th>Nombres</th>
+            <th>Apellidos</th>
+            <th>Especialidad</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+          *ngFor="let user of userArray; let srNo = index; trackByFn"
+            [class.selected-row]="selectedUser === user"
+            (keydown.enter)="onRowUpdate(user)"
+            (dblclick)="onEdit(user); selectRow(user)"
+          >
+            <td>{{ srNo + 1 }}</td>
+            <td>
+              <ng-container *ngIf="!user.isEdit; else editMode">
+                {{ user.nombre }}
+              </ng-container>
+              <ng-template #editMode>
+                <input type="text" [(ngModel)]="user.nombre" />
+                <div class="text-danger" *ngIf="validateField(user.nombre)">
+                  <span> Required </span>
+                </div>
+              </ng-template>
+            </td>
+            <td>
+              <ng-container *ngIf="!user.isEdit; else editModeUser">
+                {{ user.apellido }}
+              </ng-container>
+              <ng-template #editModeUser>
+                <input type="text" [(ngModel)]="user.apellido" />
+                <div class="text-danger" *ngIf="validateField(user.apellido)">
+                  <span> Required </span>
+                </div>
+              </ng-template>
+            </td>
+            <td>
+              <select cSelect [(ngModel)]="user.idEspecialidad">
+                <option *ngFor="let e of especialidad" value="{{e.idEspecialidad}}">
+                  {{e.nombreEspecialidad}}
+                </option>             
+              </select>
+            </td>
+            <td><c-form-check [switch]="true">
+              <input cFormCheckInput [checked]="user.isActivo?true:false" type="checkbox" (click)="Mod(user)" />
+            </c-form-check></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  

@@ -1,12 +1,11 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Config } from 'datatables.net';
 import { Subject } from 'rxjs';
 import { UsuarioService } from '../../../services/usuario.service';
 import { UsuarioDTO } from '../../../dto/usuarioDTO';
-import { FormBuilder, FormGroup } from '@angular/forms';
 import { EspecialidadService } from '../../../services/especialidad.service';
 import { especialidadDTO } from '../../../dto/especialidadDTO';
+import { MostrarUsuarioDTO } from '../../../dto/MostrarUsuarioDTO';
 
 @Component({
   selector: 'app-user',
@@ -14,7 +13,7 @@ import { especialidadDTO } from '../../../dto/especialidadDTO';
   styleUrl: './user.component.scss',
 })
 export class UserComponent implements OnInit, OnDestroy {
-  userArray: any[];
+  userArray: MostrarUsuarioDTO[];
   especialidad: especialidadDTO[];
   dtOptions: Config = {};
   dtTrigger = new Subject();
@@ -35,8 +34,8 @@ export class UserComponent implements OnInit, OnDestroy {
   }
   loadAllEspecialidades(){
     this.especialidadService.obtenerTodos().subscribe({
-      next: (especialidades) => {
-        this.especialidad = especialidades;
+      next: (especialidades:any) => {
+        this.especialidad = especialidades.data;
         console.log(this.especialidad)
       },
       error: (error) => console.error(error),
@@ -44,9 +43,9 @@ export class UserComponent implements OnInit, OnDestroy {
   }
   loadAllUser() {
     this.usuarioService.obtenerTodos().subscribe({
-      next: (usuario: UsuarioDTO[]) => {
-        this.userArray = usuario;
-        console.log(this.userArray);
+      next: (usuario: MostrarUsuarioDTO) => {
+        this.userArray = usuario.data;
+        console.log(this.userArray[0]);
         this.dtTrigger.next(this.dtOptions);
       },
       error: (error) => console.error(error),
@@ -60,7 +59,7 @@ export class UserComponent implements OnInit, OnDestroy {
   onUpdate(data: any): void {
     console.log(data);
   }
-  Mod(data: any): void {
+  Mod(data: UsuarioDTO): void {
     data.isActivo = !data.isActivo;
     console.log(data);
   }

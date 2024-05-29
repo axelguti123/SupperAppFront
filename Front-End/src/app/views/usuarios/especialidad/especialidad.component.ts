@@ -23,8 +23,8 @@ export class EspecialidadComponent implements OnInit {
 
   traerTabla(){
     this.especialidadService.obtenerTodos().subscribe({
-      next: (especialidad) => {
-        this.especialidad = especialidad;
+      next: (especialidad:any) => {
+        this.especialidad = especialidad.data;
         console.log(especialidad)
       },
       error: (error) => console.error(error),

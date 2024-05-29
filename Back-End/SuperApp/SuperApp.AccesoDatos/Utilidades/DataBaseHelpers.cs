@@ -17,12 +17,25 @@ namespace SuperApp.AccesoDatos.Utilidades
         public static async Task<Response> ExecuteNonQueryAsync(string storedProcedure, Action<SqlCommand> action, Func<int, Response> handleReturnValue = null)
         {
             var response = new Response();
+            using var connection = CadenaConexion.ObtenerConexion();
+
             try
             {
-                await CadenaConexion.Abrir();
-                using var cmd = new SqlCommand(storedProcedure, CadenaConexion.conectar) { CommandType = CommandType.StoredProcedure };
+                await connection.OpenAsync().ConfigureAwait(false);
+                using var cmd = new SqlCommand(storedProcedure, connection) { CommandType = CommandType.StoredProcedure };
                 action?.Invoke(cmd);
+                var returnValue = new SqlParameter
+                {
+                    ParameterName = "@returnValue",
+                    SqlDbType = SqlDbType.Int,
+                    Direction = ParameterDirection.ReturnValue,
+                };
                 await cmd.ExecuteNonQueryAsync().ConfigureAwait(false);
+                if(handleReturnValue != null)
+                {
+                    int result=(int)returnValue.Value;
+                    return handleReturnValue(result);
+                }
                 response.Status = "success";
                 response.Message = "Operacion Realizada con Exito. ";
             }catch(UsuarioNoEncontradoException ex)
@@ -41,7 +54,7 @@ namespace SuperApp.AccesoDatos.Utilidades
             }
             finally
             {
-                await CadenaConexion.Cerrar();
+                await connection.CloseAsync().ConfigureAwait(false);
             }
             return response;
         }
@@ -49,10 +62,12 @@ namespace SuperApp.AccesoDatos.Utilidades
         public static async Task<Response<TEntity>> ExecuteReaderAsync<TEntity>(string storedProcedure, Action<SqlCommand> action, Func<SqlDataReader, TEntity> read)
         {
             var response = new Response<TEntity>();
+            using var connection = CadenaConexion.ObtenerConexion();
+
             try
             {
-                await CadenaConexion.Abrir();
-                using var cmd = new SqlCommand(storedProcedure, CadenaConexion.conectar) { CommandType = CommandType.StoredProcedure };
+                await connection.OpenAsync().ConfigureAwait(false);
+                using var cmd = new SqlCommand(storedProcedure, connection) { CommandType = CommandType.StoredProcedure };
                 action?.Invoke(cmd);
                 using var reader = await cmd.ExecuteReaderAsync().ConfigureAwait(false);
                 response.Data = read(reader);
@@ -66,7 +81,6 @@ namespace SuperApp.AccesoDatos.Utilidades
             }
             finally
             {
-                await CadenaConexion.Cerrar();
             }
             return response;
         }

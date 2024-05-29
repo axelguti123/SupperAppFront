@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   CarouselModule,
   DropdownModule,
+  FormModule,
   NavModule,
   PaginationModule,
   PopoverModule,
@@ -18,13 +19,13 @@ import {
 import { SeguimientoComponent } from './seguimiento/seguimiento.component';
 import { PartidaComponent } from './partida/partida.component';
 import { TabsComponent } from './tabs/tabs.component';
-import { EspecialidadComponent } from '../usuarios/especialidad/especialidad.component';
 import { SeguridadModule } from '../../seguridad/seguridad.module'
 
 // Components Routing
 import { BaseRoutingModule } from './base-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { UtilidadesModule } from '../utilidades/utilidades.module';
+import { DataTablesModule } from 'angular-datatables';
 @NgModule({
   imports: [
     CommonModule,
@@ -41,7 +42,9 @@ import { UtilidadesModule } from '../utilidades/utilidades.module';
     FormsModule,
     HttpClientModule,
     SeguridadModule,
-    UtilidadesModule
+    UtilidadesModule,
+    DataTablesModule,
+    FormModule
   ],
   declarations: [
     SeguimientoComponent,
