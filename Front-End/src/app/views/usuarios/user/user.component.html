@@ -14,7 +14,7 @@
       </thead>
       <tbody>
         <tr
-        *ngFor="let user of userArray; let srNo = index; trackByFn"
+        *ngFor="let user of userArray; let srNo = index; trackBy: trackByFn"
           [class.selected-row]="selectedUser === user"
           (keydown.enter)="onRowUpdate(user)"
           (dblclick)="onEdit(user); selectRow(user)"
@@ -43,11 +43,7 @@
             </ng-template>
           </td>
           <td>
-            <select cSelect [(ngModel)]="user.idEspecialidad">
-              <option *ngFor="let e of especialidad" value="{{e.idEspecialidad}}">
-                {{e.nombreEspecialidad}}
-              </option>             
-            </select>
+            <app-combobox [especialidades]="especialidad" [idEspecialidad]="user.idEspecialidad"></app-combobox>
           </td>
           <td><c-form-check [switch]="true">
             <input cFormCheckInput [checked]="user.isActivo?true:false" type="checkbox" (click)="Mod(user)" />

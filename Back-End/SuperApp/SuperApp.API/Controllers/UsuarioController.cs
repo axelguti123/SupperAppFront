@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SuperApp.Services.DTOs;
 using SuperApp.Services.Sevices;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -14,10 +15,10 @@ namespace SuperApp.API.Controllers
 
         // GET: api/<UsuarioController>
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<JsonResult> Get()
         {
             var lst=await _usuario.GetAll();
-            return Ok(lst);
+            return new JsonResult(lst);
         }
 
         // GET api/<UsuarioController>/5

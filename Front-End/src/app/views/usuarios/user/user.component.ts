@@ -1,26 +1,30 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Config } from 'datatables.net';
-import { Subject } from 'rxjs';
+import { Subject, takeUntil, tap } from 'rxjs';
 import { UsuarioService } from '../../../services/usuario.service';
 import { UsuarioDTO } from '../../../dto/usuarioDTO';
 import { EspecialidadService } from '../../../services/especialidad.service';
 import { especialidadDTO } from '../../../dto/especialidadDTO';
-import { MostrarUsuarioDTO } from '../../../dto/MostrarUsuarioDTO';
-
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
   styleUrl: './user.component.scss',
 })
 export class UserComponent implements OnInit, OnDestroy {
-  userArray: MostrarUsuarioDTO[];
-  especialidad: especialidadDTO[];
+  userArray: UsuarioDTO[] = [];
+  especialidad: especialidadDTO[] = [];
   dtOptions: Config = {};
-  dtTrigger = new Subject();
-  isChecked: boolean;
-  constructor(private usuarioService: UsuarioService, private especialidadService:EspecialidadService) {}
+  dtTrigger = new Subject<Config>();
+  isChecked: boolean = false;
+  private unsubscribe$ = new Subject<void>();
+  constructor(
+    private usuarioService: UsuarioService,
+    private especialidadService: EspecialidadService
+  ) {}
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   ngOnInit(): void {
@@ -32,24 +36,47 @@ export class UserComponent implements OnInit, OnDestroy {
     this.loadAllUser();
     this.loadAllEspecialidades();
   }
-  loadAllEspecialidades(){
-    this.especialidadService.obtenerTodos().subscribe({
-      next: (especialidades:any) => {
-        this.especialidad = especialidades.data;
-        console.log(this.especialidad)
-      },
-      error: (error) => console.error(error),
-    });
+  loadAllEspecialidades() {
+    this.especialidadService
+      .obtenerTodos()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe({
+        next: (especialidades: {
+          data: especialidadDTO[];
+          message: string;
+          status: string;
+        }) => {
+          this.especialidad = especialidades.data;
+          console.log(especialidades);
+        },
+        error: (error) => console.error(error),
+      });
   }
   loadAllUser() {
-    this.usuarioService.obtenerTodos().subscribe({
-      next: (usuario: MostrarUsuarioDTO) => {
-        this.userArray = usuario.data;
-        console.log(this.userArray[0]);
-        this.dtTrigger.next(this.dtOptions);
-      },
-      error: (error) => console.error(error),
-    });
+    const startTime = performance.now();
+    this.usuarioService
+      .obtenerTodos()
+      .pipe(
+        tap(() => {
+          const endTime = performance.now();
+          console.log(
+            `Load all specialties took ${endTime - startTime} milliseconds.`
+          );
+        }),
+        takeUntil(this.unsubscribe$)
+      )
+      .subscribe({
+        next: (usuario: {
+          data: UsuarioDTO[];
+          message: string;
+          status: string;
+        }) => {
+          this.userArray = usuario.data;
+          console.log(usuario);
+          this.dtTrigger.next(this.dtOptions);
+        },
+        error: (error) => console.error(error),
+      });
   }
   originalValue: any;
   onEdit(item: any) {
@@ -73,16 +100,16 @@ export class UserComponent implements OnInit, OnDestroy {
     }
     user.isEdit = !user.isEdit;
   }
-  validateField(item: any) {
+  validateField(item: any): boolean {
     return !item.trim();
   }
-  validateForm(obj: any) {
+  validateForm(obj: any): boolean {
     return !obj.nombre || !obj.apellido || obj.nombreEspecialidad;
   }
   onCancel(item: any) {
     item.isEdit = false;
   }
-  trackByFn(item: UsuarioDTO) {
+  trackByFn(index: number, item: UsuarioDTO) {
     return item.idEspecialidad; // Usa una propiedad única del usuario si es posible
   }
   selectedUser: any;

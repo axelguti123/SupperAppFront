@@ -10,8 +10,8 @@ export class EspecialidadService {
   constructor(private http:HttpClient) {}
   private apiURL=environment.apiURL+'especialidad';
 
-  public obtenerTodos(): Observable<especialidadDTO[]> {
-    return this.http.get<especialidadDTO[]>(this.apiURL);
+  public obtenerTodos(): Observable<{data:especialidadDTO[],message:string,status:string}> {
+    return this.http.get<{data:especialidadDTO[],message:string,status:string}>(this.apiURL);
   }
   public crear(especialidad:especialidadDTO) {
     return this.http.post(this.apiURL,especialidad);

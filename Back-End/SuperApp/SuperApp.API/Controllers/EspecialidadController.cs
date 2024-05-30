@@ -14,10 +14,10 @@ namespace SuperApp.API.Controllers
 
         // GET: api/<EspecialidadController>
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<JsonResult> Get()
         {
             var lst = await _especialidad.GetAll();
-            return Ok(lst);
+            return new JsonResult(lst);
         }
 
         // GET api/<EspecialidadController>/5
