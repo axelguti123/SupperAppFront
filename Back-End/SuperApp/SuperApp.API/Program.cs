@@ -18,6 +18,7 @@ builder.Services.AddTransient((uof) =>
 });
 builder.Services.AddScoped<EspecialidadServices>();
 builder.Services.AddScoped<UsuarioServices>();
+builder.Services.AddScoped<PartidaServices>();
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(builder =>

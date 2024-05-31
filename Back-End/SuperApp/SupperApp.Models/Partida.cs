@@ -14,10 +14,9 @@ namespace SupperApp.Models
         public int IDEspecialidad {  get; set; }
         public string IDPadre {  get; set; }
         public string Und {  get; set; }
-        public string Total {  get; set; }
-
-        public virtual Especialidad Especialidad { get; set; }
-        public virtual Partida ParentPartida { get; set; }
+        public decimal Total {  get; set; }
+        public int Nivel {  get; set; }
+        public virtual Especialidad Especialidads { get; set; }
         public virtual ICollection<Partida> ChildPartida { get; set; }
 
     }

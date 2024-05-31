@@ -10,6 +10,7 @@ namespace SuperApp.AccesoDatos.Interfaz
     {
         IEspecialidad Especialidad { get; }
         IUsuario Usuario { get; }
+        IPartida Partida { get; }
 
     }
 }

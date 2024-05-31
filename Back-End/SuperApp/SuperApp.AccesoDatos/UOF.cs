@@ -12,11 +12,14 @@ namespace SuperApp.AccesoDatos
     {
         private IEspecialidad? _especialidad;
         private IUsuario? _usuario;
+        private IPartida? _partida;
         public IEspecialidad Especialidad
         {
             get { return _especialidad ??= new EspecialidadDAO(); }
         }
 
         public IUsuario Usuario { get { return _usuario ??= new UsuarioDAO(); } }
+
+        public IPartida Partida { get { return _partida ??= new PartidaDAO(); } }
     }
 }
