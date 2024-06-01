@@ -36,46 +36,42 @@ namespace SuperApp.AccesoDatos.DAO
                 {
                     list.Add(new Partida()
                     {
-                        CodPartida = reader.IsDBNull(reader.GetOrdinal("codPartida")) ? null : reader.GetString(reader.GetOrdinal("codPartida")),
-                        partida = reader.IsDBNull(reader.GetOrdinal("partida")) ? null : reader.GetString(reader.GetOrdinal("partida")),
+                        CodPartida = reader.IsDBNull(reader.GetOrdinal("codPartida")) ? "" : reader.GetString(reader.GetOrdinal("codPartida")),
+                        partida = reader.IsDBNull(reader.GetOrdinal("partida")) ? "" : reader.GetString(reader.GetOrdinal("partida")),
                         IDEspecialidad = reader.IsDBNull(reader.GetOrdinal("idEspecialidad")) ? 0 : reader.GetInt32(reader.GetOrdinal("idEspecialidad")),
                         Especialidads = new Especialidad()
                         {
-                            NombreEspecialidad = reader.IsDBNull(reader.GetOrdinal("nombreEspecialidad")) ? null : reader.GetString(reader.GetOrdinal("nombreEspecialidad"))
+                            NombreEspecialidad = reader.IsDBNull(reader.GetOrdinal("nombreEspecialidad")) ? "" : reader.GetString(reader.GetOrdinal("nombreEspecialidad"))
                         },
-                        Und = reader.IsDBNull(reader.GetOrdinal("Und")) ? null : reader.GetString(reader.GetOrdinal("Und")),
-                        Total = reader.IsDBNull(reader.GetOrdinal("total")) ? 0: reader.GetDecimal(reader.GetOrdinal("total")),
-                        IDPadre = reader.IsDBNull(reader.GetOrdinal("IDPadre")) ? null : reader.GetString(reader.GetOrdinal("IDPadre")),
+                        Und = reader.IsDBNull(reader.GetOrdinal("Und")) ? "" : reader.GetString(reader.GetOrdinal("Und")),
+                        Total = reader.IsDBNull(reader.GetOrdinal("total")) ? 0 : reader.GetDecimal(reader.GetOrdinal("total")),
+                        IDPadre = reader.IsDBNull(reader.GetOrdinal("IDPadre")) ? "" : reader.GetString(reader.GetOrdinal("IDPadre")),
                         Nivel = reader.IsDBNull(reader.GetOrdinal("Nivel")) ? 0 : reader.GetInt32(reader.GetOrdinal("Nivel"))
                     });
 
                 }
-                var lista = ArmarJerarquia(list);
-                return lista.AsEnumerable();
+                return list.AsEnumerable();
             });
            
         }
 
         private static List<Partida> ArmarJerarquia(IEnumerable<Partida> list)
         {
-            var partidasLookup = list.ToLookup(p => p.IDPadre);
+            var lookup=new Dictionary<string, Partida>();
             foreach (var partida in list)
             {
-                partidasLookup[partida.CodPartida]= partida;
+                lookup[partida.CodPartida]=partida;
+                
             }
             List<Partida> raiz = [];
             foreach (var partida in list)
             {
-                if(partida.IDPadre == null)
+                if (string.IsNullOrEmpty(partida.IDPadre))
                 {
                     raiz.Add(partida);
-                }
-                else
+                }else if (lookup.ContainsKey(partida.IDPadre))
                 {
-                    if (lookup.ContainsKey(partida.IDPadre))
-                    {
-                        lookup[partida.IDPadre].ChildPartida.Add(partida);
-                    }
+                    lookup[partida.IDPadre].ChildPartida.Add(partida);
                 }
             }
             return raiz;
