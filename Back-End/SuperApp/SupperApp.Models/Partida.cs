@@ -17,7 +17,7 @@ namespace SupperApp.Models
         public decimal Total {  get; set; }
         public int Nivel {  get; set; }
         public virtual Especialidad Especialidads { get; set; }
-        public virtual ICollection<Partida> ChildPartida { get; set; }
+        public virtual ICollection<Partida> ChildPartida { get; set; }=[];
 
     }
 }

@@ -10,7 +10,7 @@ namespace SuperApp.AccesoDatos.Conexion
     internal class CadenaConexion
     {
 
-        private static string _conexion = "Data Source=localhost;Initial Catalog=dbObra;Integrated Security=true;";
+        private static readonly string _conexion = "Data Source=localhost;Initial Catalog=dbObra;Integrated Security=true;";
 
         public static SqlConnection ObtenerConexion()
         {

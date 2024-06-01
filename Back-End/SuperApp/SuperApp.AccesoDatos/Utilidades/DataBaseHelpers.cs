@@ -3,6 +3,7 @@ using SuperApp.AccesoDatos.Excepciones;
 using SupperApp.Models;
 using System.Data.SqlClient;
 using System.Data;
+using System.Data.SqlTypes;
 
 namespace SuperApp.AccesoDatos.Utilidades
 {
@@ -78,9 +79,14 @@ namespace SuperApp.AccesoDatos.Utilidades
             {
                 response.Status = "Error";
                 response.Message = ex.Message;
+            }catch(SqlNullValueException ex)
+            {
+                response.Status="Error";
+                response.Message = ex.Message;
             }
             finally
             {
+                await connection.CloseAsync().ConfigureAwait(false);
             }
             return response;
         }

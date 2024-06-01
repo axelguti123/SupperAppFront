@@ -36,17 +36,17 @@ namespace SuperApp.AccesoDatos.DAO
                 {
                     list.Add(new Partida()
                     {
-                        CodPartida = reader.GetString(reader.GetOrdinal("codPartida")),
-                        partida = reader.GetString(reader.GetOrdinal("partida")),
-                        IDEspecialidad = reader.GetInt32(reader.GetOrdinal("idEspecialidad")),
+                        CodPartida = reader.IsDBNull(reader.GetOrdinal("codPartida")) ? null : reader.GetString(reader.GetOrdinal("codPartida")),
+                        partida = reader.IsDBNull(reader.GetOrdinal("partida")) ? null : reader.GetString(reader.GetOrdinal("partida")),
+                        IDEspecialidad = reader.IsDBNull(reader.GetOrdinal("idEspecialidad")) ? 0 : reader.GetInt32(reader.GetOrdinal("idEspecialidad")),
                         Especialidads = new Especialidad()
                         {
-                            NombreEspecialidad = reader.GetString(reader.GetOrdinal("nombreEspecialidad"))
+                            NombreEspecialidad = reader.IsDBNull(reader.GetOrdinal("nombreEspecialidad")) ? null : reader.GetString(reader.GetOrdinal("nombreEspecialidad"))
                         },
-                        Und=reader.GetString(reader.GetOrdinal("Und")),
-                        Total=reader.GetDecimal(reader.GetOrdinal("total")),
-                        IDPadre=reader.GetString(reader.GetOrdinal("IDPadre")),
-                        Nivel=reader.GetInt32(reader.GetOrdinal("Nivel"))
+                        Und = reader.IsDBNull(reader.GetOrdinal("Und")) ? null : reader.GetString(reader.GetOrdinal("Und")),
+                        Total = reader.IsDBNull(reader.GetOrdinal("total")) ? 0: reader.GetDecimal(reader.GetOrdinal("total")),
+                        IDPadre = reader.IsDBNull(reader.GetOrdinal("IDPadre")) ? null : reader.GetString(reader.GetOrdinal("IDPadre")),
+                        Nivel = reader.IsDBNull(reader.GetOrdinal("Nivel")) ? 0 : reader.GetInt32(reader.GetOrdinal("Nivel"))
                     });
 
                 }
@@ -56,19 +56,29 @@ namespace SuperApp.AccesoDatos.DAO
            
         }
 
-        private List<Partida> ArmarJerarquia(IEnumerable<Partida> list)
+        private static List<Partida> ArmarJerarquia(IEnumerable<Partida> list)
         {
-            var partidas = list.ToLookup(p => p.IDPadre);
-            foreach(var partida in list)
+            var partidasLookup = list.ToLookup(p => p.IDPadre);
+            foreach (var partida in list)
             {
-                if(partida.IDPadre != null)
+                partidasLookup[partida.CodPartida]= partida;
+            }
+            List<Partida> raiz = [];
+            foreach (var partida in list)
+            {
+                if(partida.IDPadre == null)
                 {
-                    var parent = list.FirstOrDefault(p => p.CodPartida == partida.IDPadre);
-                    parent.ChildPartida.Add(partida);
+                    raiz.Add(partida);
+                }
+                else
+                {
+                    if (lookup.ContainsKey(partida.IDPadre))
+                    {
+                        lookup[partida.IDPadre].ChildPartida.Add(partida);
+                    }
                 }
             }
-            var rootPartida= list.Where(p=>p.IDPadre==null).ToList();
-            return rootPartida;
+            return raiz;
         }
 
         public Task<Response> Update(Partida data)
