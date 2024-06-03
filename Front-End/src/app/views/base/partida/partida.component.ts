@@ -1,54 +1,57 @@
-import { Component } from '@angular/core';
-import { especialidadDTO } from '../../../dto/especialidadDTO';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Config } from 'datatables.net';
-import { Subject } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { UsuarioDTO } from '../../../dto/usuarioDTO';
-import { EspecialidadService } from '../../../services/especialidad.service';
-import { UsuarioService } from '../../../services/usuario.service';
+import { PartidaDTO } from '../../../dto/partidaDTO';
+import { PartidaService } from '../../../services/partida.service';
 
 @Component({
   selector: 'app-partida',
   templateUrl: './partida.component.html',
-  styleUrl: './partida.component.scss'
+  styleUrl: './partida.component.scss',
 })
-export class PartidaComponent {
-  userArray: any[];
-  especialidad: especialidadDTO[];
+export class PartidaComponent implements OnInit, OnDestroy {
+  partidaArray: PartidaDTO[] = [];
   dtOptions: Config = {};
-  dtTrigger = new Subject();
-  isChecked: boolean;
-  constructor(private usuarioService: UsuarioService, private especialidadService:EspecialidadService) {}
+  dtTrigger = new Subject<Config>();
+  isChecked: boolean = false;
+  private unsubscribe$ = new Subject<void>();
+  constructor(
+    private partidaService: PartidaService
+  ) {}
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   ngOnInit(): void {
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 10,
+
     };
 
-    this.loadAllUser();
-    this.loadAllEspecialidades();
+    this.loadAllPartida();
   }
-  loadAllEspecialidades(){
-    this.especialidadService.obtenerTodos().subscribe({
-      next: (especialidades:any) => {
-        this.especialidad = especialidades.data;
-        console.log(this.especialidad)
-      },
-      error: (error) => console.error(error),
-    });
-  }
-  loadAllUser() {
-    this.usuarioService.obtenerTodos().subscribe({
-      next: (usuario: any) => {
-        this.userArray = usuario.data;
-        console.log(this.userArray);
-        this.dtTrigger.next(this.dtOptions);
-      },
-      error: (error) => console.error(error),
-    });
+  loadAllPartida() {
+    this.partidaService
+      .obtenerTodos()
+      .pipe(
+        takeUntil(this.unsubscribe$)
+      )
+      .subscribe({
+        next: (usuario: {
+          data: PartidaDTO[];
+          message: string;
+          status: string;
+        }) => {
+          this.partidaArray = usuario.data;
+          console.log(usuario);
+          this.dtTrigger.next(this.dtOptions);
+        },
+        error: (error) => console.error(error),
+      });
   }
   originalValue: any;
   onEdit(item: any) {
@@ -58,7 +61,7 @@ export class PartidaComponent {
   onUpdate(data: any): void {
     console.log(data);
   }
-  Mod(data: any): void {
+  Mod(data: UsuarioDTO): void {
     data.isActivo = !data.isActivo;
     console.log(data);
   }
@@ -72,16 +75,16 @@ export class PartidaComponent {
     }
     user.isEdit = !user.isEdit;
   }
-  validateField(item: any) {
+  validateField(item: any): boolean {
     return !item.trim();
   }
-  validateForm(obj: any) {
+  validateForm(obj: any): boolean {
     return !obj.nombre || !obj.apellido || obj.nombreEspecialidad;
   }
   onCancel(item: any) {
     item.isEdit = false;
   }
-  trackByFn(item: UsuarioDTO) {
+  trackByFn(index: number, item: UsuarioDTO) {
     return item.idEspecialidad; // Usa una propiedad única del usuario si es posible
   }
   selectedUser: any;

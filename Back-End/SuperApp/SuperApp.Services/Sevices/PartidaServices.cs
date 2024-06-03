@@ -22,18 +22,38 @@ namespace SuperApp.Services.Sevices
             try
             {
                 var partida = await _uof.Partida.GetAll();
-                var list = ArmarJerarquia(partida.Data);
-                response = _mapper.Map<ResponseDTO<IEnumerable<MostrarPartidaDTO>>>(list);
+                response = _mapper.Map<ResponseDTO<IEnumerable<MostrarPartidaDTO>>>(partida);
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Error obteniendo todos los usuarios");
                 response.Status = "Error";
                 response.Message = ex.Message;
             }
-            
             return response;
+            /* var response=new ResponseDTO<IEnumerable<MostrarPartidaDTO>>();
+             try
+             {
+                 var partida = await _uof.Partida.GetAll();
+                 if (partida.Status == "Success")
+                 {
+                     var list = ArmarJerarquia(partida.Data);
+                     var mapper = _mapper.Map<IEnumerable<MostrarPartidaDTO>>(list);
+                     response.Data=mapper;
+                     response.Status=partida.Status;
+                     response.Message=partida.Message;
+                 }
+
+             }
+             catch (Exception ex)
+             {
+                 response.Status = "Error";
+                 response.Message = ex.Message;
+             }
+
+             return response;*/
         }
-        private static Response<IEnumerable<Partida>> ArmarJerarquia(IEnumerable<Partida> list)
+        /*private static List<Partida> ArmarJerarquia(IEnumerable<Partida> list)
         {
             var lookup = new Dictionary<string, Partida>();
             foreach (var partida in list)
@@ -41,19 +61,19 @@ namespace SuperApp.Services.Sevices
                 lookup[partida.CodPartida] = partida;
 
             }
-            Response< List < Partida >> raiz = new Response<List<Partida>>();
+            var raiz = new List<Partida>();
             foreach (var partida in list)
             {
                 if (string.IsNullOrEmpty(partida.IDPadre))
                 {
-                    raiz.Data.Add(partida);
+                    raiz.Add(partida);
                 }
-                else if (lookup.ContainsKey(partida.IDPadre))
+                else if (lookup.TryGetValue(partida.IDPadre, out Partida? value))
                 {
-                    lookup[partida.IDPadre].ChildPartida.Add(partida);
+                    value.ChildPartida.Add(partida);
                 }
             }
-            return raiz.Data.AsEnumerable();
-        }
+            return raiz;
+        }*/
     }
 }

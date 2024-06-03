@@ -5,6 +5,7 @@ import { UsuarioService } from '../../../services/usuario.service';
 import { UsuarioDTO } from '../../../dto/usuarioDTO';
 import { EspecialidadService } from '../../../services/especialidad.service';
 import { especialidadDTO } from '../../../dto/especialidadDTO';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -17,10 +18,23 @@ export class UserComponent implements OnInit, OnDestroy {
   dtTrigger = new Subject<Config>();
   isChecked: boolean = false;
   private unsubscribe$ = new Subject<void>();
+  userForm:FormGroup;
   constructor(
     private usuarioService: UsuarioService,
-    private especialidadService: EspecialidadService
-  ) {}
+    private especialidadService: EspecialidadService,
+    private fb:FormBuilder
+  ) {
+    this.userForm = fb.group({
+      users:this.fb.group({
+        idUsuario:'',
+        nombre:'',
+        apellido:'',
+        idEspecialidad:'',
+        nombreEspecialidad:'',
+        isActivo:''
+      })
+    });
+  }
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
     this.unsubscribe$.next();
@@ -51,6 +65,12 @@ export class UserComponent implements OnInit, OnDestroy {
         },
         error: (error) => console.error(error),
       });
+  }
+  initializeform(){
+    const usersArray=this.userForm.get('users') as FormArray;
+    this.userArray.forEach(user =>{
+      
+    });
   }
   loadAllUser() {
     const startTime = performance.now();
@@ -101,7 +121,8 @@ export class UserComponent implements OnInit, OnDestroy {
     user.isEdit = !user.isEdit;
   }
   validateField(item: any): boolean {
-    return !item.trim();
+    
+    return !item;
   }
   validateForm(obj: any): boolean {
     return !obj.nombre || !obj.apellido || obj.nombreEspecialidad;
@@ -109,12 +130,20 @@ export class UserComponent implements OnInit, OnDestroy {
   onCancel(item: any) {
     item.isEdit = false;
   }
-  trackByFn(index: number, item: UsuarioDTO) {
+  trackByFn(index: number, item: UsuarioDTO):number {
     return item.idEspecialidad; // Usa una propiedad única del usuario si es posible
   }
   selectedUser: any;
 
   selectRow(user: any) {
     this.selectedUser = user;
+    console.log(this.selectedUser);
+  }
+  onSpecialidadChange(user: any, event: any): void {
+    const selectedIdEspecialidad = event.target.value;
+    user.idEspecialidad = selectedIdEspecialidad;
+    const selectedEspecialidad = this.especialidad.find(e => e.idEspecialidad === selectedIdEspecialidad);
+    console.log('Selected User:', user);
+    console.log('Selected Especialidad:', selectedEspecialidad);
   }
 }

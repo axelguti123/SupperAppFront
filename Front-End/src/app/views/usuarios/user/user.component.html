@@ -17,33 +17,41 @@
         *ngFor="let user of userArray; let srNo = index; trackBy: trackByFn"
           [class.selected-row]="selectedUser === user"
           (keydown.enter)="onRowUpdate(user)"
-          (dblclick)="onEdit(user); selectRow(user)"
+          
         >
           <td>{{ srNo + 1 }}</td>
-          <td>
-            <ng-container *ngIf="!user.isEdit; else editMode">
+          <td (dblclick)="onEdit(user); selectRow(user)">
+            <ng-container *ngIf="!user.isEdit; else editMode" >
               {{ user.nombre }}
             </ng-container>
             <ng-template #editMode>
-              <input type="text" [(ngModel)]="user.nombre" />
-              <div class="text-danger" *ngIf="validateField(user.nombre)">
-                <span> Required </span>
-              </div>
+              <input type="text" [formControl]="nombre" />
             </ng-template>
           </td>
-          <td>
+          <td (dblclick)="onEdit(user); selectRow(user)">
             <ng-container *ngIf="!user.isEdit; else editModeUser">
               {{ user.apellido }}
             </ng-container>
             <ng-template #editModeUser>
-              <input type="text" [(ngModel)]="user.apellido" />
-              <div class="text-danger" *ngIf="validateField(user.apellido)">
-                <span> Required </span>
-              </div>
+              <input type="text" formControlName="apellido"/>
             </ng-template>
           </td>
-          <td>
-            <app-combobox [especialidades]="especialidad" [idEspecialidad]="user.idEspecialidad"></app-combobox>
+          <td >
+            <ng-container *ngIf="!user.isEdit; else editEspecialidad">
+              <select  class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                <option *ngFor="let e of especialidad" [value]="e.idEspecialidad">
+                  {{ e.nombreEspecialidad }}
+                </option>
+              </select>
+            </ng-container>
+            <ng-template #editEspecialidad>
+              <select cSelect [formControl]="idEspecialidad" (change)="onSpecialidadChange(user, $event)">
+                <option *ngFor="let e of especialidad" [value]="e.idEspecialidad">
+                  {{ e.nombreEspecialidad }}
+                </option>
+              </select>
+            </ng-template>
+                        
           </td>
           <td><c-form-check [switch]="true">
             <input cFormCheckInput [checked]="user.isActivo?true:false" type="checkbox" (click)="Mod(user)" />

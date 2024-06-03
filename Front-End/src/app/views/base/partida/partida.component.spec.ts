@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PartidaComponent } from './partida.component';
+import { PartidaComponent } from './PartidaComponent';
 
 describe('PartidaComponent', () => {
   let component: PartidaComponent;

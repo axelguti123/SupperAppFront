@@ -5,53 +5,76 @@
       <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered hover">
         <thead>
           <tr class="bg-success text-white">
-            <th>Nº</th>
-            <th>Especialidad</th>
-            <th>Apellidos</th>
-            <th>Especialidad</th>
-            <th>Estado</th>
+            <th>Nro</th>
+            <!--<th>Especialidad</th>-->
+            <th>item</th>
+            <th>Partida</th>
+            <th>Und</th>
+            <th>Total</th>
           </tr>
         </thead>
         <tbody>
           <tr
-          *ngFor="let user of userArray; let srNo = index; trackByFn"
-            [class.selected-row]="selectedUser === user"
-            (keydown.enter)="onRowUpdate(user)"
-            (dblclick)="onEdit(user); selectRow(user)"
+          *ngFor="let partida of partidaArray; let srNo = index; trackByFn"
+            [class.selected-row]="selectedPartida === partida"
+            (keydown.enter)="onRowUpdate(partida)"
+            (dblclick)="onEdit(partida); selectRow(partida)"
           >
             <td>{{ srNo + 1 }}</td>
-            <td>
-              <ng-container *ngIf="!user.isEdit; else editMode">
-                {{ user.nombre }}
+        <!--<td>
+              <ng-container *ngIf="!partida.isEdit; else editEspecialidad">
+                {{ partida.nombreEspecialidad }}
               </ng-container>
-              <ng-template #editMode>
-                <input type="text" [(ngModel)]="user.nombre" />
-                <div class="text-danger" *ngIf="validateField(user.nombre)">
+              <ng-template #editEspecialidad>
+                <input type="text" [(ngModel)]="partida.nombreEspecialidad" />
+                <div class="text-danger" *ngIf="validateField(partida.nombreEspecialidad)">
+                  <span> Required </span>
+                </div>
+              </ng-template>
+            </td>
+          -->
+            <td>
+              <ng-container *ngIf="!partida.isEdit; else editItem">
+                {{ partida.codPartida }}
+              </ng-container>
+              <ng-template #editItem>
+                <input type="text" [(ngModel)]="partida.codPartida" />
+                <div class="text-danger" *ngIf="validateField(partida.codPartida)">
                   <span> Required </span>
                 </div>
               </ng-template>
             </td>
             <td>
-              <ng-container *ngIf="!user.isEdit; else editModeUser">
-                {{ user.apellido }}
+              <ng-container *ngIf="!partida.isEdit; else editPartida">
+                {{ partida.partida }}
               </ng-container>
-              <ng-template #editModeUser>
-                <input type="text" [(ngModel)]="user.apellido" />
-                <div class="text-danger" *ngIf="validateField(user.apellido)">
+              <ng-template #editPartida>
+                <input type="text" [(ngModel)]="partida.partida" />
+                <div class="text-danger" *ngIf="validateField(partida.partida)">
                   <span> Required </span>
                 </div>
               </ng-template>
             </td>
             <td>
-              <select cSelect [(ngModel)]="user.idEspecialidad">
-                <option *ngFor="let e of especialidad" value="{{e.idEspecialidad}}">
-                  {{e.nombreEspecialidad}}
-                </option>             
-              </select>
+              <ng-container *ngIf="!partida.isEdit; else editUnd">
+                {{ partida.und }}
+              </ng-container>
+              <ng-template #editUnd>
+                <input type="text" [(ngModel)]="partida.und" />
+               
+              </ng-template>
             </td>
-            <td><c-form-check [switch]="true">
-              <input cFormCheckInput [checked]="user.isActivo?true:false" type="checkbox" (click)="Mod(user)" />
-            </c-form-check></td>
+            <td >
+              <ng-container *ngIf="!partida.isEdit; else editTotal">
+                {{ partida.total }}
+              </ng-container>
+              <ng-template #editTotal>
+                <input type="text" [(ngModel)]="partida.total" />
+                <div class="text-danger" *ngIf="validateField(partida.total)">
+                  <span> Required </span>
+                </div>
+              </ng-template>
+            </td>
           </tr>
         </tbody>
       </table>

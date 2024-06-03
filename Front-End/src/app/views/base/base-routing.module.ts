@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { SeguimientoComponent } from './seguimiento/seguimiento.component';
-import { PartidaComponent } from './partida/partida.component';
 import { TabsComponent } from './tabs/tabs.component';
 import {esAdminGuard} from '../../es-admin.guard'
 const routes: Routes = [

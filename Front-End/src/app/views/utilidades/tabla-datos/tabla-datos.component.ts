@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { especialidadDTO } from '../../../dto/especialidadDTO';
 import { UsuarioDTO } from '../../../dto/usuarioDTO';
+import { PartidaDTO } from '../../../dto/partidaDTO';
 
 @Component({
   selector: 'app-tabla-datos',
@@ -49,7 +50,7 @@ export class TablaDatosComponent implements OnInit {
   }
   selectedUser: any;
 
-  selectRow(user: any) {
+  selectRow(user: PartidaDTO) {
     this.selectedUser = user;
   }
 }

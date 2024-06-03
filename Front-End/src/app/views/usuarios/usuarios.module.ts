@@ -35,7 +35,6 @@ import { UserComponent } from './user/user.component';
     ReactiveFormsModule,
     FormModule,
     FormsModule,
-    UtilidadesModule,
     DataTablesModule
     ]
 })

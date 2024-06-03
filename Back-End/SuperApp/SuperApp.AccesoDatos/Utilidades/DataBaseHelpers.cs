@@ -15,6 +15,7 @@ namespace SuperApp.AccesoDatos.Utilidades
             {2,(message)=>new EspecialidadNoEncontradaException("No se encontro la especialidad") }
 
         };
+
         public static async Task<Response> ExecuteNonQueryAsync(string storedProcedure, Action<SqlCommand> action, Func<int, Response> handleReturnValue = null)
         {
             var response = new Response();
@@ -72,7 +73,7 @@ namespace SuperApp.AccesoDatos.Utilidades
                 action?.Invoke(cmd);
                 using var reader = await cmd.ExecuteReaderAsync().ConfigureAwait(false);
                 response.Data = read(reader);
-                response.Status = "success";
+                response.Status = "Success";
                 response.Message = "Operacion realizada con exito";
             }
             catch (SqlException ex)
