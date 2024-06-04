@@ -88,6 +88,7 @@ export class UserComponent implements OnInit, OnDestroy {
   editStates = {};
   createUser(data: any): FormGroup {
     const userForm = this.fb.group({
+<<<<<<< HEAD
       idUsuario:[data.idUsuario],
       nombre: [data.nombre],
       apellido: [data.apellido],
@@ -96,6 +97,14 @@ export class UserComponent implements OnInit, OnDestroy {
       isActivo: [data.isActivo]
     });
     this.editStates[data.idUsuario] = {
+=======
+      nombre: [data.nombre],
+      apellido: [data.apellido],
+      idEspecialidad: [data.idEspecialidad],
+      isActivo: [data.isActivo]
+    });
+    this.editStates[data.nombre] = {
+>>>>>>> f2388cf2ef5c83585a3b1851fdfa5a49f7456295
       nombre: false,
       apellido: false,
       idEspecialidad: false
@@ -111,12 +120,20 @@ export class UserComponent implements OnInit, OnDestroy {
   }
   originalValue: any;
   onEdit(index: number, field: string): void {
+<<<<<<< HEAD
     const user = this.users.at(index).value.idUsuario;
     this.editStates[user][field] = true;
   }
   isEdit(index: number, field: any): boolean {
     const user = this.users.at(index).value.idUsuario;
     console.log(user);
+=======
+    const user = this.users.at(index).value.nombre;
+    this.editStates[user][field] = true;
+  }
+  isEdit(index: number, field: string): boolean {
+    const user = this.users.at(index).value.nombre;
+>>>>>>> f2388cf2ef5c83585a3b1851fdfa5a49f7456295
     return this.editStates[user][field];
   }
   selectedUser: any;
@@ -128,7 +145,11 @@ export class UserComponent implements OnInit, OnDestroy {
     console.log(data);
   }
   onRowUpdate(index: number): void {
+<<<<<<< HEAD
     const user = this.users.at(index).value.idUsuario;
+=======
+    const user = this.users.at(index).value.nombre;
+>>>>>>> f2388cf2ef5c83585a3b1851fdfa5a49f7456295
     console.log('Datos actualizados:', this.users.at(index).value);
     Object.keys(this.editStates[user]).forEach(field => {
       this.editStates[user][field] = false;
@@ -156,7 +177,11 @@ export class UserComponent implements OnInit, OnDestroy {
   getEspecialidadName(id: number): string {
     console.log(id)
     const especialidad = this.especialidad.find(e => e.idEspecialidad === id);
+<<<<<<< HEAD
     console.log(especialidad);
+=======
+    
+>>>>>>> f2388cf2ef5c83585a3b1851fdfa5a49f7456295
     return especialidad ? especialidad.NombreEspecialidad : 'Desconocida';
   }
 }

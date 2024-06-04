@@ -16,8 +16,11 @@
           <tr
             *ngFor="let user of users.controls; let i = index; trackBy: trackByFn"
             [formGroupName]="i"
+<<<<<<< HEAD
             (keydown.enter)="onRowUpdate(i)"
             (dblclick)="onEdit(i); selectRow(i)"
+=======
+>>>>>>> f2388cf2ef5c83585a3b1851fdfa5a49f7456295
           >
             <td>{{ i + 1 }}</td>
             <td (dblclick)="onEdit(i, 'nombre')">
@@ -38,6 +41,7 @@
             </td>
             <td (dblclick)="onEdit(i, 'idEspecialidad')">
               <ng-container *ngIf="!isEdit(i, 'idEspecialidad'); else editEspecialidad">
+<<<<<<< HEAD
                 <select cSelect formControlName="idEspecialidad" (blur)="onRowUpdate(i)">
                   <option *ngFor="let e of especialidad" [value]="e.idEspecialidad">
                     {{ e.nombreEspecialidad }}
@@ -47,14 +51,26 @@
               <ng-template #editEspecialidad>
                 <select cSelect formControlName="idEspecialidad" (blur)="onRowUpdate(i)">
                   <option *ngFor="let e of especialidad" [value]="e.idEspecialidad" (change)="toggleActivo(i)">
+=======
+                {{ getEspecialidadName(user.get('idEspecialidad').value) }}
+              </ng-container>
+              <ng-template #editEspecialidad>
+                <select formControlName="idEspecialidad" (blur)="onRowUpdate(i)">
+                  <option *ngFor="let e of especialidad" [value]="e.idEspecialidad">
+>>>>>>> f2388cf2ef5c83585a3b1851fdfa5a49f7456295
                     {{ e.nombreEspecialidad }}
                   </option>
                 </select>
               </ng-template>
             </td>
             <td>
+<<<<<<< HEAD
               <c-form-check [switch]="true" >
                 <input  cFormCheckInput class="click" [checked]="user.get('isActivo').value" type="checkbox" (change)="toggleActivo(i)" />
+=======
+              <c-form-check [switch]="true">
+                <input cFormCheckInput [checked]="user.get('isActivo').value" type="checkbox" (click)="Mod(user.controls)" />
+>>>>>>> f2388cf2ef5c83585a3b1851fdfa5a49f7456295
               </c-form-check>
             </td>
           </tr>
