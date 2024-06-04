@@ -76,7 +76,7 @@ export class PartidaComponent implements OnInit, OnDestroy {
     user.isEdit = !user.isEdit;
   }
   validateField(item: any): boolean {
-    return !item.trim();
+    return !item;
   }
   validateForm(obj: any): boolean {
     return !obj.nombre || !obj.apellido || obj.nombreEspecialidad;

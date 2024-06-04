@@ -18,21 +18,14 @@ export class UserComponent implements OnInit, OnDestroy {
   dtTrigger = new Subject<Config>();
   isChecked: boolean = false;
   private unsubscribe$ = new Subject<void>();
-  userForm:FormGroup;
+  userForm: FormGroup;
   constructor(
     private usuarioService: UsuarioService,
     private especialidadService: EspecialidadService,
-    private fb:FormBuilder
+    private fb: FormBuilder
   ) {
-    this.userForm = fb.group({
-      users:this.fb.group({
-        idUsuario:'',
-        nombre:'',
-        apellido:'',
-        idEspecialidad:'',
-        nombreEspecialidad:'',
-        isActivo:''
-      })
+    this.userForm = this.fb.group({
+      users: this.fb.array([]),
     });
   }
   ngOnDestroy(): void {
@@ -66,12 +59,6 @@ export class UserComponent implements OnInit, OnDestroy {
         error: (error) => console.error(error),
       });
   }
-  initializeform(){
-    const usersArray=this.userForm.get('users') as FormArray;
-    this.userArray.forEach(user =>{
-      
-    });
-  }
   loadAllUser() {
     const startTime = performance.now();
     this.usuarioService
@@ -91,37 +78,63 @@ export class UserComponent implements OnInit, OnDestroy {
           message: string;
           status: string;
         }) => {
-          this.userArray = usuario.data;
-          console.log(usuario);
+          const usersArray=usuario.data.map(user=>this.createUser(user));
+          this.userForm.setControl('users',this.fb.array(usersArray))
           this.dtTrigger.next(this.dtOptions);
         },
         error: (error) => console.error(error),
       });
   }
-  originalValue: any;
-  onEdit(item: any) {
-    this.originalValue = { ...item };
-    item.isEdit = true;
+  editStates = {};
+  createUser(data: any): FormGroup {
+    const userForm = this.fb.group({
+      idUsuario:[data.idUsuario],
+      nombre: [data.nombre],
+      apellido: [data.apellido],
+      idEspecialidad: [data.idEspecialidad],
+      nombreEspecialidad: [data.nombreEspecialidad],
+      isActivo: [data.isActivo]
+    });
+    this.editStates[data.idUsuario] = {
+      nombre: false,
+      apellido: false,
+      idEspecialidad: false
+    };
+    return userForm;
   }
-  onUpdate(data: any): void {
-    console.log(data);
+  get users() {
+    return this.userForm.get('users') as FormArray;
   }
   Mod(data: UsuarioDTO): void {
     data.isActivo = !data.isActivo;
     console.log(data);
   }
-  onRowUpdate(user: any): void {
-    if (
-      this.originalValue &&
-      JSON.stringify(user) !== JSON.stringify(this.originalValue)
-    ) {
-      // El valor ha  cambiado
-      this.onUpdate(user);
-    }
-    user.isEdit = !user.isEdit;
+  originalValue: any;
+  onEdit(index: number, field: string): void {
+    const user = this.users.at(index).value.idUsuario;
+    this.editStates[user][field] = true;
+  }
+  isEdit(index: number, field: any): boolean {
+    const user = this.users.at(index).value.idUsuario;
+    console.log(user);
+    return this.editStates[user][field];
+  }
+  selectedUser: any;
+  
+  selectRow(user: any) {
+    this.selectedUser = user;
+  }
+  onUpdate(data: any): void {
+    console.log(data);
+  }
+  onRowUpdate(index: number): void {
+    const user = this.users.at(index).value.idUsuario;
+    console.log('Datos actualizados:', this.users.at(index).value);
+    Object.keys(this.editStates[user]).forEach(field => {
+      this.editStates[user][field] = false;
+    });
   }
   validateField(item: any): boolean {
-    
     return !item;
   }
   validateForm(obj: any): boolean {
@@ -130,20 +143,20 @@ export class UserComponent implements OnInit, OnDestroy {
   onCancel(item: any) {
     item.isEdit = false;
   }
-  trackByFn(index: number, item: UsuarioDTO):number {
+  trackByFn(index: number, item: UsuarioDTO): number {
     return item.idEspecialidad; // Usa una propiedad única del usuario si es posible
   }
-  selectedUser: any;
-
-  selectRow(user: any) {
-    this.selectedUser = user;
-    console.log(this.selectedUser);
+ 
+  toggleActivo(index: number): void {
+    const isActive = this.users.at(index).get('isActivo').value;
+    this.users.at(index).get('isActivo').setValue(!isActive);
+    this.onRowUpdate(index);
   }
-  onSpecialidadChange(user: any, event: any): void {
-    const selectedIdEspecialidad = event.target.value;
-    user.idEspecialidad = selectedIdEspecialidad;
-    const selectedEspecialidad = this.especialidad.find(e => e.idEspecialidad === selectedIdEspecialidad);
-    console.log('Selected User:', user);
-    console.log('Selected Especialidad:', selectedEspecialidad);
+
+  getEspecialidadName(id: number): string {
+    console.log(id)
+    const especialidad = this.especialidad.find(e => e.idEspecialidad === id);
+    console.log(especialidad);
+    return especialidad ? especialidad.NombreEspecialidad : 'Desconocida';
   }
 }
