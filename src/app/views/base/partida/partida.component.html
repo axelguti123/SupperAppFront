@@ -1,82 +1,65 @@
-
 <div class="row">
   <div class="col-1"></div>
-  <div class="container">
-    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered hover">
-      <thead>
-        <tr class="bg-success text-white">
-          <th>Nro</th>
-          <!--<th>Especialidad</th>-->
-          <th>item</th>
-          <th>Partida</th>
-          <th>Und</th>
-          <th>Total</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-        *ngFor="let partida of partidaArray; let srNo = index; "
-          [class.selected-row]="selectedPartida === partida"
-          (keydown.enter)="onRowUpdate(partida)"
-          (dblclick)="onEdit(partida); selectRow(partida)"
-        >
-          <td>{{ srNo + 1 }}</td>
-      <!--<td>
-            <ng-container *ngIf="!partida.isEdit; else editEspecialidad">
-              {{ partida.nombreEspecialidad }}
-            </ng-container>
-            <ng-template #editEspecialidad>
-              <input type="text" [(ngModel)]="partida.nombreEspecialidad" />
-              <div class="text-danger" *ngIf="validateField(partida.nombreEspecialidad)">
-                <span> Required </span>
-              </div>
-            </ng-template>
-          </td>
-        -->
-          <td>
-            <ng-container *ngIf="!partida.isEdit; else editItem">
-              {{ partida.codPartida }}
-            </ng-container>
-            <ng-template #editItem>
-              <input type="text" [(ngModel)]="partida.codPartida" />
-              <div class="text-danger" *ngIf="validateField(partida.codPartida)">
-                <span> Required </span>
-              </div>
-            </ng-template>
-          </td>
-          <td>
-            <ng-container *ngIf="!partida.isEdit; else editPartida">
-              {{ partida.partida }}
-            </ng-container>
-            <ng-template #editPartida>
-              <input type="text" [(ngModel)]="partida.partida" />
-              <div class="text-danger" *ngIf="validateField(partida.partida)">
-                <span> Required </span>
-              </div>
-            </ng-template>
-          </td>
-          <td>
-            <ng-container *ngIf="!partida.isEdit; else editUnd">
-              {{ partida.und }}
-            </ng-container>
-            <ng-template #editUnd>
-              <input type="text" [(ngModel)]="partida.und" />
-             
-            </ng-template>
-          </td>
-          <td >
-            <ng-container *ngIf="!partida.isEdit; else editTotal">
-              {{ partida.total }}
-            </ng-container>
-            <ng-template #editTotal>
-              <input type="text" [(ngModel)]="partida.total" />
-              <div class="text-danger" *ngIf="validateField(partida.total)">
-                <span> Required </span>
-              </div>
-            </ng-template>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="container-fluid">
+    <form [formGroup]="partidaForm">
+      <table
+        datatable
+        [dtOptions]="dtOptions"
+        [dtTrigger]="dtTrigger"
+        class="table table-bordered hover w-100"
+      >
+        <thead>
+          <tr class="bg-success text-white">
+            <th>Nro</th>
+            <!--<th>Especialidad</th>-->
+            <th>item</th>
+            <th>Partida</th>
+            <th>Und</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody formArrayName="partidas">
+          <tr
+            *ngFor="let partida of partidas.controls; let i = index"
+            (keydown.enter)="onRowUpdate(i)"
+            [formGroupName]="i"
+          >
+            <td>{{ i + 1 }}</td>
+            <td  (dblclick)="onEdit(i,'codPartida')">
+              <ng-container *ngIf="!isEdit(i,'codPartida'); else editItem">
+                {{ partida.get('codPartida').value }}
+              </ng-container>
+              <ng-template #editItem>
+                <input type="text" class="edit-input" formControlName="codPartida" />
+              </ng-template>
+            </td>
+            <td (dblclick)="onEdit(i,'partida')">
+              <ng-container *ngIf="!isEdit(i,'partida'); else editPartida">
+                {{ partida.get('partida').value}}
+              </ng-container>
+              <ng-template #editPartida>
+                <input type="text" class="edit-input" formControlName="partida"/>
+              </ng-template>
+            </td>
+            <td (dblclick)="onEdit(i,'und')">
+              <ng-container *ngIf="!isEdit(i,'und'); else editUnd">
+                {{ partida.get('und').value }}
+              </ng-container>
+              <ng-template #editUnd>
+                <input type="text" class="edit-input" formControlName="und" />
+              </ng-template>
+            </td>
+            <td (dblclick)="onEdit(i,'total')">
+              <ng-container *ngIf="!isEdit(i,'total'); else editTotal">
+                {{ partida.get('total').value}}
+              </ng-container>
+              <ng-template #editTotal>
+                <input type="text" class="edit-input" formControlName="total"/>
+              </ng-template>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
   </div>
 </div>

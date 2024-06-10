@@ -1,6 +1,6 @@
 export interface PartidaDTO{
-CodPartida:string;
+codPartida:string;
 partida:string;
-Und:string;
-Total:number;
+und:string;
+total:number;
 }

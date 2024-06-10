@@ -125,7 +125,6 @@ export class UserComponent implements OnInit, OnDestroy {
   get users() {
     return this.userForm.get('users') as FormArray;
   }
-  originalValue: any;
   onEdit(index: number, field: string, event: Event): void {
     event.stopPropagation();
     const user = this.users.at(index).value.idUsuario;
@@ -135,11 +134,6 @@ export class UserComponent implements OnInit, OnDestroy {
     const user = this.users.at(index).value.idUsuario;
     console.log(user);
     return this.editStates[user] ? this.editStates[user][field] : false;
-  }
-  selectedUser: any;
-
-  selectRow(user: any) {
-    this.selectedUser = user;
   }
   onUpdate(data: UsuarioDTO): void {
     this.usuarioService.update(data).subscribe();
@@ -153,16 +147,6 @@ export class UserComponent implements OnInit, OnDestroy {
       this.editStates[user][field] = false;
     });
   }
-
-  validateField(item: any): boolean {
-    return !item;
-  }
-  validateForm(obj: any): boolean {
-    return !obj.nombre || !obj.apellido || obj.nombreEspecialidad;
-  }
-  onCancel(item: any) {
-    item.isEdit = false;
-  }
   trackByFn(item: UsuarioDTO): number {
     return item.idEspecialidad; // Usa una propiedad única del usuario si es posible
   }
@@ -172,16 +156,9 @@ export class UserComponent implements OnInit, OnDestroy {
     this.users.at(index).get('isActivo').setValue(!isActive);
     this.onRowUpdate(index);
   }
-  ModCombobox(index: number, event: Event): void {
-    event.stopPropagation();
+  ModCombobox(index: number): void {
     const idEspecialidad = this.users.at(index).get('idEspecialidad').value;
     this.users.at(index).get('idEspecialidad').setValue(idEspecialidad);
     this.onRowUpdate(index);
-  }
-  getEspecialidadName(id: number): string {
-    console.log(id);
-    const especialidad = this.especialidad.find((e) => e.idEspecialidad === id);
-    console.log(especialidad);
-    return especialidad ? especialidad.NombreEspecialidad : 'Desconocida';
   }
 }

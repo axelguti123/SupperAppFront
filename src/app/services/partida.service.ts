@@ -16,4 +16,7 @@ export class PartidaService {
   public crear(especialidad:PartidaDTO) {
     return this.http.post(this.apiURL,especialidad);
   }
+  public update(partida:PartidaDTO):Observable<{message:string,status:string}>{
+    return this.http.put<{message:string,status:string}>(`${this.apiURL}/${partida.codPartida}`,partida);
+  }
 }
