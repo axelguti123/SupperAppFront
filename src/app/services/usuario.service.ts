@@ -14,4 +14,7 @@ export class UsuarioService {
   public obtenerTodos():Observable<{data:UsuarioDTO[],message:string,status:string}>{
     return this.http.get<{data:UsuarioDTO[],message:string,status:string}>(this.apiURL)
   }
+  public update(usuario:UsuarioDTO):Observable<{message:string,status:string}>{
+    return this.http.put<{message:string,status:string}>(`${this.apiURL}/${usuario.idUsuario}`,usuario);
+  }
 }

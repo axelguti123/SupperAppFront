@@ -1,5 +1,4 @@
 <div class="row">
-  <div class="col-1"></div>
   <div class="container">
     <form [formGroup]="userForm">
       <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered hover">
@@ -16,41 +15,30 @@
           <tr
             *ngFor="let user of users.controls; let i = index; trackBy: trackByFn"
             [formGroupName]="i"
-            (keydown.enter)="onRowUpdate(i)"
-            (dblclick)="onEdit(i); selectRow(i)"
           >
             <td>{{ i + 1 }}</td>
-            <td (dblclick)="onEdit(i, 'nombre')">
+            <td (dblclick)="onEdit(i, 'nombre',$event)"(keydown.enter)="onRowUpdate(i,$event)">
               <ng-container *ngIf="!isEdit(i, 'nombre'); else editNombre">
                 {{ user.get('nombre').value }}
               </ng-container>
               <ng-template #editNombre>
-                <input type="text" formControlName="nombre" (blur)="onRowUpdate(i)"/>
+                <input type="text" formControlName="nombre" />
               </ng-template>
             </td>
-            <td (dblclick)="onEdit(i, 'apellido')">
+            <td (dblclick)="onEdit(i, 'apellido',$event)" (keydown.enter)="onRowUpdate(i,$event)">
               <ng-container *ngIf="!isEdit(i, 'apellido'); else editApellido">
                 {{ user.get('apellido').value }}
               </ng-container>
               <ng-template #editApellido>
-                <input type="text" formControlName="apellido" (blur)="onRowUpdate(i)"/>
+                <input type="text" formControlName="apellido"/>
               </ng-template>
             </td>
-            <td (dblclick)="onEdit(i, 'idEspecialidad')">
-              <ng-container *ngIf="!isEdit(i, 'idEspecialidad'); else editEspecialidad">
-                <select cSelect formControlName="idEspecialidad" (blur)="onRowUpdate(i)">
-                  <option *ngFor="let e of especialidad" [value]="e.idEspecialidad">
-                    {{ e.nombreEspecialidad }}
-                  </option>
-                </select>
-              </ng-container>
-              <ng-template #editEspecialidad>
-                <select cSelect formControlName="idEspecialidad" (blur)="onRowUpdate(i)">
-                  <option *ngFor="let e of especialidad" [value]="e.idEspecialidad" (change)="toggleActivo(i)">
-                    {{ e.nombreEspecialidad }}
-                  </option>
-                </select>
-              </ng-template>
+            <td>
+              <select cSelect formControlName="idEspecialidad" (change)="ModCombobox(i,$event)">
+                <option *ngFor="let e of especialidad" [value]="e.idEspecialidad"  >
+                  {{ e.nombreEspecialidad }}
+                </option>
+              </select>
             </td>
             <td>
               <c-form-check [switch]="true" >
