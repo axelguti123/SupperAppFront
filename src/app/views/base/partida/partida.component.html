@@ -30,7 +30,7 @@
                 {{ partida.get('codPartida').value }}
               </ng-container>
               <ng-template #editItem>
-                <input type="text" class="edit-input" formControlName="codPartida" />
+                <textarea class="edit-input" formControlName="codPartida"></textarea>
               </ng-template>
             </td>
             <td (dblclick)="onEdit(i,'partida')">

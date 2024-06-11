@@ -12,6 +12,8 @@ import { UsuarioDTO } from '../../../dto/usuarioDTO';
 import { EspecialidadService } from '../../../services/especialidad.service';
 import { especialidadDTO } from '../../../dto/especialidadDTO';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
+import { parsearErroresAPI } from '../../utilidades';
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -29,7 +31,8 @@ export class UserComponent implements OnInit, OnDestroy {
     private usuarioService: UsuarioService,
     private especialidadService: EspecialidadService,
     private fb: FormBuilder,
-    private ref: ChangeDetectorRef
+    private ref: ChangeDetectorRef,
+    private router: Router
   ) {
     this.userForm = fb.group({
       users: this.fb.array([]),
@@ -151,7 +154,7 @@ export class UserComponent implements OnInit, OnDestroy {
     return item.idEspecialidad; // Usa una propiedad única del usuario si es posible
   }
 
-  toggleActivo(index: number, event: Event): void {
+  toggleActivo(index: number): void {
     const isActive = this.users.at(index).get('isActivo').value;
     this.users.at(index).get('isActivo').setValue(!isActive);
     this.onRowUpdate(index);
@@ -160,5 +163,18 @@ export class UserComponent implements OnInit, OnDestroy {
     const idEspecialidad = this.users.at(index).get('idEspecialidad').value;
     this.users.at(index).get('idEspecialidad').setValue(idEspecialidad);
     this.onRowUpdate(index);
+  }
+  guardarCambios(especialidad: especialidadDTO) {
+    
+    this.especialidadService.crear(especialidad).subscribe({
+      next: () => {
+        this.router.navigate(['/especialidad']);
+        
+        
+      },
+      error: (error) => console.log(error),
+    });
+    
+
   }
 }

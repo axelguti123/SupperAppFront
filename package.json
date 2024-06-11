@@ -29,6 +29,7 @@
     "datatables.net": "^2.0.7",
     "datatables.net-bs5": "^2.0.3",
     "datatables.net-dt": "^2.0.7",
+    "gsap": "^3.12.5",
     "jquery": "^3.7.1",
     "ngx-scrollbar": "^14.1.0",
     "rxjs": "~7.8.0",

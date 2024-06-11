@@ -1,4 +1,7 @@
-.edit-input{
-    width: 100%;
-    box-sizing: border-box;
+.edit-input {
+  width: 100%;
+  box-sizing: border-box;
+  resize: none; /* Evita que el usuario cambie el tamaño del textarea */
+  overflow: hidden; /* Oculta la barra de desplazamiento */
+  min-height: 1em;
 }

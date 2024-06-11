@@ -10,12 +10,14 @@ import {
   CollapseModule,
   FormModule,
   GridModule,
+  ModalModule,
 } from '@coreui/angular';
 import { MostrarErroresComponent } from '../utilidades/mostrar-errores/mostrar-errores.component';
 import {UtilidadesModule} from '../utilidades/utilidades.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DataTablesModule } from 'angular-datatables';
 import { UserComponent } from './user/user.component';
+import { FormUsuariosComponent } from './form-usuarios/form-usuarios.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,7 @@ import { UserComponent } from './user/user.component';
     FormEspecialidadComponent,
     MostrarErroresComponent,
     UserComponent,
+    FormUsuariosComponent,
   ],
   imports: [
     CommonModule,
@@ -35,7 +38,8 @@ import { UserComponent } from './user/user.component';
     ReactiveFormsModule,
     FormModule,
     FormsModule,
-    DataTablesModule
+    DataTablesModule,
+    ModalModule
     ]
 })
 export class UsuariosModule {}

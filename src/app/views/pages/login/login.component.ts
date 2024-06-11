@@ -1,12 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
+import {gsap} from 'gsap'
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
 
   loginObj: any = {
     userName: '',
@@ -14,6 +14,12 @@ export class LoginComponent {
   }
   constructor(private router: Router) {
     
+  }
+  ngOnInit(): void {
+    gsap.to('.signin',{
+      duration:2,
+      rotation:360
+    })
   }
   onLogin() {
     if(this.loginObj.userName == 'admin' &&
