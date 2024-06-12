@@ -51,6 +51,7 @@ export class UserComponent implements OnInit, OnDestroy {
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 10,
+      scrollX:true
     };
   }
   private unsubscribeFromData(): void {
@@ -124,6 +125,17 @@ export class UserComponent implements OnInit, OnDestroy {
       idEspecialidad: false,
     };
     return userForm;
+  }
+  addNewUser(){
+    const newUser= this.fb.group({
+      idUsuario: [''],
+      nombre: [''],
+      apellido: [''],
+      idEspecialidad: [''],
+      nombreEspecialidad: ['']
+    });
+    this.users.push(newUser);
+    this.ref.markForCheck();
   }
   get users() {
     return this.userForm.get('users') as FormArray;
