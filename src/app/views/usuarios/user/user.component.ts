@@ -11,7 +11,7 @@ import { UsuarioService } from '../../../services/usuario.service';
 import { UsuarioDTO } from '../../../dto/usuarioDTO';
 import { EspecialidadService } from '../../../services/especialidad.service';
 import { especialidadDTO } from '../../../dto/especialidadDTO';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { parsearErroresAPI } from '../../utilidades';
 @Component({
@@ -27,6 +27,7 @@ export class UserComponent implements OnInit, OnDestroy {
   isChecked: boolean = false;
   private unsubscribe$ = new Subject<void>();
   userForm: FormGroup;
+  newUserForm:FormGroup;
   constructor(
     private usuarioService: UsuarioService,
     private especialidadService: EspecialidadService,
@@ -37,6 +38,15 @@ export class UserComponent implements OnInit, OnDestroy {
     this.userForm = fb.group({
       users: this.fb.array([]),
     });
+    this.newUserForm = this.fb.group({
+      idUsuario: [''],
+      nombre: ['', Validators.required],
+      apellido: ['', Validators.required],
+      idEspecialidad: ['', Validators.required],
+      nombreEspecialidad: [''],
+      isActivo: [false],
+    });
+  
   }
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
@@ -44,7 +54,6 @@ export class UserComponent implements OnInit, OnDestroy {
     this.unsubscribe$.complete();
     this.unsubscribeFromData();
   }
-
   ngOnInit(): void {
     this.loadAllEspecialidades();
     this.subscribeData();
@@ -54,6 +63,7 @@ export class UserComponent implements OnInit, OnDestroy {
       scrollX:true
     };
   }
+  
   private unsubscribeFromData(): void {
     // Verifica si hay una suscripción activa y la cierra
     if (this.dataSubscription && !this.dataSubscription.closed) {
@@ -84,6 +94,7 @@ export class UserComponent implements OnInit, OnDestroy {
             const usersArray = usuario.data.map((user) =>
               this.createUser(user)
             );
+            console.log(usersArray)
             this.userForm.setControl('users', this.fb.array(usersArray));
             this.dtTrigger.next(this.dtOptions);
             this.ref.markForCheck();
@@ -132,12 +143,13 @@ export class UserComponent implements OnInit, OnDestroy {
       nombre: [''],
       apellido: [''],
       idEspecialidad: [''],
-      nombreEspecialidad: ['']
+      nombreEspecialidad: [''],
+      isActivo:[false]
     });
     this.users.push(newUser);
     this.ref.markForCheck();
   }
-  get users() {
+  get users():FormArray {
     return this.userForm.get('users') as FormArray;
   }
   onEdit(index: number, field: string, event: Event): void {
@@ -161,6 +173,9 @@ export class UserComponent implements OnInit, OnDestroy {
     Object.keys(this.editStates[user]).forEach((field) => {
       this.editStates[user][field] = false;
     });
+  }
+  onCreate(){
+    
   }
   trackByFn(item: UsuarioDTO): number {
     return item.idEspecialidad; // Usa una propiedad única del usuario si es posible
