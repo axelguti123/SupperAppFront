@@ -1,1 +1,8 @@
-<p>form-filtros works!</p>
+<table #datatable id="tabla" datatable class="table table-bordered hover w-100">
+  <thead>
+    <ng-content select="[thead]"></ng-content>
+  </thead>
+  <tbody>
+    <ng-content select="[tbody]"></ng-content>
+  </tbody>
+</table>

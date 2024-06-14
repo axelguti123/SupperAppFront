@@ -31,7 +31,7 @@ export class PartidaComponent implements OnInit, OnDestroy {
     private ref: ChangeDetectorRef
   ) {
     this.partidaForm = fb.group({
-      partidas: this.fb.array([]),
+      list: this.fb.array([]),
     });
   }
   ngOnDestroy(): void {
@@ -79,7 +79,7 @@ export class PartidaComponent implements OnInit, OnDestroy {
               this.createPartida(partida)
             );
             this.partidaForm.setControl(
-              'partidas',
+              'list',
               this.fb.array(partidaArray)
             );
             this.dtTrigger.next(this.dtOptions);
@@ -105,15 +105,15 @@ export class PartidaComponent implements OnInit, OnDestroy {
     };
     return partidaForm;
   }
-  get partidas() {
-    return this.partidaForm.get('partidas') as FormArray;
+  get list() {
+    return this.partidaForm.get('list') as FormArray;
   }
   onEdit(index: number, field: string): void {
-    const partida = this.partidas.at(index).value.codPartida;
+    const partida = this.list.at(index).value.codPartida;
     this.editStates[partida][field] = true;
   }
   isEdit(index: number, field: any): boolean {
-    const user = this.partidas.at(index).value.codPartida;
+    const user = this.list.at(index).value.codPartida;
     console.log(user);
     return this.editStates[user] ? this.editStates[user][field] : false;
   }
@@ -126,8 +126,8 @@ export class PartidaComponent implements OnInit, OnDestroy {
     this.partidaService.update(data).subscribe();
   }
   onRowUpdate(index: number): void {
-    const user = this.partidas.at(index).value.codPartida;
-    const data = this.partidas.at(index).value;
+    const user = this.list.at(index).value.codPartida;
+    const data = this.list.at(index).value;
     console.log('Datos actualizados:', data);
     this.onUpdate(data);
     Object.keys(this.editStates[user]).forEach((field) => {

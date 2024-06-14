@@ -39,7 +39,8 @@ import { FormUsuariosComponent } from './form-usuarios/form-usuarios.component';
     FormModule,
     FormsModule,
     DataTablesModule,
-    ModalModule
+    ModalModule,
+    UtilidadesModule
     ]
 })
 export class UsuariosModule {}

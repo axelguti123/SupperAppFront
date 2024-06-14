@@ -1,49 +1,54 @@
-<tbody>
-  <tr
-    *ngFor="let user of listado; let srNo = index; trackByFn"
-    [class.selected-row]="selectedUser === user"
-    (keydown.enter)="onRowUpdate(user)"
-    (dblclick)="onEdit(user); selectRow(user)"
-  >
-    <td>{{ srNo + 1 }}</td>
-    <td>
-      <ng-container *ngIf="!user.isEdit; else editMode">
-        {{ user.nombre }}
-      </ng-container>
-      <ng-template #editMode>
-        <input type="text" [(ngModel)]="user.nombre" />
-        <div class="text-danger" *ngIf="validateField(user.nombre)">
-          <span> Required </span>
-        </div>
-      </ng-template>
-    </td>
-    <td>
-      <ng-container *ngIf="!user.isEdit; else editModeUser">
-        {{ user.apellido }}
-      </ng-container>
-      <ng-template #editModeUser>
-        <input type="text" [(ngModel)]="user.apellido" />
-        <div class="text-danger" *ngIf="validateField(user.apellido)">
-          <span> Required </span>
-        </div>
-      </ng-template>
-    </td>
-    <td>
-      <select cSelect [(ngModel)]="user.idEspecialidad">
-        <option *ngFor="let e of especialidad" value="{{ e.idEspecialidad }}">
-          {{ e.nombreEspecialidad }}
-        </option>
-      </select>
-    </td>
-    <td>
-      <c-form-check [switch]="true">
-        <input
-          cFormCheckInput
-          [checked]="user.isActivo ? true : false"
-          type="checkbox"
-          (click)="Mod(user)"
-        />
-      </c-form-check>
-    </td>
-  </tr>
-</tbody>
+<form [formGroup]="forms">
+  <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered hover w-100">
+    <thead>
+      <tr class="bg-success text-white">
+        <th>Nro</th>
+        <th>item</th>
+        <th>Partida</th>
+        <th>Und</th>
+        <th>Total</th>
+      </tr>
+    </thead>
+    <tbody formArrayName="list">
+      <tr
+            *ngFor="let partida of list.controls; let i = index"
+            (keydown.enter)="handleRowUpdate(i)"
+            [formGroupName]="i"
+          >
+            <td>{{ i + 1 }}</td>
+            <td  (dblclick)="onEdit(i,'codPartida')">
+              <ng-container *ngIf="!isEdit(i,'codPartida'); else editItem">
+                {{ partida.get('codPartida').value }}
+              </ng-container>
+              <ng-template #editItem>
+                <textarea class="edit-input" formControlName="codPartida"></textarea>
+              </ng-template>
+            </td>
+            <td (dblclick)="onEdit(i,'partida')">
+              <ng-container *ngIf="!isEdit(i,'partida'); else editPartida">
+                {{ partida.get('partida').value}}
+              </ng-container>
+              <ng-template #editPartida>
+                <input type="text" class="edit-input" formControlName="partida"/>
+              </ng-template>
+            </td>
+            <td (dblclick)="onEdit(i,'und')">
+              <ng-container *ngIf="!isEdit(i,'und'); else editUnd">
+                {{ partida.get('und').value }}
+              </ng-container>
+              <ng-template #editUnd>
+                <input type="text" class="edit-input" formControlName="und" />
+              </ng-template>
+            </td>
+            <td (dblclick)="onEdit(i,'total')">
+              <ng-container *ngIf="!isEdit(i,'total'); else editTotal">
+                {{ partida.get('total').value}}
+              </ng-container>
+              <ng-template #editTotal>
+                <input type="text" class="edit-input" formControlName="total"/>
+              </ng-template>
+            </td>
+          </tr>
+    </tbody>
+  </table>
+</form>

@@ -1,4 +1,3 @@
-<app-form-usuarios (onSubmit)="guardarCambios($event)"></app-form-usuarios>
 <div class="row">
   <div class="container-fluid">
     <form [formGroup]="userForm">
@@ -47,26 +46,6 @@
               </c-form-check>
             </td>
           </tr>
-          <tr [formGroup]="newUserForm">
-            <td>{{ users.controls.length + 1 }}</td>
-            <td (keydown.enter)="onCreate()"><input type="text" formControlName="nombre" /></td>
-            <td><input type="text" formControlName="apellido" /></td>
-            <td>
-              <select cSelect formControlName="idEspecialidad" >
-                <option *ngFor="let e of especialidad" [value]="e.idEspecialidad">
-                  {{ e.nombreEspecialidad }}
-                </option>
-              </select>
-            </td>
-            <td>
-              <c-form-check [switch]="true">
-                <input cFormCheckInput class="click" type="checkbox" disabled/>
-              </c-form-check>
-            </td>
-            <td>
-              <button type="button" (click)="addNewUser()">Add New</button>
-            </td>
-          </tr>  
         </tbody>
       </table>
     </form>
