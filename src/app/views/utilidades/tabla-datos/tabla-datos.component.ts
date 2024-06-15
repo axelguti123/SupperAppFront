@@ -1,4 +1,13 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, input } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  input,
+} from '@angular/core';
 import { especialidadDTO } from '../../../dto/especialidadDTO';
 import { UsuarioDTO } from '../../../dto/usuarioDTO';
 import { PartidaDTO } from '../../../dto/partidaDTO';
@@ -11,14 +20,16 @@ import { FormArray, FormGroup } from '@angular/forms';
   templateUrl: './tabla-datos.component.html',
   styleUrl: './tabla-datos.component.scss',
 })
-export class TablaDatosComponent implements OnInit,OnDestroy {
-  ngOnDestroy(): void {
-    
+export class TablaDatosComponent implements OnInit, OnDestroy, AfterViewInit {
+  ngAfterViewInit(): void {
+    this.dtTrigger.next(this.dtOptions);
   }
+  ngOnDestroy(): void {}
   @Input() forms: FormGroup;
   @Input() data: FormArray;
-  @Input() editStates= {}
-  @Output() onRowUpdate=new EventEmitter<number>();
+  @Input() editStates = {};
+  @Output() onRowUpdate = new EventEmitter<number>();
+  @Input() columns: string[];
   dtOptions: Config = {};
   dtTrigger = new Subject<Config>();
   get list(): FormArray {

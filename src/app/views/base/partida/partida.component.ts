@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
@@ -18,13 +19,13 @@ import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
   styleUrl: './partida.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PartidaComponent implements OnInit, OnDestroy {
-  partidaArray: PartidaDTO[] = [];
+export class PartidaComponent implements OnInit, OnDestroy,AfterViewInit {
   dtOptions: Config = {};
   dtTrigger = new Subject<Config>();
-  isChecked: boolean = false;
   private unsubscribe$ = new Subject<void>();
   partidaForm: FormGroup;
+  editStates: { [key: string]: any } = {};
+  columns: string[]
   constructor(
     private partidaService: PartidaService,
     private fb: FormBuilder,
@@ -34,25 +35,24 @@ export class PartidaComponent implements OnInit, OnDestroy {
       list: this.fb.array([]),
     });
   }
+  ngAfterViewInit(): void {
+    this.dtTrigger.next(this.dtOptions);
+  }
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
-    this.unsubscribeFromData();
   }
-
-  ngOnInit(): void {
-    this.subsCribeData();
+  private initializeDataTableOptions(): void {
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 10,
     };
   }
-  private unsubscribeFromData(): void {
-    // Verifica si hay una suscripción activa y la cierra
-    if (this.dataSubscription && !this.dataSubscription.closed) {
-      this.dataSubscription.unsubscribe();
-    }
+  ngOnInit(): void {
+    this.subsCribeData();
+    this.initializeDataTableOptions();
+    this.columns= ['Nro','Item','Partida','Und','Total'];
   }
   private dataSubscription: Subscription;
   private subsCribeData(): void {
@@ -82,14 +82,12 @@ export class PartidaComponent implements OnInit, OnDestroy {
               'list',
               this.fb.array(partidaArray)
             );
-            this.dtTrigger.next(this.dtOptions);
             this.ref.markForCheck();
           },
           error: (error) => console.error(error),
         });
     }
   }
-  editStates = {};
   createPartida(data: PartidaDTO): FormGroup {
     const partidaForm = this.fb.group({
       codPartida: [data.codPartida],
@@ -116,11 +114,6 @@ export class PartidaComponent implements OnInit, OnDestroy {
     const user = this.list.at(index).value.codPartida;
     console.log(user);
     return this.editStates[user] ? this.editStates[user][field] : false;
-  }
-  selectedUser: any;
-
-  selectRow(user: any) {
-    this.selectedUser = user;
   }
   onUpdate(data: PartidaDTO): void {
     this.partidaService.update(data).subscribe();
