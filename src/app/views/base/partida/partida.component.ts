@@ -21,7 +21,6 @@ import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 })
 export class PartidaComponent implements OnInit, OnDestroy,AfterViewInit {
   dtOptions: Config = {};
-  dtTrigger = new Subject<Config>();
   private unsubscribe$ = new Subject<void>();
   partidaForm: FormGroup;
   editStates: { [key: string]: any } = {};
@@ -36,10 +35,8 @@ export class PartidaComponent implements OnInit, OnDestroy,AfterViewInit {
     });
   }
   ngAfterViewInit(): void {
-    this.dtTrigger.next(this.dtOptions);
   }
   ngOnDestroy(): void {
-    this.dtTrigger.unsubscribe();
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
@@ -119,15 +116,13 @@ export class PartidaComponent implements OnInit, OnDestroy,AfterViewInit {
     this.partidaService.update(data).subscribe();
   }
   onRowUpdate(index: number): void {
-    const user = this.list.at(index).value.codPartida;
+    const partida = this.list.at(index).value.codPartida;
     const data = this.list.at(index).value;
     console.log('Datos actualizados:', data);
     this.onUpdate(data);
-    Object.keys(this.editStates[user]).forEach((field) => {
-      this.editStates[user][field] = false;
+    Object.keys(this.editStates[partida]).forEach((field) => {
+      this.editStates[partida][field] = false;
     });
   }
-  trackByFn(index: number, item: UsuarioDTO) {
-    return item.idEspecialidad; // Usa una propiedad única del usuario si es posible
-  }
+
 }

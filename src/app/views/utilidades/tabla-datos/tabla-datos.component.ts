@@ -8,9 +8,7 @@ import {
   Output,
   input,
 } from '@angular/core';
-import { especialidadDTO } from '../../../dto/especialidadDTO';
 import { UsuarioDTO } from '../../../dto/usuarioDTO';
-import { PartidaDTO } from '../../../dto/partidaDTO';
 import { Config } from 'datatables.net';
 import { Subject } from 'rxjs';
 import { FormArray, FormGroup } from '@angular/forms';
@@ -24,23 +22,19 @@ export class TablaDatosComponent implements OnInit, OnDestroy, AfterViewInit {
   ngAfterViewInit(): void {
     this.dtTrigger.next(this.dtOptions);
   }
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
+  }
   @Input() forms: FormGroup;
-  @Input() data: FormArray;
   @Input() editStates = {};
   @Output() onRowUpdate = new EventEmitter<number>();
   @Input() columns: string[];
-  dtOptions: Config = {};
+  @Input() dtOptions: Config = {};
   dtTrigger = new Subject<Config>();
   get list(): FormArray {
     return this.forms.get('list') as FormArray;
   }
-  ngOnInit(): void {
-    this.dtOptions = {
-      pagingType: 'full_numbers',
-      pageLength: 10,
-    };
-  }
+  ngOnInit(): void {}
   trackByFn(item: UsuarioDTO): number {
     return item.idEspecialidad; // Usa una propiedad única del usuario si es posible
   }
