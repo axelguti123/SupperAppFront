@@ -1,5 +1,5 @@
 <form [formGroup]="forms">
-  <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered w-100">
+  <table datatable #datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered w-100">
     <thead>
       <tr class="bg-success text-white">
         <th *ngFor="let colum of columns">{{ colum }}</th>

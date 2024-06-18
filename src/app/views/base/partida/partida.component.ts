@@ -3,15 +3,17 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  ElementRef,
   OnDestroy,
   OnInit,
+  ViewChild,
 } from '@angular/core';
 import { Config } from 'datatables.net';
 import { Subject, Subscription, takeUntil, tap } from 'rxjs';
-import { UsuarioDTO } from '../../../dto/usuarioDTO';
 import { PartidaDTO } from '../../../dto/partidaDTO';
 import { PartidaService } from '../../../services/partida.service';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { spanishTranslation } from '../../traduccionDatatables';
 
 @Component({
   selector: 'app-partida',
@@ -25,6 +27,9 @@ export class PartidaComponent implements OnInit, OnDestroy,AfterViewInit {
   partidaForm: FormGroup;
   editStates: { [key: string]: any } = {};
   columns: string[]
+  dtTrigger=new Subject<Config>();
+  @ViewChild('datatable',{static:true}) table:ElementRef
+
   constructor(
     private partidaService: PartidaService,
     private fb: FormBuilder,
@@ -35,15 +40,34 @@ export class PartidaComponent implements OnInit, OnDestroy,AfterViewInit {
     });
   }
   ngAfterViewInit(): void {
+    
+    const table=$(this.table.nativeElement).DataTable(this.dtOptions);
+    $('#table thead tr').clone(true).appendTo('#table thead');
+    $('#table thead tr:eq(1) th').each(function(i){
+      const title =$(this).text();
+      $(this).html('<input type="text" placeholder="Buscar..."/>');
+      $('input', this).on('keyup change',function(this:HTMLInputElement){
+        if(table.column(i).search()!== this.value){
+          table.column(i).search(this.value).draw();
+        }
+      })
+    })
   }
   ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
+    this.unSuscribeFromData();
+  }
+  private unSuscribeFromData(): void{
+    if(this.dataSubscription && this.dataSubscription.closed){
+      this.dataSubscription.unsubscribe();
+    }
   }
   private initializeDataTableOptions(): void {
     this.dtOptions = {
       pagingType: 'full_numbers',
-      pageLength: 10,
+      pageLength: 10
     };
   }
   ngOnInit(): void {
@@ -55,7 +79,7 @@ export class PartidaComponent implements OnInit, OnDestroy,AfterViewInit {
   private subsCribeData(): void {
     if (!this.dataSubscription || this.dataSubscription.closed) {
       const startTime = performance.now();
-      this.partidaService
+      this.dataSubscription=this.partidaService
         .obtenerTodos()
         .pipe(
           tap(() => {
@@ -72,18 +96,22 @@ export class PartidaComponent implements OnInit, OnDestroy,AfterViewInit {
             message: string;
             status: string;
           }) => {
-            const partidaArray = partida.data.map((partida) =>
-              this.createPartida(partida)
-            );
-            this.partidaForm.setControl(
-              'list',
-              this.fb.array(partidaArray)
-            );
+            this.InitializeForm(partida.data);
+            this.dtTrigger.next(this.dtOptions);
             this.ref.markForCheck();
           },
           error: (error) => console.error(error),
         });
     }
+  }
+  private InitializeForm(partida:PartidaDTO[]):void{
+    const partidaArray = partida.map((partida) =>
+      this.createPartida(partida)
+    );
+    this.partidaForm.setControl(
+      'list',
+      this.fb.array(partidaArray)
+    );
   }
   createPartida(data: PartidaDTO): FormGroup {
     const partidaForm = this.fb.group({
@@ -103,26 +131,20 @@ export class PartidaComponent implements OnInit, OnDestroy,AfterViewInit {
   get list() {
     return this.partidaForm.get('list') as FormArray;
   }
-  onEdit(index: number, field: string): void {
-    const partida = this.list.at(index).value.codPartida;
-    this.editStates[partida][field] = true;
-  }
-  isEdit(index: number, field: any): boolean {
-    const user = this.list.at(index).value.codPartida;
-    console.log(user);
-    return this.editStates[user] ? this.editStates[user][field] : false;
-  }
+
   onUpdate(data: PartidaDTO): void {
     this.partidaService.update(data).subscribe();
+
   }
   onRowUpdate(index: number): void {
     const partida = this.list.at(index).value.codPartida;
     const data = this.list.at(index).value;
-    console.log('Datos actualizados:', data);
     this.onUpdate(data);
     Object.keys(this.editStates[partida]).forEach((field) => {
       this.editStates[partida][field] = false;
     });
+    this.ref.markForCheck();
+
   }
 
 }

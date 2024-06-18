@@ -16,9 +16,9 @@ export class LoginComponent implements OnInit{
     
   }
   ngOnInit(): void {
-    gsap.to('.signin',{
-      duration:2,
-      rotation:360
+    gsap.from('.signin',{
+      x:-600,
+      fill:'blue'
     })
   }
   onLogin() {

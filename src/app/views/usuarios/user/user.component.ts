@@ -13,7 +13,6 @@ import { EspecialidadService } from '../../../services/especialidad.service';
 import { especialidadDTO } from '../../../dto/especialidadDTO';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { parsearErroresAPI } from '../../utilidades';
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
