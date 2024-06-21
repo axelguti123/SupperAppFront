@@ -31,6 +31,7 @@ export class TablaDatosComponent implements OnDestroy, AfterViewInit {
 
   onDelete(index:any){
     this.list.removeAt(index);
+    console.log(index)
     console.log('Registro Eliminado');
   }
   
