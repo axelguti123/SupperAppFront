@@ -27,7 +27,14 @@ export class TablaDatosComponent implements OnDestroy, AfterViewInit {
   }
   ngOnDestroy(): void {
   }
-  @Input() forms: FormGroup;
+  buttonDelete: string;
+
+  onDelete(index:any){
+    this.list.removeAt(index);
+    console.log('Registro Eliminado');
+  }
+  
+  @Input() forms: FormGroup;  
   @Input() editStates = {};
   @Output() onRowUpdate = new EventEmitter<number>();
   @Input() columns: string[];
@@ -49,7 +56,6 @@ export class TablaDatosComponent implements OnDestroy, AfterViewInit {
     console.log(user);
     return this.editStates[user] ? this.editStates[user][field] : false;
   }
-
   handleRowUpdate(index: number): void {
     this.onRowUpdate.emit(index);
   }

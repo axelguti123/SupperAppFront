@@ -9,6 +9,7 @@
             <th>Apellidos</th>
             <th>Especialidad</th>
             <th>Estado</th>
+            <th>Accion</th>
           </tr>
         </thead>
         <tbody formArrayName="users">
@@ -44,6 +45,9 @@
               <c-form-check [switch]="true" >
                 <input  cFormCheckInput class="click" [checked]="user.get('isActivo').value" type="checkbox" (change)="toggleActivo(i)" />
               </c-form-check>
+            </td>
+            <td>
+              <app-button ></app-button>
             </td>
           </tr>
         </tbody>

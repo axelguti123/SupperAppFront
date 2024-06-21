@@ -41,17 +41,7 @@ export class PartidaComponent implements OnInit, OnDestroy,AfterViewInit {
   }
   ngAfterViewInit(): void {
     
-    const table=$(this.table.nativeElement).DataTable(this.dtOptions);
-    $('#table thead tr').clone(true).appendTo('#table thead');
-    $('#table thead tr:eq(1) th').each(function(i){
-      const title =$(this).text();
-      $(this).html('<input type="text" placeholder="Buscar..."/>');
-      $('input', this).on('keyup change',function(this:HTMLInputElement){
-        if(table.column(i).search()!== this.value){
-          table.column(i).search(this.value).draw();
-        }
-      })
-    })
+    
   }
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
@@ -67,13 +57,21 @@ export class PartidaComponent implements OnInit, OnDestroy,AfterViewInit {
   private initializeDataTableOptions(): void {
     this.dtOptions = {
       pagingType: 'full_numbers',
-      pageLength: 10
+      pageLength: 10,
+      columns:[
+        {title:'Nro'},
+        {title:'Item'},
+        {title:'Partida'},
+        {title:'Und'},
+        {title:'Total'},
+        {title:'Delete',orderable:false,searchable:false}
+      ]
     };
   }
   ngOnInit(): void {
     this.subsCribeData();
     this.initializeDataTableOptions();
-    this.columns= ['Nro','Item','Partida','Und','Total'];
+    
   }
   private dataSubscription: Subscription;
   private subsCribeData(): void {
@@ -118,7 +116,7 @@ export class PartidaComponent implements OnInit, OnDestroy,AfterViewInit {
       codPartida: [data.codPartida],
       partida: [data.partida],
       und: [data.und],
-      total: [data.total],
+      total: [data.total]
     });
     this.editStates[data.codPartida] = {
       codPartida: false,

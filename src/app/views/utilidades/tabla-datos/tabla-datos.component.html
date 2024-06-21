@@ -1,5 +1,11 @@
 <form [formGroup]="forms">
-  <table datatable #datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered w-100">
+  <table
+    datatable
+    #datatable
+    [dtOptions]="dtOptions"
+    [dtTrigger]="dtTrigger"
+    class="table table-bordered w-100"
+  >
     <thead>
       <tr class="bg-success text-white">
         <th *ngFor="let colum of columns">{{ colum }}</th>
@@ -46,6 +52,13 @@
           <ng-template #editTotal>
             <input type="text" class="edit-input" formControlName="total" />
           </ng-template>
+        </td>
+        <td>
+          <app-button
+            buttonText="Delete"
+            [data]="partida.get('codPartida').value"
+            (buttonClick)="onDelete()"
+          />
         </td>
       </tr>
     </tbody>
