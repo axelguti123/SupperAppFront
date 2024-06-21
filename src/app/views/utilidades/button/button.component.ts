@@ -10,8 +10,8 @@ export class ButtonComponent {
   @Input() buttonClass;
   @Output() buttonClick=new EventEmitter<void>();
   @Input() data: any;
+  @Input() index: number;
   onClick(){
-    console.log(this.data);
     this.buttonClick.emit(this.data);
   }
   

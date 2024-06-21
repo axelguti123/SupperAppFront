@@ -27,11 +27,10 @@ export class TablaDatosComponent implements OnDestroy, AfterViewInit {
   }
   ngOnDestroy(): void {
   }
-  buttonDelete: string;
 
-  onDelete(index:any){
-    this.list.removeAt(index);
-    console.log(index)
+  onDelete(event:{index:number,codPartida:any}):void{
+    this.list.removeAt(event.index);
+    console.log(event.index,event.codPartida)
     console.log('Registro Eliminado');
   }
   
