@@ -36,7 +36,6 @@ import { DataTablesModule } from 'angular-datatables';
     CarouselModule,
     ReactiveFormsModule,
     DropdownModule,
-    PaginationModule,
     PopoverModule,
     TableModule,
     FormsModule,

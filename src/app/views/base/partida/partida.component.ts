@@ -13,9 +13,7 @@ import { Subject, Subscription, takeUntil, tap } from 'rxjs';
 import { PartidaDTO } from '../../../dto/partidaDTO';
 import { PartidaService } from '../../../services/partida.service';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
-import { spanishTranslation } from '../../traduccionDatatables';
-import { error } from 'jquery';
-
+import * as XLSX from 'xlsx';
 @Component({
   selector: 'app-partida',
   templateUrl: './partida.component.html',
@@ -148,17 +146,59 @@ export class PartidaComponent implements OnInit, OnDestroy,AfterViewInit {
 
   }
   onRowDelete(event:{index:number,idPartida:number}): void {
+    
     this.partidaService.delete(event.idPartida).subscribe({
       next: (partida: {
-        data: PartidaDTO[];
         message: string;
         status: string;
       }) => {
-        this.list.removeAt(event.index);
-        console.log(partida.message)
+        console.log('Registro Eliminado');
+        this.validarMessagge(partida,event.index);
       },
       error: (error) => console.error(error),
     });
   }
-    
+  validarMessagge(partida:any,index:number):void{
+    if(partida.status==="success"){
+      this.list.removeAt(index);
+      this.ref.markForCheck();
+    }else if(partida.status==="error"){
+      console.log(partida.message);
+    }
+  }
+  data: any;
+  onFileChangeEvent(evt:any){
+    const target: DataTransfer=<DataTransfer>(evt.target);
+    if(target.files.length!==1) throw new Error("Cannot use multiple files");
+    const reader:FileReader=new FileReader();
+    reader.onload=(e:any)=>{
+      const bstr: string=e.target.result;
+      const wb: XLSX.WorkBook=XLSX.read(bstr,{type:'binary'});
+      const wsname: string=wb.SheetNames[0];
+      const ws: XLSX.WorkSheet=wb.Sheets[wsname];
+      const jsonData= XLSX.utils.sheet_to_json(ws,{header:1})
+      this.data=this.buildHierarchy(jsonData);
+      console.log(this.data);
+    };
+    reader.readAsArrayBuffer(target.files[0])
+  }
+  buildHierarchy(data:any[]):any[]{
+    const hierarchy=[];
+    const lookup={}
+    data.forEach((row,index)=>{
+      if (index === 0) return; // Skip header row
+      const [id, description, unit, quantity] = row;
+      const item = { id, description, unit, quantity, children: [] };
+
+      lookup[id] = item;
+
+      const parentId = id.slice(0, -3);
+      if (lookup[parentId]) {
+        lookup[parentId].children.push(item);
+      } else {
+        hierarchy.push(item);
+      }
+    });
+    return hierarchy;
+  }
 }

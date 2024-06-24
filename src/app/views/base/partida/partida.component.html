@@ -11,5 +11,7 @@
       (onRowDelete)="onRowDelete($event)"
     >
     </app-tabla-datos>
+    <input type="file" style="display: none;" (change)="onFileChangeEvent($event)" #subirArchivo/>
+    <button cbutton (click)="subirArchivo.click()">Cargar Archivo</button>
   </div>
 </div>
