@@ -1,6 +1,7 @@
-export interface PartidaDTO{
-codPartida:string;
-partida:string;
-und:string;
-total:number;
+export interface PartidaDTO {
+  idPartida:number;
+  codPartida: string;
+  partida: string;
+  und: string;
+  total: number;
 }

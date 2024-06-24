@@ -56,8 +56,8 @@
         <td>
           <app-button
             buttonText="Delete"
-            [data]="partida.get('codPartida').value"
-            (buttonClick)="onDelete({index:i,codPartida:partida.get('codPartida').value})"
+            [data]="partida.get('idPartida').value"
+            (buttonClick)="onDelete({index:i,idPartida:partida.get('idPartida').value})"
           />
         </td>
       </tr>

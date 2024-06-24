@@ -14,6 +14,7 @@ import { PartidaDTO } from '../../../dto/partidaDTO';
 import { PartidaService } from '../../../services/partida.service';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { spanishTranslation } from '../../traduccionDatatables';
+import { error } from 'jquery';
 
 @Component({
   selector: 'app-partida',
@@ -95,6 +96,7 @@ export class PartidaComponent implements OnInit, OnDestroy,AfterViewInit {
             status: string;
           }) => {
             this.InitializeForm(partida.data);
+            console.log(partida.data)
             this.dtTrigger.next(this.dtOptions);
             this.ref.markForCheck();
           },
@@ -113,12 +115,13 @@ export class PartidaComponent implements OnInit, OnDestroy,AfterViewInit {
   }
   createPartida(data: PartidaDTO): FormGroup {
     const partidaForm = this.fb.group({
+      idPartida:[data.idPartida],
       codPartida: [data.codPartida],
       partida: [data.partida],
       und: [data.und],
       total: [data.total]
     });
-    this.editStates[data.codPartida] = {
+    this.editStates[data.idPartida] = {
       codPartida: false,
       partida: false,
       und: false,
@@ -135,7 +138,7 @@ export class PartidaComponent implements OnInit, OnDestroy,AfterViewInit {
 
   }
   onRowUpdate(index: number): void {
-    const partida = this.list.at(index).value.codPartida;
+    const partida = this.list.at(index).value.idPartida;
     const data = this.list.at(index).value;
     this.onUpdate(data);
     Object.keys(this.editStates[partida]).forEach((field) => {
@@ -144,5 +147,18 @@ export class PartidaComponent implements OnInit, OnDestroy,AfterViewInit {
     this.ref.markForCheck();
 
   }
-
+  onRowDelete(event:{index:number,idPartida:number}): void {
+    this.partidaService.delete(event.idPartida).subscribe({
+      next: (partida: {
+        data: PartidaDTO[];
+        message: string;
+        status: string;
+      }) => {
+        this.list.removeAt(event.index);
+        console.log(partida.message)
+      },
+      error: (error) => console.error(error),
+    });
+  }
+    
 }

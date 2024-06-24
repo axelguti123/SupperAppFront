@@ -19,4 +19,8 @@ export class PartidaService {
   public update(partida:PartidaDTO):Observable<{message:string,status:string}>{
     return this.http.put<{message:string,status:string}>(`${this.apiURL}/${partida.codPartida}`,partida);
   }
+  public delete(index:number):Observable<{message:string,status:string}>{
+    return this.http.delete<{message:string,status:string}>(`${this.apiURL}/${index}`);
+  }
 }
+
