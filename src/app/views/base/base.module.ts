@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // CoreUI Modules
 import {
+  ButtonModule,
   CarouselModule,
   DropdownModule,
   FormModule,
@@ -43,7 +44,8 @@ import { DataTablesModule } from 'angular-datatables';
     SeguridadModule,
     UtilidadesModule,
     DataTablesModule,
-    FormModule
+    FormModule,
+    ButtonModule
   ],
   declarations: [
     SeguimientoComponent,
