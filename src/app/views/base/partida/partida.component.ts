@@ -156,21 +156,34 @@ export class PartidaComponent implements OnInit, OnDestroy, AfterViewInit {
     const file = evt.target.files[0];
     this.readFile(file);
   }
-      readFile(file: File): void {
-        const fileReader = new FileReader();
-        fileReader.onload = () => {
-          const arrayBuffer = fileReader.result as ArrayBuffer;
-          const data = new Uint8Array(arrayBuffer);
-          const arr = Array.from(data, (byte) => String.fromCharCode(byte)).join(
-            ''
-          );
-          const workbook = XLSX.read(arr, { type: 'binary' });
-          const sheetName = workbook.SheetNames[0];
-          const workSheet = workbook.Sheets[sheetName];
-          const jsonData = XLSX.utils.sheet_to_json(workSheet, { raw: true });
-          console.log(jsonData);
-        };
-        fileReader.readAsArrayBuffer(file);
-        console.log(file)
+  readFile(file: File): void {
+    const fileReader = new FileReader();
+    fileReader.onload = () => {
+      const arrayBuffer = fileReader.result as ArrayBuffer;
+      const data = new Uint8Array(arrayBuffer);
+      const arr = Array.from(data, (byte) => String.fromCharCode(byte)).join(
+        ''
+      );
+      const workbook = XLSX.read(arr, { type: 'binary' });
+      const sheetName = workbook.SheetNames[0];
+      const workSheet = workbook.Sheets[sheetName];
+      const jsonData = XLSX.utils.sheet_to_json(workSheet, { raw: true });
+      console.log(jsonData);
+      const completo=this.addIdPadre(jsonData);
+      console.log(completo);
+    };
+    fileReader.readAsArrayBuffer(file);
+    console.log(file);
+  }
+  addIdPadre(items: any[]): any[] {
+    let idPadre: string | null = null;
+    return items.map(item => {
+      if (!item.ITEM.includes('.')) {
+        idPadre = item.ITEM;
+        return item;
+      } else {
+        return { ...item, IDPADRE: idPadre };
       }
+    });
+  } 
 }
