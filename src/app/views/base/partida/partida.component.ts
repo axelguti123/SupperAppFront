@@ -13,7 +13,7 @@ import { Subject, Subscription, takeUntil, tap } from 'rxjs';
 import { PartidaDTO } from '../../../dto/partidaDTO';
 import { PartidaService } from '../../../services/partida.service';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
-import * as XLSX from 'xlsx';
+import { ExcelToJson } from '../../../services/utilidades/excelToJson';
 @Component({
   selector: 'app-partida',
   templateUrl: './partida.component.html',
@@ -23,6 +23,7 @@ import * as XLSX from 'xlsx';
 export class PartidaComponent implements OnInit, OnDestroy, AfterViewInit {
   dtOptions: Config = {};
   private unsubscribe$ = new Subject<void>();
+  private jsonData;
   partidaForm: FormGroup;
   editStates: { [key: string]: any } = {};
   columns: string[];
@@ -32,7 +33,8 @@ export class PartidaComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     private partidaService: PartidaService,
     private fb: FormBuilder,
-    private ref: ChangeDetectorRef
+    private ref: ChangeDetectorRef,
+    private excelToJson: ExcelToJson
   ) {
     this.partidaForm = fb.group({
       list: this.fb.array([]),
@@ -151,39 +153,9 @@ export class PartidaComponent implements OnInit, OnDestroy, AfterViewInit {
       console.log(partida.message);
     }
   }
-  data: any;
   onFileChangeEvent(evt: any) {
     const file = evt.target.files[0];
-    this.readFile(file);
+    this.jsonData=this.excelToJson.readFile(file);
   }
-  readFile(file: File): void {
-    const fileReader = new FileReader();
-    fileReader.onload = () => {
-      const arrayBuffer = fileReader.result as ArrayBuffer;
-      const data = new Uint8Array(arrayBuffer);
-      const arr = Array.from(data, (byte) => String.fromCharCode(byte)).join(
-        ''
-      );
-      const workbook = XLSX.read(arr, { type: 'binary' });
-      const sheetName = workbook.SheetNames[0];
-      const workSheet = workbook.Sheets[sheetName];
-      const jsonData = XLSX.utils.sheet_to_json(workSheet, { raw: true });
-      console.log(jsonData);
-      const completo=this.addIdPadre(jsonData);
-      console.log(completo);
-    };
-    fileReader.readAsArrayBuffer(file);
-    console.log(file);
-  }
-  addIdPadre(items: any[]): any[] {
-    let idPadre: string | null = null;
-    return items.map(item => {
-      if (!item.ITEM.includes('.')) {
-        idPadre = item.ITEM;
-        return item;
-      } else {
-        return { ...item, IDPADRE: idPadre };
-      }
-    });
-  } 
+   
 }

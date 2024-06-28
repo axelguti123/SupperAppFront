@@ -1,5 +1,6 @@
 import {
   AfterViewInit,
+  ChangeDetectionStrategy,
   Component,
   ElementRef,
   EventEmitter,
@@ -17,6 +18,7 @@ import { FormArray, FormGroup } from '@angular/forms';
   selector: 'app-tabla-datos',
   templateUrl: './tabla-datos.component.html',
   styleUrl: './tabla-datos.component.scss',
+  changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class TablaDatosComponent implements OnDestroy, AfterViewInit {
   constructor(){
