@@ -1,17 +1,20 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output, input } from '@angular/core';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { especialidadDTO } from '../../../dto/especialidadDTO';
-import { EspecialidadService } from '../../../services/especialidad.service';
-import { ADTSettings } from 'angular-datatables/src/models/settings';
+import { Config } from 'datatables.net';
+import { Subject } from 'rxjs';
 @Component({
   selector: 'app-form-especialidad',
   templateUrl: './form-especialidad.component.html',
   styleUrl: './form-especialidad.component.scss',
 })
 export class FormEspecialidadComponent implements OnInit {
-  dtOptions: ADTSettings = {};
+  @Input() editStates = {};
+  @Input() dtOptions: Config = {};
+  @Input() dtTrigger= new Subject<Config>();
   visible: boolean[] = [false, false];
-  form: FormGroup;
+  @Input() form:FormGroup;
+  @Input() forms: FormGroup;  
   userControls: FormControl[] = [];
   @Output() headers: string[] = [];
   @Output()especialidadArray: any[];
@@ -20,14 +23,10 @@ export class FormEspecialidadComponent implements OnInit {
   @Output() onSubmit = new EventEmitter<especialidadDTO>();
   constructor(
     private formBuilder: FormBuilder,
-    private especialidadService: EspecialidadService,
   ) {}
   ngOnInit(): void {
-    this.dtOptions = {
-      pagingType: 'full_numbers'
-    };
-    this.loadAllUser();
     this.initializeForm();
+    console.log(this.forms)
     
   }
   initializeForm(): void {
@@ -52,7 +51,9 @@ export class FormEspecialidadComponent implements OnInit {
       this.onSubmit.emit(this.form.value);
     }
   }
-  
+  get list(): FormArray{
+    return this.forms.get('list') as FormArray
+  }
   
   validateUserName(userName: string) {
     if (userName === '') {
@@ -65,19 +66,9 @@ export class FormEspecialidadComponent implements OnInit {
       }
     }
   }
-
-  loadAllUser() {
-    this.especialidadService.obtenerTodos().subscribe({
-      next: (especialidad:any) => {
-        this.especialidadArray = especialidad.data;
-        console.log(this.especialidadArray);
-      },
-      error: (error) => console.error(error),
-    });
-  }
   filtro:String='';
   validateForm(obj: especialidadDTO): boolean {
-    return obj.NombreEspecialidad !== '' && obj.estado;
+    return obj.nombreEspecialidad !== '' && obj.estado;
   }
   validateField(item: any) {
     if (item !== '') {
@@ -89,30 +80,20 @@ export class FormEspecialidadComponent implements OnInit {
   onCancel(item: any) {
     item.isEdit = false;
   }
-  trackByFn(index: number, item: any) {
-    return item.id; // Usa una propiedad única del usuario si es posible
+  trackByFn(index: number, item: FormGroup): number {
+    console.log(index)
+    return item.value.idPartida; // Usa una propiedad única del usuario si es posible
   }
-  selectedUser: any;
-
-  selectRow(user: any) {
-    this.selectedUser = user;
+  onEdit(index: number, field: string): void {
+    const partida = this.list.at(index).value.idEspecialidad;
+    this.editStates[partida][field] = true;
   }
-  originalValue: any;
-  onEdit(item: any) {
-    this.originalValue = { ...item };
-    item.isEdit = true;
+  isEdit(index: number, field: any): boolean {
+    const user = this.list.at(index).value.idEspecialidad;
+    console.log(user);
+    return this.editStates[user] ? this.editStates[user][field] : false;
   }
   onUpdate(data: any): void {
     console.log(data);
-  }
-  onRowUpdate(user: any): void {
-    if (
-      this.originalValue &&
-      JSON.stringify(user) !== JSON.stringify(this.originalValue)
-    ) {
-      // El valor ha cambiado
-      this.onUpdate(user);
-    }
-    user.isEdit = !user.isEdit;
   }
 }

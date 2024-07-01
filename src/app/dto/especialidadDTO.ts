@@ -1,5 +1,5 @@
 export interface especialidadDTO{
     idEspecialidad:number;
-    NombreEspecialidad:string;
+    nombreEspecialidad:string;
     estado:boolean;
 }

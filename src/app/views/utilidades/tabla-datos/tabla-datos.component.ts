@@ -38,6 +38,7 @@ export class TablaDatosComponent implements OnDestroy, AfterViewInit {
   }
   
   @Input() forms: FormGroup;  
+  
   @Input() editStates = {};
   @Output() onRowUpdate = new EventEmitter<number>();
   @Output() onRowDelete = new EventEmitter<{index: number, idPartida: any}>();

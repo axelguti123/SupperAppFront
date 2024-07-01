@@ -3,7 +3,7 @@
   >Agregar Especialidad</a
 >
 <c-row>
-  <c-col [xs]="6">
+  <c-col [xs]="9">
     <div [visible]="visible[0]" cCollapse>
       <c-card class="mt-3">
         <c-card-body>
@@ -35,40 +35,45 @@
           <div class="row">
             <div class="col-1">
             </div>
-            <div>
-              <table  class="table table-bordered">
+            <form [formGroup]="forms">
+              <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered w-100">
                 <thead>
                   <tr class="bg-success text-white">
                     <th>Nº</th>
                     <th>Especialidad</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody formArrayName="list">
                   <tr
-                    *ngFor="let user of especialidadArray; let srNo = index; trackByFn"
-                    (click)="onEdit(user); selectRow(user)"
-                    [class.selected-row]="selectedUser === user"
+                    *ngFor="let especialidad of list.controls; let i = index; trackByFn"
                     (keydown.enter)="onRowUpdate(user)"
                   >
-                    <td>{{ srNo + 1 }}</td>
-                    <td>
-                      <ng-container *ngIf="!user.isEdit; else editMode">
-                        {{ user.nombreEspecialidad }}
+                    <td>{{ i + 1 }}</td>
+                    <td (dblclick)="onEdit(i,'nombreEspecialidad')">
+                      <ng-container *ngIf="!isEdit(i, 'nombreEspecialidad'); else editMode">
+                        {{ especialidad.get('nombreEspecialidad').value}}
                       </ng-container>
                       <ng-template #editMode>
                         <input
                           type="text"
-                          [(ngModel)]="user.nombreEspecialidad"
+                          formControlName="nombreEspecialidad"
                         />
                         <div class="text-danger" *ngIf="validateField(user.nombreEspecialidad)">
                           <span> Required </span>
                         </div>
                       </ng-template>
                     </td>
+                    <td>
+                      <app-button
+                        buttonText="Delete"
+                        [data]="especialidad.get('idEspecialidad').value"
+                        
+                      />
+                    </td>
                   </tr>
                 </tbody>
               </table>
-            </div>
+            </form>
           </div>          
         </c-card-body>
       </c-card>
